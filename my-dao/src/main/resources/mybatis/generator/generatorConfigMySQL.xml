@@ -26,9 +26,9 @@
         </javaTypeResolver>
 
         <javaModelGenerator targetPackage="com.rex.my.entity.mysql"
-                            targetProject="my-entity"/>
+                            targetProject="src/main/java"/>
 
-        <sqlMapGenerator targetPackage="mybatis.mapper.mysql" targetProject="my-dao"/>
+        <sqlMapGenerator targetPackage="mybatis.mapper.mysql" targetProject="src/main/resources"/>
 
         <javaClientGenerator targetPackage="com.rex.my.dao.mapper.mysql" type="XMLMAPPER"
                              targetProject="src/main/java"/>
