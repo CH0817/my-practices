@@ -45,7 +45,7 @@ public class MyBatisConfig {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(mysqlDataSource);
         sessionFactory.setMapperLocations(
-                new PathMatchingResourcePatternResolver().getResources("classpath:mapper/mysql/*.xml"));
+                new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/mysql/*.xml"));
         return sessionFactory.getObject();
     }
 
