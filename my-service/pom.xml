@@ -7,16 +7,12 @@
         <artifactId>my-practices</artifactId>
         <groupId>com.rex</groupId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>my-service</artifactId>
     <packaging>jar</packaging>
     <dependencies>
         <!--module-->
-        <dependency>
-            <groupId>com.rex</groupId>
-            <artifactId>my-dependencies</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.rex</groupId>
             <artifactId>my-commons</artifactId>
