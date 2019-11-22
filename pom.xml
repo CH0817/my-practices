@@ -53,6 +53,42 @@
                 <version>${mybatis.version}</version>
                 <scope>test</scope>
             </dependency>
+            <!--modules-->
+            <dependency>
+                <groupId>com.rex</groupId>
+                <artifactId>my-web</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rex</groupId>
+                <artifactId>my-service</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rex</groupId>
+                <artifactId>my-dao</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rex</groupId>
+                <artifactId>my-entity</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rex</groupId>
+                <artifactId>my-security</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rex</groupId>
+                <artifactId>my-api</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rex</groupId>
+                <artifactId>my-commons</artifactId>
+                <version>${version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

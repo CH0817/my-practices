@@ -30,12 +30,10 @@
         <dependency>
             <groupId>com.rex</groupId>
             <artifactId>my-entity</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.rex</groupId>
             <artifactId>my-service</artifactId>
-            <version>${parent.version}</version>
         </dependency>
     </dependencies>
 </project>
