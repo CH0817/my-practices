@@ -1,0 +1,3 @@
+mybatis:
+  type-aliases-package: com.example.domain.model
+  type-handlers-package: com.example.typehandler
