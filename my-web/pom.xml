@@ -35,5 +35,9 @@
             <groupId>com.rex</groupId>
             <artifactId>my-service</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.rex</groupId>
+            <artifactId>my-dao</artifactId>
+        </dependency>
     </dependencies>
 </project>
