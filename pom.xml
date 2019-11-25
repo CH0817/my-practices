@@ -14,7 +14,6 @@
         <module>my-service</module>
         <module>my-dao</module>
         <module>my-api</module>
-        <module>my-core</module>
     </modules>
 
     <properties>
@@ -74,11 +73,6 @@
             <dependency>
                 <groupId>com.rex</groupId>
                 <artifactId>my-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.rex</groupId>
-                <artifactId>my-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
