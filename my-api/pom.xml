@@ -22,4 +22,7 @@
             <artifactId>my-business</artifactId>
         </dependency>
     </dependencies>
+    <build>
+        <finalName>my-api</finalName>
+    </build>
 </project>
