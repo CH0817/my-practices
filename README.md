@@ -1,2 +1,2 @@
 # my-practices
-Spring Boot + Maven module 練習
+Spring Boot + MyBatis + Atomikos + Maven module 練習
