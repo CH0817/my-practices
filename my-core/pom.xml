@@ -9,14 +9,16 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>my-entity</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>my-core</artifactId>
+    <packaging>pom</packaging>
     <dependencies>
-        <!--module-->
         <dependency>
             <groupId>com.rex</groupId>
-            <artifactId>my-commons</artifactId>
-            <version>${parent.version}</version>
+            <artifactId>my-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.rex</groupId>
+            <artifactId>my-web</artifactId>
         </dependency>
     </dependencies>
 </project>

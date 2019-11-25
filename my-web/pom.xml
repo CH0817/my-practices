@@ -10,8 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>my-web</artifactId>
-    <version>${parent.version}</version>
-
+    <packaging>war</packaging>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -24,20 +23,7 @@
         <!--module-->
         <dependency>
             <groupId>com.rex</groupId>
-            <artifactId>my-commons</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.rex</groupId>
-            <artifactId>my-entity</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.rex</groupId>
             <artifactId>my-service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.rex</groupId>
-            <artifactId>my-dao</artifactId>
         </dependency>
     </dependencies>
 </project>

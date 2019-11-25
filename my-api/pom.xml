@@ -7,20 +7,19 @@
         <artifactId>my-practices</artifactId>
         <groupId>com.rex</groupId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>my-api</artifactId>
     <packaging>war</packaging>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <!--module-->
         <dependency>
             <groupId>com.rex</groupId>
-            <artifactId>my-commons</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.rex</groupId>
-            <artifactId>my-entity</artifactId>
-            <version>${parent.version}</version>
+            <artifactId>my-service</artifactId>
         </dependency>
     </dependencies>
 </project>
