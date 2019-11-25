@@ -1,4 +1,4 @@
-package com.rex.my.service;
+package com.rex.my.business.service;
 
 import com.rex.my.entity.mysql.User;
 

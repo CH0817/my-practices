@@ -11,7 +11,7 @@
 
     <modules>
         <module>my-web</module>
-        <module>my-service</module>
+        <module>my-business</module>
         <module>my-dao</module>
         <module>my-api</module>
     </modules>
@@ -62,7 +62,7 @@
             </dependency>
             <dependency>
                 <groupId>com.rex</groupId>
-                <artifactId>my-service</artifactId>
+                <artifactId>my-business</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

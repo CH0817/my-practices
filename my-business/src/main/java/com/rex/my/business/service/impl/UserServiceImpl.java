@@ -1,8 +1,8 @@
-package com.rex.my.service.impl;
+package com.rex.my.business.service.impl;
 
+import com.rex.my.business.service.UserService;
 import com.rex.my.dao.mapper.mysql.UserMapper;
 import com.rex.my.entity.mysql.User;
-import com.rex.my.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

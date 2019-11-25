@@ -19,7 +19,7 @@
         <!--module-->
         <dependency>
             <groupId>com.rex</groupId>
-            <artifactId>my-service</artifactId>
+            <artifactId>my-business</artifactId>
         </dependency>
     </dependencies>
 </project>

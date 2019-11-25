@@ -1,6 +1,6 @@
 package com.rex.my.api.web.controller;
 
-import com.rex.my.service.UserService;
+import com.rex.my.business.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

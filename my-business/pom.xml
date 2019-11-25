@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>my-service</artifactId>
+    <artifactId>my-business</artifactId>
     <packaging>jar</packaging>
     <dependencies>
         <!--module-->
