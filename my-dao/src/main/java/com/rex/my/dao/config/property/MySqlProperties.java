@@ -1,4 +1,4 @@
-package com.rex.my.dao.property;
+package com.rex.my.dao.config.property;
 
 import lombok.Getter;
 import lombok.Setter;

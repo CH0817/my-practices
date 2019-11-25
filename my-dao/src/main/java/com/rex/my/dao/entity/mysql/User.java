@@ -1,4 +1,4 @@
-package com.rex.my.entity.mysql;
+package com.rex.my.dao.entity.mysql;
 
 public class User {
     /**

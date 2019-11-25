@@ -2,7 +2,7 @@ package com.rex.my.dao.config;
 
 import com.atomikos.icatch.jta.UserTransactionImp;
 import com.atomikos.icatch.jta.UserTransactionManager;
-import com.rex.my.dao.property.MySqlProperties;
+import com.rex.my.dao.config.property.MySqlProperties;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;

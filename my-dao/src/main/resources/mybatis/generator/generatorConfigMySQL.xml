@@ -24,7 +24,7 @@
             <property name="forceBigDecimals" value="true"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.rex.my.entity.mysql"
+        <javaModelGenerator targetPackage="com.rex.my.dao.entity.mysql"
                             targetProject="src/main/java"/>
 
         <sqlMapGenerator targetPackage="mybatis.mapper.mysql" targetProject="src/main/resources"/>
