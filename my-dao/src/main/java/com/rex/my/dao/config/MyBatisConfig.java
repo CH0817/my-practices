@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 import javax.transaction.UserTransaction;
 
 @Configuration
-@MapperScan(basePackages = {"com.rex.my.entity.mysql"},
+@MapperScan(basePackages = {"com.rex.my.dao.mapper.mysql"},
             sqlSessionTemplateRef = "mysqlSqlSessionTemplate")
 public class MyBatisConfig {
 
