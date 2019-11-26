@@ -8,7 +8,7 @@ public class User {
      *
      * @mbg.generated
      */
-    private Integer id;
+    private String id;
 
     /**
      *
@@ -27,7 +27,7 @@ public class User {
      *
      * @mbg.generated
      */
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -39,7 +39,7 @@ public class User {
      *
      * @mbg.generated
      */
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
