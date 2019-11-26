@@ -6,3 +6,7 @@ datasource:
       url: jdbc:mysql://192.168.56.1:33660/my_practice?useUnicode=true&characterEncoding=UTF-8
       user: rex
       password: ji394su3
+spring:
+  datasource:
+    initialization-mode: always
+    schema: classpath:db/schema-@profileActive@.sql

@@ -128,6 +128,7 @@
                     <include>**/application.yaml</include>
                     <include>**/application-${profileActive}.yaml</include>
                     <include>**/application-${profileActive}DB.yaml</include>
+                    <include>**/db/schema-${profileActive}.sql</include>
                 </includes>
             </resource>
         </resources>
