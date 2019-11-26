@@ -1,9 +1,9 @@
 # Atomikos datasource
 datasource:
   mysql:
-    xa-data-source-class-name: com.mysql.cj.jdbc.MysqlXADataSource
+    xa-data-source-class-name: org.h2.jdbcx.JdbcDataSource
     xa-properties:
-      url: jdbc:mysql://192.168.56.1:33660/my_practice?useUnicode=true&characterEncoding=UTF-8
+      url: jdbc:h2:mem:my_practice
       user: rex
       password: ji394su3
 spring:

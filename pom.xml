@@ -23,6 +23,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <lombok.version>1.18.10</lombok.version>
         <mybatis.version>2.1.1</mybatis.version>
+        <h2.version>1.4.199</h2.version>
     </properties>
 
     <dependencyManagement>
@@ -53,6 +54,13 @@
                 <artifactId>mybatis-spring-boot-starter-test</artifactId>
                 <version>${mybatis.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <!--H2-->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+                <scope>runtime,test</scope>
             </dependency>
             <!--modules-->
             <dependency>
