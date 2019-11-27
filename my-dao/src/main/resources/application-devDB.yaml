@@ -26,3 +26,12 @@ atomikos:
     primary:
       log-base-dir: logs/atomikos
       log-base-name: atomikos-primary-log
+logging:
+  level:
+    com:
+      rex:
+        my:
+          dao:
+            mapper:
+              primary: debug
+              secondary: debug

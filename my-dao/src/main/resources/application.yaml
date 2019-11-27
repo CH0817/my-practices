@@ -1,12 +1,3 @@
 spring:
   profiles:
     active: @profileActive@Db
-logging:
-  level:
-    com:
-      rex:
-        my:
-          dao:
-            mapper:
-              primary: debug
-              secondary: debug
