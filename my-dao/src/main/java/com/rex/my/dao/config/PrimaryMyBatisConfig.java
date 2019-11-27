@@ -7,6 +7,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
+import org.springframework.boot.jta.atomikos.AtomikosProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -23,6 +24,13 @@ public class PrimaryMyBatisConfig {
     @ConfigurationProperties(prefix = "atomikos.datasource.primary")
     public DataSource primaryDataSource() {
         return new AtomikosDataSourceBean();
+    }
+
+    @Bean
+    @Primary
+    @ConfigurationProperties(prefix = "atomikos.properties.primary")
+    public AtomikosProperties atomikosProperties() {
+        return new AtomikosProperties();
     }
 
     @Bean(name = "primarySqlSessionFactory")

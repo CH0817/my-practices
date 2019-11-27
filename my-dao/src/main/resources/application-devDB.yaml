@@ -1,12 +1,16 @@
 atomikos:
   datasource:
     primary:
+      borrow-connection-timeout: 180
+      max-pool-size: 30
+      min-pool-size: 10
+      unique-resource-name: primaryDataSource
       xa-data-source-class-name: org.h2.jdbcx.JdbcDataSource
       xa-properties:
         url: jdbc:h2:mem:my_practice
         user: rex
         password: ji394su3
-spring:
-  datasource:
-    initialization-mode: always
-    schema: classpath:db/schema-@profileActive@.sql
+  properties:
+    primary:
+      log-base-dir: logs/atomikos
+      log-base-name: atomikos-primary-log
