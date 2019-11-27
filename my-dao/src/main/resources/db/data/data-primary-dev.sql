@@ -1,0 +1,1 @@
+insert into user (id, email) VALUES ('a', 'test@email.com');

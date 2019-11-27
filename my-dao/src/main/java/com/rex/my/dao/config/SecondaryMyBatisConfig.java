@@ -46,7 +46,7 @@ public class SecondaryMyBatisConfig {
     private ResourceDatabasePopulator resourceDatabasePopulator() {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
         resourceDatabasePopulator.addScript(new ClassPathResource("db/schema-secondary-dev.sql"));
-        // resourceDatabasePopulator.addScript(new ClassPathResource("data-h22.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("db/data/data-secondary-dev.sql"));
         return resourceDatabasePopulator;
     }
 

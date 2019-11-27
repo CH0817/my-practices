@@ -138,6 +138,8 @@
                     <include>**/application-${profileActive}DB.yaml</include>
                     <include>**/db/schema-primary-${profileActive}.sql</include>
                     <include>**/db/schema-secondary-${profileActive}.sql</include>
+                    <include>**/db/data/data-primary-${profileActive}.sql</include>
+                    <include>**/db/data/data-secondary-${profileActive}.sql</include>
                 </includes>
             </resource>
         </resources>
