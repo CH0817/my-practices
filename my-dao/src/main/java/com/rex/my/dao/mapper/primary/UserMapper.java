@@ -1,6 +1,6 @@
-package com.rex.my.dao.mapper.mysql;
+package com.rex.my.dao.mapper.primary;
 
-import com.rex.my.dao.entity.mysql.User;
+import com.rex.my.dao.entity.primary.User;
 import java.util.List;
 
 public interface UserMapper {

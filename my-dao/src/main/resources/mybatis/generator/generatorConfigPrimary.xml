@@ -7,7 +7,7 @@
     <classPathEntry
             location="D:\IDE\libraries\mysql\mysql-connector-java\8.0.18\mysql-connector-java-8.0.18.jar"/>
 
-    <context id="mysql" targetRuntime="MyBatis3Simple">
+    <context id="primary" targetRuntime="MyBatis3Simple">
         <property name="javaFileEncoding" value="UTF-8"/>
         <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
         <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
@@ -24,12 +24,12 @@
             <property name="forceBigDecimals" value="true"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.rex.my.dao.entity.mysql"
+        <javaModelGenerator targetPackage="com.rex.my.dao.entity.primary"
                             targetProject="src/main/java"/>
 
-        <sqlMapGenerator targetPackage="mybatis.mapper.mysql" targetProject="src/main/resources"/>
+        <sqlMapGenerator targetPackage="mybatis.mapper.primary" targetProject="src/main/resources"/>
 
-        <javaClientGenerator targetPackage="com.rex.my.dao.mapper.mysql" type="XMLMAPPER"
+        <javaClientGenerator targetPackage="com.rex.my.dao.mapper.primary" type="XMLMAPPER"
                              targetProject="src/main/java"/>
 
         <table tableName="user" enableCountByExample="false" enableSelectByExample="false"

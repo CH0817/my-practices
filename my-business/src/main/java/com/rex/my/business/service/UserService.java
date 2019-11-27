@@ -1,6 +1,6 @@
 package com.rex.my.business.service;
 
-import com.rex.my.dao.entity.mysql.User;
+import com.rex.my.dao.entity.primary.User;
 
 public interface UserService {
 

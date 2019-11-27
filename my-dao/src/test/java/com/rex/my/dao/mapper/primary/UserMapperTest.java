@@ -1,6 +1,6 @@
-package com.rex.my.dao.mapper.mysql;
+package com.rex.my.dao.mapper.primary;
 
-import com.rex.my.dao.entity.mysql.User;
+import com.rex.my.dao.entity.primary.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
+// @Sql({""})
 public class UserMapperTest {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
