@@ -20,7 +20,7 @@ public class PrimaryMyBatisConfig {
 
     @Bean(name = "primaryDataSource")
     @Primary
-    @ConfigurationProperties(prefix = "datasource.primary")
+    @ConfigurationProperties(prefix = "atomikos.datasource.primary")
     public DataSource primaryDataSource() {
         return new AtomikosDataSourceBean();
     }
