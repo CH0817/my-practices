@@ -19,13 +19,13 @@ import javax.sql.DataSource;
 import javax.transaction.UserTransaction;
 
 @Configuration
-@MapperScan(basePackages = {"com.rex.my.dao.mapper.mysql"}, sqlSessionTemplateRef = "mysqlSqlSessionTemplate")
-public class MyBatisConfig {
+@MapperScan(basePackages = {"com.rex.my.dao.mapper.mysql"}, sqlSessionTemplateRef = "primarySqlSessionTemplate")
+public class PrimaryMyBatisConfig {
 
-    @Bean(name = "mysqlDataSource")
+    @Bean(name = "primaryDataSource")
     @Primary
-    @ConfigurationProperties(prefix = "datasource.mysql")
-    public DataSource mysqlDataSource() {
+    @ConfigurationProperties(prefix = "datasource.primary")
+    public DataSource primaryDataSource() {
         return new AtomikosDataSourceBean();
     }
 
@@ -37,21 +37,21 @@ public class MyBatisConfig {
         return new JtaTransactionManager(userTransaction, userTransactionManager);
     }
 
-    @Bean(name = "mysqlSqlSessionFactory")
+    @Bean(name = "primarySqlSessionFactory")
     @Primary
-    public SqlSessionFactory mysqlSqlSessionFactory(@Qualifier("mysqlDataSource") DataSource mysqlDataSource)
+    public SqlSessionFactory primarySqlSessionFactory(@Qualifier("primaryDataSource") DataSource primaryDataSource)
             throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(mysqlDataSource);
+        sessionFactory.setDataSource(primaryDataSource);
         sessionFactory.setMapperLocations(
                 new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/mysql/*.xml"));
         return sessionFactory.getObject();
     }
 
-    @Bean(name = "mysqlSqlSessionTemplate")
+    @Bean(name = "primarySqlSessionTemplate")
     @Primary
-    public SqlSessionTemplate mysqlSqlSessionTemplate(
-            @Qualifier("mysqlSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    public SqlSessionTemplate primarySqlSessionTemplate(
+            @Qualifier("primarySqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
@@ -83,9 +83,9 @@ public class MyBatisConfig {
     //     return new JtaTransactionManager(userTransaction, userTransactionManager);
     // }
     //
-    // @Bean(name = "mysqlSqlSessionFactory")
+    // @Bean(name = "primarySqlSessionFactory")
     // @Primary
-    // public SqlSessionFactory mysqlSqlSessionFactory(@Qualifier("mysqlDataSource") DataSource mysqlDataSource)
+    // public SqlSessionFactory primarySqlSessionFactory(@Qualifier("mysqlDataSource") DataSource mysqlDataSource)
     //         throws Exception {
     //     final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
     //     sessionFactory.setDataSource(mysqlDataSource);
@@ -94,10 +94,10 @@ public class MyBatisConfig {
     //     return sessionFactory.getObject();
     // }
     //
-    // @Bean(name = "mysqlSqlSessionTemplate")
+    // @Bean(name = "primarySqlSessionTemplate")
     // @Primary
-    // public SqlSessionTemplate mysqlSqlSessionTemplate(
-    //         @Qualifier("mysqlSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    // public SqlSessionTemplate primarySqlSessionTemplate(
+    //         @Qualifier("primarySqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
     //     return new SqlSessionTemplate(sqlSessionFactory);
     // }
 
