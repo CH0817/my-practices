@@ -1,1 +1,1 @@
-insert into user (id, email) VALUES ('a', 'test@email.com');
+insert into user (id, email, password, create_date) VALUES ('a', 'test@email.com', '11111111', now());
