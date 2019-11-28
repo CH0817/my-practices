@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: @profileActive@
+    include: @profile.includes@
 server:
   servlet:
     context-path: /my-web
