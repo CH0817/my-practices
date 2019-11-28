@@ -11,12 +11,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import static org.junit.Assert.assertTrue;
+import java.util.Date;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-// @Sql({""})
 public class UserMapperTest {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -27,9 +28,13 @@ public class UserMapperTest {
     public void insert() {
         User user = new User();
         user.setEmail("mail@com.tw");
-        mapper.insert(user);
+        user.setPassword("11111111");
+        user.setCreateDate(new Date());
+        int executeCount = mapper.insert(user);
         logger.info("id: {}", user.getId());
-        assertTrue(!StringUtils.isEmpty(user.getId()) && user.getId().length() == 36);
+        assertFalse(StringUtils.isEmpty(user.getId()));
+        assertEquals(32, user.getId().length());
+        assertEquals(1, executeCount);
     }
 
 }
