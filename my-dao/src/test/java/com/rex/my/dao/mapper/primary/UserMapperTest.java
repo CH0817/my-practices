@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -34,6 +35,31 @@ public class UserMapperTest {
         logger.info("id: {}", user.getId());
         assertFalse(StringUtils.isEmpty(user.getId()));
         assertEquals(32, user.getId().length());
+        assertEquals(1, executeCount);
+    }
+
+    @Test
+    public void selectAll() {
+        List<User> users = mapper.selectAll();
+        assertEquals(1, users.size());
+    }
+
+    @Test
+    public void selectByPrimaryKey() {
+        User entity = mapper.selectByPrimaryKey("a");
+        assertEquals("a", entity.getId());
+    }
+
+    @Test
+    public void deleteByPrimaryKey() {
+        int executeCount = mapper.deleteByPrimaryKey("a");
+        assertEquals(1, executeCount);
+    }
+
+    @Test
+    public void updateByPrimaryKey() {
+        User entity = mapper.selectByPrimaryKey("a");
+        int executeCount = mapper.updateByPrimaryKey(entity);
         assertEquals(1, executeCount);
     }
 
