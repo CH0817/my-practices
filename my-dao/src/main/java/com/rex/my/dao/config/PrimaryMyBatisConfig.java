@@ -11,6 +11,7 @@ import org.springframework.boot.jta.atomikos.AtomikosProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
@@ -54,6 +55,7 @@ public class PrimaryMyBatisConfig {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
+    @Profile("dev")
     @Bean(name = "primaryDataSourceInitializer")
     @Primary
     public DataSourceInitializer dataSourceInitializer(@Qualifier("primaryDataSource") DataSource datasource) {

@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
@@ -35,6 +36,7 @@ public class SecondaryMyBatisConfig {
         return sessionFactory.getObject();
     }
 
+    @Profile("dev")
     @Bean(name = "secondaryDataSourceInitializer")
     public DataSourceInitializer dataSourceInitializer(@Qualifier("secondaryDataSource") DataSource datasource) {
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
