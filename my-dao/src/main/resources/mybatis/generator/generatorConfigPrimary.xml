@@ -38,5 +38,21 @@
                enableDeleteByExample="false" enableUpdateByExample="false">
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
+        <table tableName="account_type" enableCountByExample="false" enableSelectByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+        <table tableName="account" enableCountByExample="false" enableSelectByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+        <table tableName="item" enableCountByExample="false" enableSelectByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+        <table tableName="trade" enableCountByExample="false" enableSelectByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
     </context>
 </generatorConfiguration>
