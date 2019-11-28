@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `trade`
 (
     id          VARCHAR(36)    NOT NULL,
     money       DECIMAL(10, 2) NOT NULL,
-    trade_type  VARCHAR(1)     NOT NULL, # 1:收入，2:支出，3:轉帳
+    trade_type  VARCHAR(1)     NOT NULL,
     trade_date  DATE           NOT NULL,
     create_date DATETIME       NOT NULL,
     update_date DATETIME,
