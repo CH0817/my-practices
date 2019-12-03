@@ -19,6 +19,9 @@
             <!--form-->
             <form id="loginForm" class="vw-100 border p-3 rounded" th:action="@{/login}" th:method="post"
                   style="background-color: #E9ECEF">
+                <!--login alert-->
+                <div th:if="${message != null}" class="alert alert-danger mt-2" role="alert" th:text="${message}"/>
+                <!--/. login alert-->
                 <!--email form group-->
                 <div class="form-group">
                     <label for="email">Email</label>
