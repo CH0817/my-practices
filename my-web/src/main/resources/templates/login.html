@@ -5,52 +5,59 @@
     <meta charset="utf-8">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" th:href="@{/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
     <!-- Theme style -->
     <link rel="stylesheet" th:href="@{/adminlte/dist/css/adminlte.min.css}">
     <title>登入</title>
 </head>
-<body>
+<body style="background-color: #E9ECEF">
 <!--container-->
 <div class="container">
     <!--row-->
     <div class="row">
-        <!--large column 12-->
+        <!--col-->
         <div class="col-6 offset-3 d-flex align-items-center vh-100">
             <!--form-->
             <form id="loginForm" class="vw-100 border p-3 rounded" th:action="@{/login}" th:method="post"
-                  style="background-color: #E9ECEF">
+                  style="background-color: white">
                 <!--login alert-->
                 <div th:if="${message != null}" class="alert alert-danger mt-2" role="alert" th:text="${message}"/>
-                <!--/. login alert-->
+                <!--/.login alert-->
                 <!--email form group-->
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" name="email" type="email" class="form-control" autofocus>
+                    <input id="email" name="email" type="email" class="form-control" placeholder="Email" autofocus>
                     <div id="emailFeeback" class="invalid-feedback"></div>
                 </div>
-                <!--/. email form group-->
+                <!--/.email form group-->
                 <!--password form group-->
                 <div class="form-group">
                     <label for="password">密碼</label>
-                    <input id="password" name="password" type="password" class="form-control">
+                    <input id="password" name="password" type="password" class="form-control" placeholder="password">
                     <div id="passwordFeeback" class="invalid-feedback"></div>
                 </div>
-                <!--password form group-->
-                <!--remember me form group-->
-                <div class="form-group form-check">
-                    <input name="isRemember" type="checkbox" class="form-check-input" id="rememberMe">
-                    <label class="form-check-label" for="rememberMe">記住我</label>
-                </div>
-                <!--/. remember me form group-->
-                <button type="button" class="btn btn-primary" onclick="login()">登入</button>
+                <!--/.password form group-->
+                <div class="row">
+                    <div class="col">
+                        <!--remember me-->
+                        <div class="icheck-primary">
+                            <input id="remember" name="isRemember" type="checkbox">
+                            <label for="remember"> 記住我 </label>
+                        </div>
+                        <!--/.remember me-->
+                    </div><!--/.col-->
+                    <div class="col">
+                        <button type="button" class="btn btn-primary float-right" onclick="login()">登入</button>
+                    </div><!--/.col-->
+                </div><!--/.row-->
             </form>
-            <!--/. form-->
-        </div>
-        <!--/. large column 12-->
-    </div>
-    <!--/. row-->
+            <!--/.form-->
+        </div><!--/.col-->
+    </div><!--/.row-->
 </div>
-<!--/. container-->
+<!--/.container-->
+
 <!-- jQuery -->
 <script th:src="@{/adminlte/plugins/jquery/jquery.min.js}"></script>
 <!-- Bootstrap 4 -->
