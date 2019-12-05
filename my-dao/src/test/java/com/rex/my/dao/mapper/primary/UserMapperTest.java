@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -20,6 +21,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
+@Sql(scripts = {"/db/data/data-primary-dev.sql"})
 public class UserMapperTest {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -65,7 +67,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void findByEmail(){
+    public void findByEmail() {
         assertTrue(Objects.nonNull(mapper.findByEmail("test@email.com")));
     }
 
