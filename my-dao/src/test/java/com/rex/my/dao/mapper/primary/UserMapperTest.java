@@ -1,6 +1,6 @@
 package com.rex.my.dao.mapper.primary;
 
-import com.rex.my.dao.entity.primary.User;
+import com.rex.my.model.dao.primary.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -14,7 +14,8 @@ import org.springframework.util.StringUtils;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

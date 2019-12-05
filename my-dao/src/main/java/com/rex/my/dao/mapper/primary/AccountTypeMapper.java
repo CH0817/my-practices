@@ -1,6 +1,7 @@
 package com.rex.my.dao.mapper.primary;
 
-import com.rex.my.dao.entity.primary.AccountType;
+import com.rex.my.model.dao.primary.AccountType;
+
 import java.util.List;
 
 public interface AccountTypeMapper {

@@ -1,6 +1,7 @@
 package com.rex.my.dao.mapper.primary;
 
-import com.rex.my.dao.entity.primary.User;
+import com.rex.my.model.dao.primary.User;
+
 import java.util.List;
 
 public interface UserMapper {
