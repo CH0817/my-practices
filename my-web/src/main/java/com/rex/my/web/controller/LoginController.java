@@ -1,6 +1,7 @@
 package com.rex.my.web.controller;
 
 import com.rex.my.dao.entity.primary.User;
+import com.rex.my.web.controller.base.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -8,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-public class LoginController {
-
-    private Logger logger = LoggerFactory.getLogger(getClass());
+public class LoginController extends BaseController {
 
     @RequestMapping("/login")
     public String login(RedirectAttributes redirectAttributes, User user) {
