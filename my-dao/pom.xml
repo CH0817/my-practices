@@ -55,5 +55,9 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.rex</groupId>
+            <artifactId>my-model</artifactId>
+        </dependency>
     </dependencies>
 </project>
