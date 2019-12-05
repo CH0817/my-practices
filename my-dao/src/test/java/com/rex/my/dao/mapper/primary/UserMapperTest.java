@@ -13,9 +13,9 @@ import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -62,6 +62,11 @@ public class UserMapperTest {
         User entity = mapper.selectByPrimaryKey("a");
         int executeCount = mapper.updateByPrimaryKey(entity);
         assertEquals(1, executeCount);
+    }
+
+    @Test
+    public void findByEmail(){
+        assertTrue(Objects.nonNull(mapper.findByEmail("test@email.com")));
     }
 
 }

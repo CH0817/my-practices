@@ -44,4 +44,7 @@ public interface UserMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(User record);
+
+    User findByEmail(String email);
+
 }
