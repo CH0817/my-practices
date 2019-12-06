@@ -67,5 +67,6 @@
         select *
         from user
         where email = #{email}
+          and removed = 0
     </select>
 </mapper>

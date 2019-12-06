@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.Objects;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class UserMapperTest extends BaseMapperTest {
 
@@ -55,9 +55,9 @@ public class UserMapperTest extends BaseMapperTest {
         assertEquals(1, mapper.updateSelectiveByPrimaryKey(mapper.selectByPrimaryKey("a")));
     }
 
-    // @Test
-    // public void findByEmail() {
-    //     assertTrue(Objects.nonNull(mapper.findByEmail("test@email.com")));
-    // }
+    @Test
+    public void findByEmail() {
+        assertTrue(Objects.nonNull(mapper.findByEmail("test@email.com")));
+    }
 
 }
