@@ -1,7 +1,6 @@
 package com.rex.my.dao.mapper.primary;
 
 import com.rex.my.model.dao.primary.Item;
-
 import java.util.List;
 
 public interface ItemMapper {

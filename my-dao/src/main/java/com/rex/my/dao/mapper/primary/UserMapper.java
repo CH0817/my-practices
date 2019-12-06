@@ -1,7 +1,6 @@
 package com.rex.my.dao.mapper.primary;
 
 import com.rex.my.model.dao.primary.User;
-
 import java.util.List;
 
 public interface UserMapper {
@@ -46,5 +45,4 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User findByEmail(String email);
-
 }

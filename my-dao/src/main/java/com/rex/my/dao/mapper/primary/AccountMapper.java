@@ -1,7 +1,6 @@
 package com.rex.my.dao.mapper.primary;
 
 import com.rex.my.model.dao.primary.Account;
-
 import java.util.List;
 
 public interface AccountMapper {
