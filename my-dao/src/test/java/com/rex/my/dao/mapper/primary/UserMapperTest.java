@@ -1,15 +1,12 @@
 package com.rex.my.dao.mapper.primary;
 
+import com.rex.my.dao.mapper.primary.base.BaseMapperTest;
 import com.rex.my.model.dao.primary.User;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -18,11 +15,8 @@ import java.util.Objects;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@Transactional
 @Sql(scripts = {"/db/data/data-primary-dev.sql"})
-public class UserMapperTest {
+public class UserMapperTest extends BaseMapperTest {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
