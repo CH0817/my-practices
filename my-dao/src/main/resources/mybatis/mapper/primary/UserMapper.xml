@@ -38,6 +38,13 @@
         where removed = 0
     </select>
 
+    <select id="selectByPrimaryKey" parameterType="string" resultMap="BaseResultMap">
+        select *
+        from user
+        where id = #{id}
+          and removed = 0
+    </select>
+
     <select id="findByEmail" parameterType="string" resultMap="BaseResultMap">
         select *
         from user

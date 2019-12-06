@@ -40,12 +40,11 @@ public class UserMapperTest extends BaseMapperTest {
         assertEquals(1, mapper.selectAll().size());
     }
 
-    // @Test
-    // public void selectByPrimaryKey() {
-    //     User entity = mapper.selectByPrimaryKey("a");
-    //     assertEquals("a", entity.getId());
-    // }
-    //
+    @Test
+    public void selectByPrimaryKey() {
+        assertEquals("a", mapper.selectByPrimaryKey("a").getId());
+    }
+
     // @Test
     // public void deleteByPrimaryKey() {
     //     int executeCount = mapper.deleteByPrimaryKey("a");
