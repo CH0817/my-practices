@@ -32,6 +32,12 @@
         </trim>
     </insert>
 
+    <select id="selectAll" resultMap="BaseResultMap">
+        select *
+        from user
+        where removed = 0
+    </select>
+
     <select id="findByEmail" parameterType="string" resultMap="BaseResultMap">
         select *
         from user
