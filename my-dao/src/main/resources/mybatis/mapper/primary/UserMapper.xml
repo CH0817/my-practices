@@ -45,6 +45,13 @@
           and removed = 0
     </select>
 
+    <update id="update2DeleteByPrimaryKey" parameterType="string">
+        update user
+        set removed = 1
+        where id = #{id}
+          and removed = 0
+    </update>
+
     <select id="findByEmail" parameterType="string" resultMap="BaseResultMap">
         select *
         from user
