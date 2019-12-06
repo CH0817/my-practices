@@ -9,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class UserMapperTest extends BaseMapperTest {
 
@@ -21,46 +20,49 @@ public class UserMapperTest extends BaseMapperTest {
     private UserMapper mapper;
 
     @Test
-    public void insert() {
+    public void insertSelective() {
+        Date today = new Date();
         User user = new User();
         user.setEmail("mail@com.tw");
         user.setPassword("11111111");
-        user.setCreateDate(new Date());
-        int executeCount = mapper.insert(user);
+        user.setRemoved(Boolean.TRUE);
+        user.setCreateDate(today);
+        user.setUpdateDate(today);
+        int executeCount = mapper.insertSelective(user);
         logger.info("id: {}", user.getId());
         assertFalse(StringUtils.isEmpty(user.getId()));
         assertEquals(32, user.getId().length());
         assertEquals(1, executeCount);
     }
 
-    @Test
-    public void selectAll() {
-        List<User> users = mapper.selectAll();
-        assertEquals(1, users.size());
-    }
-
-    @Test
-    public void selectByPrimaryKey() {
-        User entity = mapper.selectByPrimaryKey("a");
-        assertEquals("a", entity.getId());
-    }
-
-    @Test
-    public void deleteByPrimaryKey() {
-        int executeCount = mapper.deleteByPrimaryKey("a");
-        assertEquals(1, executeCount);
-    }
-
-    @Test
-    public void updateByPrimaryKey() {
-        User entity = mapper.selectByPrimaryKey("a");
-        int executeCount = mapper.updateByPrimaryKey(entity);
-        assertEquals(1, executeCount);
-    }
-
-    @Test
-    public void findByEmail() {
-        assertTrue(Objects.nonNull(mapper.findByEmail("test@email.com")));
-    }
+    // @Test
+    // public void selectAll() {
+    //     List<User> users = mapper.selectAll();
+    //     assertEquals(1, users.size());
+    // }
+    //
+    // @Test
+    // public void selectByPrimaryKey() {
+    //     User entity = mapper.selectByPrimaryKey("a");
+    //     assertEquals("a", entity.getId());
+    // }
+    //
+    // @Test
+    // public void deleteByPrimaryKey() {
+    //     int executeCount = mapper.deleteByPrimaryKey("a");
+    //     assertEquals(1, executeCount);
+    // }
+    //
+    // @Test
+    // public void updateByPrimaryKey() {
+    //     User entity = mapper.selectByPrimaryKey("a");
+    //     int executeCount = mapper.updateByPrimaryKey(entity);
+    //     assertEquals(1, executeCount);
+    // }
+    //
+    // @Test
+    // public void findByEmail() {
+    //     assertTrue(Objects.nonNull(mapper.findByEmail("test@email.com")));
+    // }
 
 }

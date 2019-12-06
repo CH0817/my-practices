@@ -14,6 +14,24 @@
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
     </resultMap>
 
+    <insert id="insertSelective" parameterType="com.rex.my.model.dao.primary.User">
+        <selectKey keyProperty="id" resultType="string" order="BEFORE">
+            select replace(uuid(), '-', '') as id from dual
+        </selectKey>
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id, email, password, create_date,
+            <if test="removed != null">removed,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{id}, #{email}, #{password}, #{createDate},
+            <if test="removed != null">#{removed},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+        </trim>
+    </insert>
+
     <select id="findByEmail" parameterType="string" resultMap="BaseResultMap">
         select *
         from user
