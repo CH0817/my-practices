@@ -68,6 +68,7 @@ public class PrimaryMyBatisConfig {
     private ResourceDatabasePopulator resourceDatabasePopulator() {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
         resourceDatabasePopulator.addScript(new ClassPathResource("db/schema-primary-dev.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("db/data/data-primary-dev.sql"));
         return resourceDatabasePopulator;
     }
 

@@ -1,3 +1,11 @@
+SET foreign_key_checks = 0;
+
+DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `account_type`;
+DROP TABLE IF EXISTS `account`;
+DROP TABLE IF EXISTS `item`;
+DROP TABLE IF EXISTS `trade`;
+
 CREATE TABLE IF NOT EXISTS `user`
 (
     id          VARCHAR(32) NOT NULL,
@@ -59,3 +67,5 @@ CREATE TABLE IF NOT EXISTS `trade`
     FOREIGN KEY (account_id) REFERENCES `account` (id),
     FOREIGN KEY (item_id) REFERENCES `item` (id)
 );
+
+SET foreign_key_checks = 1;

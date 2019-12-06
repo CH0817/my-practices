@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -15,7 +14,6 @@ import java.util.Objects;
 
 import static org.junit.Assert.*;
 
-@Sql(scripts = {"/db/data/data-primary-dev.sql"})
 public class UserMapperTest extends BaseMapperTest {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
