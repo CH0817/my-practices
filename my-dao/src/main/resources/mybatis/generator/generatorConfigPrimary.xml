@@ -7,7 +7,7 @@
     <classPathEntry
             location="D:\IDE\libraries\mysql\mysql-connector-java\8.0.18\mysql-connector-java-8.0.18.jar"/>
 
-    <context id="primary" targetRuntime="MyBatis3Simple">
+    <context id="primary">
         <property name="javaFileEncoding" value="UTF-8"/>
         <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
         <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
@@ -36,22 +36,27 @@
 
         <table tableName="user" enableCountByExample="false" enableSelectByExample="false"
                enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="modelOnly" value="true"/>
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
         <table tableName="account_type" enableCountByExample="false" enableSelectByExample="false"
                enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="modelOnly" value="true"/>
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
         <table tableName="account" enableCountByExample="false" enableSelectByExample="false"
                enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="modelOnly" value="true"/>
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
         <table tableName="item" enableCountByExample="false" enableSelectByExample="false"
                enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="modelOnly" value="true"/>
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
         <table tableName="trade" enableCountByExample="false" enableSelectByExample="false"
                enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="modelOnly" value="true"/>
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
     </context>
