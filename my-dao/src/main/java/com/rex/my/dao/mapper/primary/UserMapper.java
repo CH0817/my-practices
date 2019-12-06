@@ -16,4 +16,6 @@ public interface UserMapper {
 
     int update2DeleteByPrimaryKey(String id);
 
+    int updateSelectiveByPrimaryKey(User entity);
+
 }
