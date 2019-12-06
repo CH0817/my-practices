@@ -26,7 +26,7 @@ public class LoginController extends BaseController {
             redirectAttributes.addFlashAttribute("message", "帳號密碼錯誤");
             return "redirect:/";
         }
-        return "main";
+        return "page/main";
     }
 
 }

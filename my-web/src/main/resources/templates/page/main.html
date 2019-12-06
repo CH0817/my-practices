@@ -9,7 +9,8 @@
     <script th:src="@{/easy-ui-1.9.0/jquery.easyui.min.js}"></script>
     <script th:src="@{/easy-ui-1.9.0/locale/easyui-lang-zh_TW.js}"></script>
     <!--<script th:src="@{/js/main.js}"></script>-->
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
         $(function () {
             $('#functionTree').tree({
                 data: [{
@@ -32,7 +33,6 @@
                     'id': 3,
                     'text': '設定',
                     'iconCls': 'icon-more',
-                    'state': 'closed',
                     'children': [{
                         'id': 13,
                         'text': '帳戶'
@@ -44,9 +44,16 @@
                     'id': 4,
                     'text': '登出',
                     'iconCls': 'icon-clear'
-                }]
+                }],
+                onClick: function (node) {
+                    if (node.id == 13) {
+                        let centerPanel = $('body').layout('panel', 'center');
+                        $(centerPanel).panel('refresh', /*[[@{/function/account-book}]]*/);
+                    }
+                }
             });
         });
+        /*]]>*/
     </script>
 </head>
 <body class="easyui-layout">
