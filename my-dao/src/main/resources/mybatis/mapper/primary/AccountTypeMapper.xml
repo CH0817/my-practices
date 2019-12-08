@@ -13,4 +13,51 @@
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
     </resultMap>
+
+    <insert id="insertSelective" parameterType="com.rex.my.model.dao.primary.AccountType">
+        <selectKey keyProperty="id" resultType="string" order="BEFORE">
+            select replace(uuid(), '-', '') as id from dual
+        </selectKey>
+        insert into account_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id, name,
+            <if test="removed != null">removed,</if>
+            create_date,
+            <if test="updateDate != null">update_date,</if>
+            user_id,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{id}, #{name},
+            <if test="removed != null">#{removed},</if>
+            #{createDate},
+            <if test="updateDate != null">#{updateDate},</if>
+            #{userId},
+        </trim>
+    </insert>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from account_type where removed = 0
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select * from account_type where id = #{id} and removed = 0
+    </select>
+
+    <update id="update2DeleteByPrimaryKey" parameterType="com.rex.my.model.dao.primary.AccountType">
+        update account_type set removed = 1 where id = #{id} and removed = 0
+    </update>
+
+    <update id="updateSelectiveByPrimaryKey" parameterType="com.rex.my.model.dao.primary.AccountType">
+        update account_type
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="removed != null">removed = #{removed},</if>
+            update_date = #{updateDate},
+            <if test="userId != null">user_id = #{userId},</if>
+        </set>
+        <where>
+            id = #{id} and removed = 0
+        </where>
+    </update>
 </mapper>
