@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/account-book")
 public class AccountBookController extends BaseController {
@@ -34,9 +32,7 @@ public class AccountBookController extends BaseController {
     @PostMapping("/trades")
     @ResponseBody
     public DataGrid<TradeGridVo> trade(GridPagination pagination) {
-        logger.info("pagination: {}", pagination);
-        List<TradeGridVo> tradeGridData = service.getTradeGridData(pagination);
-        return new DataGrid<>(66, tradeGridData);
+        return new DataGrid<>(service.getTradeGridData(pagination));
     }
 
 }

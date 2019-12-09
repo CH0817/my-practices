@@ -68,11 +68,23 @@
         </where>
     </update>
 
-    <select id="selectForGrid" parameterType="com.rex.my.model.easyui.grid.GridPagination" resultMap="BaseResultMap">
-        select * from trade where removed = 0
-        <if test="orderBy != null">
-            order by ${orderBy}
-        </if>
-        limit #{rows} offset #{offset}
+    <resultMap id="TradeGridResultMap" type="com.rex.my.model.easyui.grid.TradeGridVo">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+        <result column="trade_type" jdbcType="VARCHAR" property="tradeType"/>
+        <result column="trade_date" jdbcType="DATE" property="tradeDate"/>
+        <result column="account_id" jdbcType="VARCHAR" property="accountId"/>
+        <result column="item_id" jdbcType="VARCHAR" property="itemId"/>
+        <result column="account_name" jdbcType="VARCHAR" property="accountName"/>
+        <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+    </resultMap>
+
+    <select id="selectForGrid" resultMap="TradeGridResultMap">
+        select t.id, t.money, t.trade_type, t.trade_date, t.account_id, t.item_id,
+            a.name as account_name, i.name as item_name
+        from trade t
+        left join account a on t.account_id = a.id
+        left join item i on t.item_id = i.id
+        where t.removed = 0
     </select>
 </mapper>

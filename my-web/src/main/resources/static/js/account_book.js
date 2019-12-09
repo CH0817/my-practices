@@ -11,7 +11,23 @@ function initGrid() {
         pagination: true,
         pageSize: 30,
         pageList: [10, 30, 50, 70, 100],
-        columns: getGridColumns()
+        columns: getGridColumns(),
+        onBeforeLoad: function (param) {
+            switch (param.sort) {
+                case "moneyString":
+                    param.sort = 'money';
+                    break;
+                case "accountName":
+                    param.sort = 'account_id';
+                    break;
+                case "itemId":
+                    param.sort = 'item_id';
+                    break;
+                default:
+                    // FIXME field 必須匹配 table column
+                    break;
+            }
+        }
     });
 }
 
@@ -29,7 +45,7 @@ function getGridColumns() {
         field: 'itemId',
         hidden: true
     }, {
-        field: 'money',
+        field: 'moneyString',
         title: '金額',
         sortable: true
     }, {
