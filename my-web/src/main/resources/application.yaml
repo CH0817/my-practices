@@ -1,6 +1,11 @@
 spring:
   profiles:
     include: @profile.includes@
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
 server:
   servlet:
     context-path: /my-web
