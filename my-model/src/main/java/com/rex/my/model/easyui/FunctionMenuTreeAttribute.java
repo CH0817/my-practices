@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class FunctionMenuTree extends BaseModel implements TreeAttribute {
+public class FunctionMenuTreeAttribute extends BaseModel implements TreeAttribute {
 
     private String url;
 

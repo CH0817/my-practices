@@ -1,8 +1,9 @@
 package com.rex.my.business.service.impl;
 
 import com.rex.my.business.service.MenuService;
-import com.rex.my.model.easyui.FunctionMenuTree;
+import com.rex.my.model.easyui.FunctionMenuTreeAttribute;
 import com.rex.my.model.easyui.Tree;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,24 +12,34 @@ import java.util.List;
 @Service
 public class MenuServiceImpl implements MenuService {
 
+    @Value("${server..servlet.context-path}")
+    private String contextPath;
+
     @Override
-    public List<Tree<FunctionMenuTree>> getFunctionMenuTree() {
+    public List<Tree<FunctionMenuTreeAttribute>> getFunctionMenuTree() {
         // FIXME 進資料庫？增加權限設定？
         // FIXME 尚未增加 attributes
-        List<Tree<FunctionMenuTree>> result = new ArrayList<>();
-        List<Tree<FunctionMenuTree>> children = new ArrayList<>();
+        List<Tree<FunctionMenuTreeAttribute>> result = new ArrayList<>();
+        List<Tree<FunctionMenuTreeAttribute>> children = new ArrayList<>();
 
-        Tree<FunctionMenuTree> tree = new Tree<>();
+        Tree<FunctionMenuTreeAttribute> tree = new Tree<>();
         tree.setId("tradeBook");
         tree.setText("收支表");
         tree.setIconCls("icon-edit");
+        tree.setChecked(Boolean.TRUE);
+
+        FunctionMenuTreeAttribute attribute = new FunctionMenuTreeAttribute();
+        attribute.setUrl(contextPath + "/account-book/content");
+
+        tree.setAttributes(attribute);
+
         result.add(tree);
 
         tree = new Tree<>();
         tree.setId("chart");
         tree.setText("圖表");
 
-        Tree<FunctionMenuTree> child = new Tree<>();
+        Tree<FunctionMenuTreeAttribute> child = new Tree<>();
         child.setId("barChart");
         child.setText("長條圖");
         children.add(child);

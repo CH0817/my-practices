@@ -1,7 +1,7 @@
 package com.rex.my.business.service;
 
 import com.rex.my.business.service.base.BaseServiceTest;
-import com.rex.my.model.easyui.FunctionMenuTree;
+import com.rex.my.model.easyui.FunctionMenuTreeAttribute;
 import com.rex.my.model.easyui.Tree;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class MenuServiceTest extends BaseServiceTest {
 
     @Test
     public void getFunctionMenuTree() {
-        List<Tree<FunctionMenuTree>> functionMenuTree = service.getFunctionMenuTree();
+        List<Tree<FunctionMenuTreeAttribute>> functionMenuTree = service.getFunctionMenuTree();
         assertEquals(4, functionMenuTree.size());
     }
 

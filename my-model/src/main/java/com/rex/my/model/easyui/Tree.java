@@ -17,7 +17,7 @@ public class Tree<A extends TreeAttribute> extends BaseModel {
     private String text;
     private String state = "open";
     private Boolean checked = Boolean.FALSE;
-    private List<A> attributes;
+    private A attributes;
     private List<Tree<A>> children;
     private String iconCls;
 

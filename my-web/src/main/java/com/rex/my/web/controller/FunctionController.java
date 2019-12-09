@@ -1,7 +1,7 @@
 package com.rex.my.web.controller;
 
 import com.rex.my.business.service.MenuService;
-import com.rex.my.model.easyui.FunctionMenuTree;
+import com.rex.my.model.easyui.FunctionMenuTreeAttribute;
 import com.rex.my.model.easyui.Tree;
 import com.rex.my.web.controller.base.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class FunctionController extends BaseController {
      * @return function menu tree JSON
      */
     @PostMapping("/menu")
-    public ResponseEntity<List<Tree<FunctionMenuTree>>> menu() {
+    public ResponseEntity<List<Tree<FunctionMenuTreeAttribute>>> menu() {
         return ResponseEntity.ok(service.getFunctionMenuTree());
     }
 

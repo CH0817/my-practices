@@ -4,9 +4,11 @@ function initMenu() {
     $('#functionTree').tree({
         url: 'function/menu',
         onClick: function (node) {
-            if (node.id === 13) {
-                let centerPanel = $('body').layout('panel', 'center');
-                $(centerPanel).panel('refresh', 'url');
+            console.info(node);
+            let attributes = node.attributes;
+            // FIXME 要過濾 logout url
+            if (attributes !== undefined) {
+                $('body').layout('panel', 'center').panel('refresh', attributes.url);
             }
         }
     });
