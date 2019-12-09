@@ -67,4 +67,12 @@
             id = #{id} and removed = 0
         </where>
     </update>
+
+    <select id="selectForGrid" parameterType="com.rex.my.model.easyui.grid.GridPagination" resultMap="BaseResultMap">
+        select * from trade where removed = 0
+        <if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        limit #{rows} offset #{offset}
+    </select>
 </mapper>

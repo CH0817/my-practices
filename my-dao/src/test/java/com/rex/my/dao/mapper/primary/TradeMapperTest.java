@@ -1,6 +1,6 @@
 package com.rex.my.dao.mapper.primary;
 
-import com.rex.my.dao.constant.TradeTypeEnum;
+import com.rex.my.model.constant.TradeTypeEnum;
 import com.rex.my.dao.mapper.primary.base.BaseMapperTest;
 import com.rex.my.model.dao.primary.Trade;
 import org.junit.Test;

@@ -1,5 +1,5 @@
 <!--FIXME 帳戶設定內容未完成-->
-<div id="content" xmlns:th="http://www.thymeleaf.org">
-    Account Book
-    <div th:text="${test}"></div>
+<div id="content" class="easyui-panel" data-options="fit:true,border:false" xmlns:th="http://www.thymeleaf.org">
+    <script th:src="@{/js/account_book.js}"></script>
+    <table th:id="tradeGrid" th:title="收支表"></table>
 </div>
