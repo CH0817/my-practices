@@ -19,5 +19,6 @@ public class Tree<A extends TreeAttribute> extends BaseModel {
     private Boolean checked = Boolean.FALSE;
     private List<A> attributes;
     private List<Tree<A>> children;
+    private String iconCls;
 
 }

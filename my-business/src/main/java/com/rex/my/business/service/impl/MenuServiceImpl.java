@@ -21,6 +21,7 @@ public class MenuServiceImpl implements MenuService {
         Tree<FunctionMenuTree> tree = new Tree<>();
         tree.setId("tradeBook");
         tree.setText("收支表");
+        tree.setIconCls("icon-edit");
         result.add(tree);
 
         tree = new Tree<>();
@@ -34,7 +35,7 @@ public class MenuServiceImpl implements MenuService {
 
         child = new Tree<>();
         child.setId("pieChart");
-        child.setText("長條圖");
+        child.setText("圓餅圖");
         children.add(child);
 
         tree.setChildren(children);
