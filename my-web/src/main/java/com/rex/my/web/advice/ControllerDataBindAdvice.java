@@ -1,6 +1,5 @@
 package com.rex.my.web.advice;
 
-import com.rex.my.web.controller.LoginController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
