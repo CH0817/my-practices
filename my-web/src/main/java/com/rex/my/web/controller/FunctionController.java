@@ -1,29 +1,36 @@
 package com.rex.my.web.controller;
 
+import com.rex.my.business.service.MenuService;
+import com.rex.my.model.easyui.FunctionMenuTree;
+import com.rex.my.model.easyui.Tree;
 import com.rex.my.web.controller.base.BaseController;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/function")
-public abstract class FunctionController extends BaseController {
+public class FunctionController extends BaseController {
+
+    private MenuService service;
+
+    @Autowired
+    public FunctionController(MenuService service) {
+        this.service = service;
+    }
 
     /**
      * 取得功能列 tree JSON
      *
-     * @return tree JSON
+     * @return function menu tree JSON
      */
-    @GetMapping("/menu")
-    public Object menu() {
-        // FIXME 取得功能列 tree JSON
-        Map<String, String> map = new HashMap<>();
-        map.put("a", "a");
-        map.put("b", "b");
-        return map;
+    @PostMapping("/menu")
+    public ResponseEntity<List<Tree<FunctionMenuTree>>> menu() {
+        return ResponseEntity.ok(service.getFunctionMenuTree());
     }
 
 }
