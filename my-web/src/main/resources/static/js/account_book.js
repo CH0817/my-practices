@@ -1,8 +1,41 @@
 'use strict';
 
+let tradeTypes = null;
+let accounts = null;
+let items = null;
+let clearButton = null;
+
+$.fn.datebox.defaults.formatter = function (date) {
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    return year + '/' + month + '/' + day;
+}
+
+$.fn.datebox.defaults.parser = function (dateString) {
+    var dateNumber = Date.parse(dateString);
+    if (!isNaN(dateNumber)) {
+        return new Date(dateNumber);
+    } else {
+        return new Date();
+    }
+}
+
 $(function () {
+    initDateboxExtendButton();
     initGrid();
 });
+
+function initDateboxExtendButton() {
+    clearButton = $.extend([], $.fn.datebox.defaults.buttons);
+    clearButton.splice(1, 0, {
+            text: '清除',
+            handler: function (target) {
+                $(target).datebox('clear').datebox('hidePanel');
+            }
+        }
+    );
+}
 
 function initGrid() {
     $('#tradeGrid').datagrid({
@@ -15,11 +48,11 @@ function initGrid() {
         pageList: [10, 30, 50, 70, 100],
         columns: getGridColumns(),
         onEndEdit: function (index, row) {
-            var ed = $(this).datagrid('getEditor', {
-                index: index,
-                field: 'productid'
-            });
-            row.productname = $(ed.target).combobox('getText');
+            // var ed = $(this).datagrid('getEditor', {
+            //     index: index,
+            //     field: 'productid'
+            // });
+            // row.productname = $(ed.target).combobox('getText');
         },
         onBeforeEdit: function (index, row) {
             row.editing = true;
@@ -52,6 +85,54 @@ function initGrid() {
     });
 }
 
+function getTradeTypeComboboxData() {
+    if (tradeTypes === null) {
+        $.ajax({
+            async: false,
+            url: 'combobox//trade/types',
+            success: function (data, textStatusm, jqXHR) {
+                tradeTypes = data;
+            }
+        });
+    }
+    return tradeTypes;
+}
+
+function getAccounts() {
+    if (accounts === null) {
+        $.ajax({
+            async: false,
+            url: 'combobox/accounts',
+            success: function (data, textStatusm, jqXHR) {
+                accounts = data;
+            }
+        });
+    }
+    return accounts;
+}
+
+function getItems() {
+    if (items === null) {
+        $.ajax({
+            async: false,
+            url: 'combobox/items',
+            success: function (data, textStatusm, jqXHR) {
+                items = data;
+            }
+        });
+    }
+    return items;
+}
+
+function getTextFromCombobox(comboboxData, value) {
+    for (let data of comboboxData) {
+        if (data.value === value) {
+            return data.text;
+        }
+    }
+    return value;
+}
+
 function getGridColumns() {
     return [[{
         field: 'id',
@@ -69,7 +150,14 @@ function getGridColumns() {
             }
         },
         formatter: function (value, rowData, rowIndex) {
-            return (value) ? value.toFixed(2) : value;
+            if (value) {
+                if (typeof value === 'string') {
+                    return value;
+                } else {
+                    return value.toFixed(2);
+                }
+            }
+            return value;
         }
     }, {
         field: 'tradeType',
@@ -79,22 +167,13 @@ function getGridColumns() {
         editor: {
             type: 'combobox',
             options: {
-                valueField: 'id',
-                textField: 'name',
                 limitToList: true,
                 editable: false,
-                data: [{
-                    "id": 1,
-                    "name": "收入",
-                    "selected": true
-                }, {
-                    "id": 2,
-                    "name": "支出"
-                }, {
-                    "id": 3,
-                    "name": "轉帳"
-                }]
+                data: getTradeTypeComboboxData()
             }
+        },
+        formatter: function (value, rowData, rowIndex) {
+            return getTextFromCombobox(getTradeTypeComboboxData(), value);
         }
     }, {
         field: 'tradeDate',
@@ -106,7 +185,9 @@ function getGridColumns() {
             options: {
                 currentText: '今天',
                 closeText: '關閉',
-                okText: '確定'
+                okText: '確定',
+                editable: false,
+                buttons: clearButton
             }
         }
     }, {
@@ -117,19 +198,13 @@ function getGridColumns() {
         editor: {
             type: 'combobox',
             options: {
-                valueField: 'id',
-                textField: 'name',
                 limitToList: true,
                 editable: false,
-                data: [{
-                    "id": 1,
-                    "name": "現金",
-                    "selected": true
-                }, {
-                    "id": 2,
-                    "name": "銀行"
-                }]
+                data: getAccounts()
             }
+        },
+        formatter: function (value, rowData, rowIndex) {
+            return getTextFromCombobox(getAccounts(), value);
         }
     }, {
         field: 'itemId',
@@ -139,19 +214,13 @@ function getGridColumns() {
         editor: {
             type: 'combobox',
             options: {
-                valueField: 'id',
-                textField: 'name',
                 limitToList: true,
                 editable: false,
-                data: [{
-                    "id": 1,
-                    "name": "吃飯",
-                    "selected": true
-                }, {
-                    "id": 2,
-                    "name": "睡覺"
-                }]
+                data: getItems()
             }
+        },
+        formatter: function (value, rowData, rowIndex) {
+            return getTextFromCombobox(getItems(), value);
         }
     }, {
         field: 'operate', title: '操作', align: 'center',
@@ -187,9 +256,9 @@ function editRow(target) {
 }
 
 function deleteRow(target) {
-    // $.messager.confirm('Confirm', 'Are you sure?', function (r) {
-    //     if (r) {
-    $('#tradeGrid').datagrid('deleteRow', getRowIndex(target));
-    //     }
-    // });
+    $.messager.confirm('確認', '確定刪除？', function (r) {
+        if (r) {
+            $('#tradeGrid').datagrid('deleteRow', getRowIndex(target));
+        }
+    });
 }
