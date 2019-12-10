@@ -80,8 +80,7 @@
     </resultMap>
 
     <select id="selectForGrid" resultMap="TradeGridResultMap">
-        select t.id, t.money, t.trade_type, t.trade_date, t.account_id, t.item_id,
-            a.name as account_name, i.name as item_name
+        select t.id, t.money, t.trade_type, t.trade_date, t.account_id, t.item_id
         from trade t
         left join account a on t.account_id = a.id
         left join item i on t.item_id = i.id
