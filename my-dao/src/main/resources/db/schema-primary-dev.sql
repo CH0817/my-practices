@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `user`
 CREATE TABLE IF NOT EXISTS `account_type`
 (
     id          VARCHAR(32) NOT NULL,
-    name        VARCHAR(10) NOT NULL UNIQUE,
+    name        VARCHAR(10) NOT NULL,
     removed     BIT         NOT NULL DEFAULT 0,
     create_date DATETIME    NOT NULL,
     update_date DATETIME,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `account`
 CREATE TABLE IF NOT EXISTS `item`
 (
     id          VARCHAR(32) NOT NULL,
-    name        VARCHAR(50) NOT NULL UNIQUE,
+    name        VARCHAR(50) NOT NULL,
     removed     BIT         NOT NULL DEFAULT 0,
     create_date DATETIME    NOT NULL,
     update_date DATETIME,
@@ -73,6 +73,8 @@ CREATE TABLE IF NOT EXISTS `trade`
     FOREIGN KEY (item_id) REFERENCES `item` (id)
 );
 
-CREATE UNIQUE INDEX name_account_type_index ON `account` (name, account_type_id);
+CREATE UNIQUE INDEX account_type_name_user_index ON `account_type` (name, user_id);
+CREATE UNIQUE INDEX account_name_account_type_user_index ON `account` (name, account_type_id, user_id);
+CREATE UNIQUE INDEX item_name_user_index ON `item` (name, user_id);
 
 SET foreign_key_checks = 1;
