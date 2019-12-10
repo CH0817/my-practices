@@ -67,6 +67,9 @@ function getGridColumns() {
                 min: 0,
                 precision: 2
             }
+        },
+        formatter: function (value, rowData, rowIndex) {
+            return (value) ? value.toFixed(2) : value;
         }
     }, {
         field: 'tradeType',
