@@ -1,16 +1,8 @@
 package com.rex.my.web.controller;
 
-import com.rex.MyWebApplication;
-import com.rex.my.business.service.LoginService;
 import com.rex.my.model.vo.Login;
+import com.rex.my.web.controller.base.BaseControllerTest;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -19,15 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = {MyWebApplication.class})
-@AutoConfigureMockMvc
-public class LoginControllerTest {
-
-    @Autowired
-    private MockMvc mvc;
-    @MockBean
-    private LoginService service;
+public class LoginControllerTest extends BaseControllerTest {
 
     @Test
     public void login() throws Exception {
@@ -35,7 +19,7 @@ public class LoginControllerTest {
         mvc.perform(generateLoginRequest("test@mail.com", "11111111"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("main"));
+                .andExpect(view().name("page/main"));
     }
 
     @Test
