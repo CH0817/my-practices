@@ -3,7 +3,6 @@ package com.rex.my.business.service.impl;
 import com.rex.my.business.service.MenuService;
 import com.rex.my.model.easyui.FunctionMenuTreeAttribute;
 import com.rex.my.model.easyui.Tree;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,9 +10,6 @@ import java.util.List;
 
 @Service
 public class MenuServiceImpl implements MenuService {
-
-    @Value("${server..servlet.context-path}")
-    private String contextPath;
 
     @Override
     public List<Tree<FunctionMenuTreeAttribute>> getFunctionMenuTree() {
@@ -29,7 +25,7 @@ public class MenuServiceImpl implements MenuService {
         tree.setChecked(Boolean.TRUE);
 
         FunctionMenuTreeAttribute attribute = new FunctionMenuTreeAttribute();
-        attribute.setUrl(contextPath + "/account-book/content");
+        attribute.setUrl("account-book/content");
 
         tree.setAttributes(attribute);
 
