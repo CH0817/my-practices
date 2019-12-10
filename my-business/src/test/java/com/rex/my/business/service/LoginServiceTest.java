@@ -1,12 +1,10 @@
 package com.rex.my.business.service;
 
 import com.rex.my.business.service.base.BaseServiceTest;
-import com.rex.my.dao.mapper.primary.UserMapper;
 import com.rex.my.model.dao.primary.User;
 import com.rex.my.model.vo.Login;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -16,8 +14,6 @@ public class LoginServiceTest extends BaseServiceTest {
 
     @Autowired
     private LoginService service;
-    @MockBean
-    private UserMapper mapper;
 
     @Test
     public void login() {
