@@ -13,6 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Ignore
 public class BaseServiceTest {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
 }
