@@ -37,7 +37,7 @@ public class UserMapperTest extends BaseMapperTest {
 
     @Test
     public void selectAll() {
-        assertEquals(1, mapper.selectAll().size());
+        assertEquals(3, mapper.selectAll().size());
     }
 
     @Test
