@@ -16,7 +16,7 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void login() throws Exception {
         when(service.login(any(Login.class))).thenReturn(true);
-        mvc.perform(generateLoginRequest("test@mail.com", "11111111"))
+        mvc.perform(generateLoginRequest("test@email.com", "11111111"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("page/main"));
