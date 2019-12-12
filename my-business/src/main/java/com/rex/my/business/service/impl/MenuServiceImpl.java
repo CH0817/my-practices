@@ -70,6 +70,12 @@ public class MenuServiceImpl implements MenuService {
         tree = new Tree<>();
         tree.setId("logout");
         tree.setText("登出");
+
+        attribute = new FunctionMenuTreeAttribute();
+        attribute.setUrl("logout");
+
+        tree.setAttributes(attribute);
+
         result.add(tree);
 
         return result;

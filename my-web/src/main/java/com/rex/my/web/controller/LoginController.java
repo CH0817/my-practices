@@ -29,4 +29,9 @@ public class LoginController extends BaseController {
         return "page/main";
     }
 
+    @RequestMapping("/logout")
+    public String logout() {
+        return "redirect:/";
+    }
+
 }
