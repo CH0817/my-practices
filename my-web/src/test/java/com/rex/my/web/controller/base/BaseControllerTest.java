@@ -4,16 +4,20 @@ import com.rex.MyWebApplication;
 import com.rex.my.business.service.LoginService;
 import com.rex.my.model.dao.primary.User;
 import com.rex.my.web.constant.SessionAttribute;
+import com.rex.my.web.controller.AccountBookController;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -26,8 +30,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {MyWebApplication.class})
-@AutoConfigureMockMvc
+@ContextConfiguration(classes = {MyWebApplication.class})
+@WebAppConfiguration
 @Ignore
 public abstract class BaseControllerTest {
 
@@ -35,8 +39,6 @@ public abstract class BaseControllerTest {
     protected MockMvc mvc;
     @Autowired
     protected MockHttpSession session;
-    @MockBean
-    protected LoginService service;
 
     @Before
     public void setUserSession() {
