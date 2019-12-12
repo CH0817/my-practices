@@ -65,22 +65,6 @@ function initGrid() {
         onCancelEdit: function (index, row) {
             row.editing = false;
             $(this).datagrid('refreshRow', index);
-        },
-        onBeforeLoad: function (param) {
-            switch (param.sort) {
-                case "moneyString":
-                    param.sort = 'money';
-                    break;
-                case "accountName":
-                    param.sort = 'account_id';
-                    break;
-                case "itemId":
-                    param.sort = 'item_id';
-                    break;
-                default:
-                    // FIXME field 必須匹配 table column
-                    break;
-            }
         }
     });
 }
@@ -160,7 +144,7 @@ function getGridColumns() {
             return value;
         }
     }, {
-        field: 'tradeType',
+        field: 'trade_type',
         title: '類型',
         width: 80,
         sortable: true,
@@ -176,7 +160,7 @@ function getGridColumns() {
             return getTextFromCombobox(getTradeTypeComboboxData(), value);
         }
     }, {
-        field: 'tradeDate',
+        field: 'trade_date',
         title: '日期',
         width: 120,
         sortable: true,
@@ -191,7 +175,7 @@ function getGridColumns() {
             }
         }
     }, {
-        field: 'accountId',
+        field: 'account_id',
         title: '帳戶',
         width: 120,
         sortable: true,
@@ -207,7 +191,7 @@ function getGridColumns() {
             return getTextFromCombobox(getAccounts(), value);
         }
     }, {
-        field: 'itemId',
+        field: 'item_id',
         title: '項目',
         width: 120,
         sortable: true,

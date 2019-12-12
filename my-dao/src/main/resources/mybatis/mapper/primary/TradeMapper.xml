@@ -72,12 +72,10 @@
     <resultMap id="TradeGridResultMap" type="com.rex.my.model.easyui.grid.TradeGridVo">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="money" jdbcType="DECIMAL" property="money"/>
-        <result column="trade_type" jdbcType="VARCHAR" property="tradeType"/>
-        <result column="trade_date" jdbcType="DATE" property="tradeDate"/>
-        <result column="account_id" jdbcType="VARCHAR" property="accountId"/>
-        <result column="item_id" jdbcType="VARCHAR" property="itemId"/>
-        <result column="account_name" jdbcType="VARCHAR" property="accountName"/>
-        <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+        <result column="trade_type" jdbcType="VARCHAR" property="trade_type"/>
+        <result column="trade_date" jdbcType="DATE" property="trade_date"/>
+        <result column="account_id" jdbcType="VARCHAR" property="account_id"/>
+        <result column="item_id" jdbcType="VARCHAR" property="item_id"/>
     </resultMap>
 
     <select id="selectForGrid" resultMap="TradeGridResultMap">

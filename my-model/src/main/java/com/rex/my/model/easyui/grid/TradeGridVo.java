@@ -15,11 +15,11 @@ import java.util.Date;
 public class TradeGridVo extends BaseModel {
 
     private String id;
-    private String accountId;
-    private String itemId;
+    private String account_id;
+    private String item_id;
     private BigDecimal money;
-    private String tradeType;
+    private String trade_type;
     @JsonFormat(pattern = "yyyy/MM/dd")
-    private Date tradeDate;
+    private Date trade_date;
 
 }
