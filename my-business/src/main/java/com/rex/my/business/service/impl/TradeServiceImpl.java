@@ -24,13 +24,13 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public PageInfo<TradeGridVo> getTradeGridData(GridPagination pagination) {
+    public PageInfo<TradeGridVo> getTradeGridData(GridPagination pagination, String userId) {
         logger.info("GridPagination: {}", pagination);
         PageHelper.startPage(pagination.getPage(), pagination.getRows());
         if (StringUtils.isNotBlank(pagination.getSort()) && StringUtils.isNotBlank(pagination.getOrder())) {
             PageHelper.orderBy(pagination.getSort() + " " + pagination.getOrder());
         }
-        return new PageInfo<>(mapper.selectForGrid());
+        return new PageInfo<>(mapper.selectForGrid(userId));
     }
 
 }

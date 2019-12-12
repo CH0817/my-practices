@@ -6,6 +6,6 @@ import com.rex.my.model.easyui.grid.TradeGridVo;
 
 public interface TradeService {
 
-    PageInfo<TradeGridVo> getTradeGridData(GridPagination pagination);
+    PageInfo<TradeGridVo> getTradeGridData(GridPagination pagination, String userId);
 
 }

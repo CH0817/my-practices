@@ -85,6 +85,6 @@
         from trade t
         left join account a on t.account_id = a.id
         left join item i on t.item_id = i.id
-        where t.removed = 0
+        where t.removed = 0 and t.user_id = #{userId}
     </select>
 </mapper>

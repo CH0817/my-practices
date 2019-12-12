@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface TradeMapper extends BaseMapper<Trade> {
 
-    List<TradeGridVo> selectForGrid();
+    List<TradeGridVo> selectForGrid(String userId);
 
 }
