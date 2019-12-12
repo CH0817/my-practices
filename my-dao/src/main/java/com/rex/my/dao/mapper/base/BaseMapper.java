@@ -6,7 +6,7 @@ public interface BaseMapper<E> {
 
     int insertSelective(E entity);
 
-    List<E> selectAll();
+    List<E> selectAll(String userId);
 
     E selectByPrimaryKey(String id);
 

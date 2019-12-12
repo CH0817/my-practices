@@ -37,7 +37,8 @@
     </insert>
 
     <select id="selectAll" resultMap="BaseResultMap">
-        select * from account_type where removed = 0
+        select * from account_type
+        where removed = 0 and user_id = #{userId}
     </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">

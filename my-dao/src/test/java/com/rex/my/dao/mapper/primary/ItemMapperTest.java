@@ -36,7 +36,7 @@ public class ItemMapperTest extends BaseMapperTest {
 
     @Test
     public void selectAll() {
-        assertEquals(3, mapper.selectAll().size());
+        assertEquals(3, mapper.selectAll("a").size());
     }
 
     @Test

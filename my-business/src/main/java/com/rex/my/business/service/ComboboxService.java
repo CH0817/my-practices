@@ -8,8 +8,8 @@ public interface ComboboxService {
 
     List<ComboboxData> getTradeTypeComboboxData();
 
-    List<ComboboxData> getAccountComboboxData();
+    List<ComboboxData> getAccountComboboxData(String userId);
 
-    List<ComboboxData> getItemComboboxData();
+    List<ComboboxData> getItemComboboxData(String userId);
 
 }

@@ -23,7 +23,9 @@ public class ComboboxControllerTest extends BaseControllerTest {
 
     @Test
     public void getAccounts() throws Exception {
-        mvc.perform(get("/combobox/accounts").contentType(MediaType.APPLICATION_JSON_VALUE))
+        mvc.perform(get("/combobox/accounts")
+                .session(session)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(jsonPath("$.length()").value(5))
                 .andExpect(jsonPath("$[0].text").value("玉山"))
@@ -35,7 +37,9 @@ public class ComboboxControllerTest extends BaseControllerTest {
 
     @Test
     public void getItems() throws Exception {
-        mvc.perform(get("/combobox/items").contentType(MediaType.APPLICATION_JSON_VALUE))
+        mvc.perform(get("/combobox/items")
+                .session(session)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(jsonPath("$.length()").value(3))
                 .andExpect(jsonPath("$[0].text").value("用餐"))

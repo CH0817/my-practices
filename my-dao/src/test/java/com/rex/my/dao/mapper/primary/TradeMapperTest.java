@@ -40,7 +40,7 @@ public class TradeMapperTest extends BaseMapperTest {
 
     @Test
     public void selectAll() {
-        assertEquals(66, mapper.selectAll().size());
+        assertEquals(66, mapper.selectAll("a").size());
     }
 
     @Test

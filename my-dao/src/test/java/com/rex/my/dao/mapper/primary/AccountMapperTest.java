@@ -37,7 +37,7 @@ public class AccountMapperTest extends BaseMapperTest {
 
     @Test
     public void selectAll() {
-        assertEquals(5, mapper.selectAll().size());
+        assertEquals(5, mapper.selectAll("a").size());
     }
 
     @Test

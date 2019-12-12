@@ -30,13 +30,13 @@ public class ComboboxServiceImpl implements ComboboxService {
     }
 
     @Override
-    public List<ComboboxData> getAccountComboboxData() {
-        return accountMapper.selectAll().stream().map(ComboboxData::new).collect(Collectors.toList());
+    public List<ComboboxData> getAccountComboboxData(String userId) {
+        return accountMapper.selectAll(userId).stream().map(ComboboxData::new).collect(Collectors.toList());
     }
 
     @Override
-    public List<ComboboxData> getItemComboboxData() {
-        return itemMapper.selectAll().stream().map(ComboboxData::new).collect(Collectors.toList());
+    public List<ComboboxData> getItemComboboxData(String userId) {
+        return itemMapper.selectAll(userId).stream().map(ComboboxData::new).collect(Collectors.toList());
     }
 
 }

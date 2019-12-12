@@ -23,12 +23,12 @@ public class ComboboxServiceTest extends BaseServiceTest {
 
     @Test
     public void getAccountComboboxData() {
-        verifyComboboxData(service.getAccountComboboxData(), "玉山", "中國信託", "郵局", "現金", "永豐信用卡");
+        verifyComboboxData(service.getAccountComboboxData("a"), "玉山", "中國信託", "郵局", "現金", "永豐信用卡");
     }
 
     @Test
     public void getItemComboboxData() {
-        verifyComboboxData(service.getItemComboboxData(), "用餐", "睡覺", "大便");
+        verifyComboboxData(service.getItemComboboxData("a"), "用餐", "睡覺", "大便");
     }
 
     private void verifyComboboxData(List<ComboboxData> dataList, String... contains) {

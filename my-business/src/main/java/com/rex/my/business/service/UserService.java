@@ -1,9 +1,9 @@
 package com.rex.my.business.service;
 
-import com.rex.my.dao.entity.primary.User;
+import com.rex.my.model.dao.primary.User;
 
 public interface UserService {
 
-    boolean insert(User user);
+    User findByEmail(String email);
 
 }
