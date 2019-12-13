@@ -59,6 +59,10 @@ public class MenuServiceImpl implements MenuService {
         child.setText("帳戶");
         children.add(child);
 
+        attribute = new FunctionMenuTreeAttribute();
+        attribute.setUrl("account/content");
+        child.setAttributes(attribute);
+
         child = new Tree<>();
         child.setId("item");
         child.setText("項目");
@@ -73,7 +77,6 @@ public class MenuServiceImpl implements MenuService {
 
         attribute = new FunctionMenuTreeAttribute();
         attribute.setUrl("logout");
-
         tree.setAttributes(attribute);
 
         result.add(tree);
