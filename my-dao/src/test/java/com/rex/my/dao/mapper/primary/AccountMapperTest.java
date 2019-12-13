@@ -2,12 +2,14 @@ package com.rex.my.dao.mapper.primary;
 
 import com.rex.my.dao.mapper.primary.base.BaseMapperTest;
 import com.rex.my.model.dao.primary.Account;
+import com.rex.my.model.easyui.grid.AccountGridVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -56,6 +58,15 @@ public class AccountMapperTest extends BaseMapperTest {
         entity.setUpdateDate(new Date());
         int executeCount = mapper.updateSelectiveByPrimaryKey(entity);
         assertEquals(1, executeCount);
+    }
+
+    @Test
+    public void selectForGrid() {
+        List<AccountGridVo> entities = mapper.selectForGrid("a");
+        assertEquals(5, entities.size());
+        assertEquals("玉山", entities.get(0).getName());
+        assertEquals(0, new BigDecimal(1000).compareTo(entities.get(0).getMoney()));
+        assertEquals("b", entities.get(0).getAccount_type_id());
     }
 
 }

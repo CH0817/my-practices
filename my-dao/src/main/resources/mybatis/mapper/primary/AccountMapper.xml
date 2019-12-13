@@ -64,4 +64,15 @@
             id = #{id} and removed = 0
         </where>
     </update>
+
+    <resultMap id="AccountGridResultMap" type="com.rex.my.model.easyui.grid.AccountGridVo">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+        <result column="account_type_id" jdbcType="VARCHAR" property="account_type_id"/>
+    </resultMap>
+
+    <select id="selectForGrid" parameterType="string" resultMap="AccountGridResultMap">
+        select * from account where removed = 0 and user_id = #{userId}
+    </select>
 </mapper>
