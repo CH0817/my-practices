@@ -11,4 +11,8 @@ public class FunctionMenuTreeAttribute extends BaseModel implements TreeAttribut
 
     private String url;
 
+    public FunctionMenuTreeAttribute(String url) {
+        this.url = url;
+    }
+
 }

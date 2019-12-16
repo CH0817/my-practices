@@ -1,91 +1,65 @@
 package com.rex.my.business.service.impl;
 
 import com.rex.my.business.service.MenuService;
+import com.rex.my.dao.mapper.primary.FunctionMapper;
+import com.rex.my.model.dao.primary.Function;
 import com.rex.my.model.easyui.FunctionMenuTreeAttribute;
 import com.rex.my.model.easyui.Tree;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MenuServiceImpl implements MenuService {
 
+    private FunctionMapper mapper;
+
+    @Autowired
+    public MenuServiceImpl(FunctionMapper mapper) {
+        this.mapper = mapper;
+    }
+
     @Override
-    public List<Tree<FunctionMenuTreeAttribute>> getFunctionMenuTree() {
-        // FIXME 進資料庫？增加權限設定？
-        // FIXME 尚未增加 attributes
-        List<Tree<FunctionMenuTreeAttribute>> result = new ArrayList<>();
-        List<Tree<FunctionMenuTreeAttribute>> children = new ArrayList<>();
-
-        Tree<FunctionMenuTreeAttribute> tree = new Tree<>();
-        tree.setId("tradeBook");
-        tree.setText("收支表");
-        tree.setIconCls("icon-edit");
-        tree.setChecked(Boolean.TRUE);
-
-        FunctionMenuTreeAttribute attribute = new FunctionMenuTreeAttribute();
-        attribute.setUrl("account-book/content");
-
-        tree.setAttributes(attribute);
-
-        result.add(tree);
-
-        tree = new Tree<>();
-        tree.setId("chart");
-        tree.setText("圖表");
-
-        Tree<FunctionMenuTreeAttribute> child = new Tree<>();
-        child.setId("barChart");
-        child.setText("長條圖");
-        children.add(child);
-
-        child = new Tree<>();
-        child.setId("pieChart");
-        child.setText("圓餅圖");
-        children.add(child);
-
-        tree.setChildren(children);
-        result.add(tree);
-
-        children = new ArrayList<>();
-
-        tree = new Tree<>();
-        tree.setId("settings");
-        tree.setText("設定");
-
-        child = new Tree<>();
-        child.setId("account");
-        child.setText("帳戶");
-        children.add(child);
-
-        attribute = new FunctionMenuTreeAttribute();
-        attribute.setUrl("account/content");
-        child.setAttributes(attribute);
-
-        child = new Tree<>();
-        child.setId("item");
-        child.setText("項目");
-        children.add(child);
-
-        attribute = new FunctionMenuTreeAttribute();
-        attribute.setUrl("item/content");
-        child.setAttributes(attribute);
-
-        tree.setChildren(children);
-        result.add(tree);
-
-        tree = new Tree<>();
-        tree.setId("logout");
-        tree.setText("登出");
-
-        attribute = new FunctionMenuTreeAttribute();
-        attribute.setUrl("logout");
-        tree.setAttributes(attribute);
-
-        result.add(tree);
-
+    public List<Tree<FunctionMenuTreeAttribute>> getFunctionMenuTree(String userId) {
+        List<Function> functions = mapper.findFunctions(userId);
+        List<Tree<FunctionMenuTreeAttribute>> result = functions.stream()
+                .filter(f -> StringUtils.isBlank(f.getParentId()))
+                .sorted(Comparator.comparing(Function::getSorted))
+                .map(createTree(functions))
+                .collect(Collectors.toList());
         return result;
+    }
+
+    private java.util.function.Function<Function, Tree<FunctionMenuTreeAttribute>> createTree(List<Function> allFunctions) {
+        return function -> {
+            Tree<FunctionMenuTreeAttribute> tree = new Tree<>(function);
+            tree.setAttributes(createAttribute(function.getUrl()));
+            tree.setChildren(createChildrenTree(tree, allFunctions));
+            return tree;
+        };
+    }
+
+    private FunctionMenuTreeAttribute createAttribute(String url) {
+        FunctionMenuTreeAttribute result = null;
+        if (StringUtils.isNotBlank(url)) {
+            result = new FunctionMenuTreeAttribute(url);
+        }
+        return result;
+    }
+
+    private List<Tree<FunctionMenuTreeAttribute>> createChildrenTree(Tree<FunctionMenuTreeAttribute> parent, List<Function> allFunctions) {
+        List<Tree<FunctionMenuTreeAttribute>> children = allFunctions.stream()
+                .filter(c -> parent.getId().equals(c.getParentId()))
+                .sorted(Comparator.comparing(Function::getSorted))
+                .map(createTree(allFunctions))
+                .collect(Collectors.toList());
+        return CollectionUtils.isEmpty(children) ? Collections.emptyList() : children;
     }
 
 }

@@ -2,10 +2,12 @@ package com.rex.my.model.easyui;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.rex.my.model.base.BaseModel;
+import com.rex.my.model.dao.primary.Function;
 import com.rex.my.model.easyui.base.TreeAttribute;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -18,7 +20,15 @@ public class Tree<A extends TreeAttribute> extends BaseModel {
     private String state = "open";
     private Boolean checked = Boolean.FALSE;
     private A attributes;
-    private List<Tree<A>> children;
+    private List<Tree<A>> children = Collections.emptyList();
     private String iconCls;
+
+    public Tree() {}
+
+    public Tree(Function function) {
+        this.id = function.getId();
+        this.text = function.getName();
+        this.iconCls = function.getIcon();
+    }
 
 }

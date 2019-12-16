@@ -72,6 +72,10 @@ public abstract class BaseControllerTest {
         return sendRequest(postRequest);
     }
 
+    protected ResultActions sendPostJsonRequestWithUserSession(String url) throws Exception {
+        return sendPostJsonRequestWithUserSession(url, null);
+    }
+
     protected ResultActions sendPostJsonRequestWithUserSession(String url, Map<String, String> paramMap) throws Exception {
         MockHttpServletRequestBuilder postRequest = post(url).session(session).contentType(MediaType.APPLICATION_JSON);
         if (Objects.nonNull(paramMap)) {

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface MenuService {
 
-    List<Tree<FunctionMenuTreeAttribute>> getFunctionMenuTree();
+    List<Tree<FunctionMenuTreeAttribute>> getFunctionMenuTree(String userId);
 
 }
