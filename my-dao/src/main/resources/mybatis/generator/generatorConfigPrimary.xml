@@ -59,5 +59,10 @@
             <property name="modelOnly" value="true"/>
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
+        <table tableName="function" enableCountByExample="false" enableSelectByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="modelOnly" value="true"/>
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
     </context>
 </generatorConfiguration>
