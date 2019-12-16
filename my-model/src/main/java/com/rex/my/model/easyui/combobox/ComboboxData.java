@@ -3,6 +3,7 @@ package com.rex.my.model.easyui.combobox;
 import com.rex.my.model.base.BaseModel;
 import com.rex.my.model.constant.TradeTypeEnum;
 import com.rex.my.model.dao.primary.Account;
+import com.rex.my.model.dao.primary.AccountType;
 import com.rex.my.model.dao.primary.Item;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,11 @@ public class ComboboxData extends BaseModel {
     public ComboboxData(Item item) {
         this.value = item.getId();
         this.text = item.getName();
+    }
+
+    public ComboboxData(AccountType accountType) {
+        this.value = accountType.getId();
+        this.text = accountType.getName();
     }
 
 }

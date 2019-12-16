@@ -44,6 +44,11 @@ public class ComboboxController extends BaseController {
     public List<ComboboxData> getItems(HttpSession session) {
         return service.getItemComboboxData(getSessionUser(session).getId());
     }
+    @GetMapping("/account/types")
+    @ResponseBody
+    public List<ComboboxData> getAccountTypes(HttpSession session) {
+        return service.getAccountTypeComboboxData(getSessionUser(session).getId());
+    }
 
     private User getSessionUser(HttpSession session) {
         User user = (User) session.getAttribute(SessionAttribute.USER);

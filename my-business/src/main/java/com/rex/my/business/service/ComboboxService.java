@@ -12,4 +12,6 @@ public interface ComboboxService {
 
     List<ComboboxData> getItemComboboxData(String userId);
 
+    List<ComboboxData> getAccountTypeComboboxData(String userId);
+
 }

@@ -5,7 +5,8 @@ let clearButton = null;
 let comboboxData = {
     tradeTypes: null,
     accounts: null,
-    items: null
+    items: null,
+    accountTypes: null
 }
 
 $(function () {
@@ -47,6 +48,13 @@ function getItems() {
     return comboboxData.items;
 }
 
+function getAccountTypeComboboxData() {
+    if (comboboxData.accountTypes === null) {
+        comboboxData.accountTypes = sendNonAyncAjax('combobox/account/types');
+    }
+    return comboboxData.accountTypes;
+}
+
 function sendNonAyncAjax(url) {
     let result = null;
     $.ajax({
@@ -57,4 +65,13 @@ function sendNonAyncAjax(url) {
         }
     });
     return result;
+}
+
+function getTextFromCombobox(comboboxData, value) {
+    for (let data of comboboxData) {
+        if (data.value === value) {
+            return data.text;
+        }
+    }
+    return value;
 }

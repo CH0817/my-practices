@@ -23,7 +23,7 @@ function getGridColumns() {
         checkbox: true
     }, {
         field: 'name',
-        title: '金額',
+        title: '名稱',
         width: 120,
         sortable: true,
         editor: {
@@ -55,7 +55,18 @@ function getGridColumns() {
         field: 'account_type_id',
         title: '帳戶類型',
         width: 120,
-        sortable: true
+        sortable: true,
+        editor: {
+            type: 'combobox',
+            options: {
+                limitToList: true,
+                editable: false,
+                data: getAccountTypeComboboxData()
+            }
+        },
+        formatter: function (value, rowData, rowIndex) {
+            return getTextFromCombobox(getAccountTypeComboboxData(), value);
+        }
     }, {
         field: 'operate',
         title: '操作',

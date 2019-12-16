@@ -36,15 +36,6 @@ function initGrid() {
     });
 }
 
-function getTextFromCombobox(comboboxData, value) {
-    for (let data of comboboxData) {
-        if (data.value === value) {
-            return data.text;
-        }
-    }
-    return value;
-}
-
 function getGridColumns() {
     return [[{
         field: 'id',

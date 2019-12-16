@@ -2,6 +2,7 @@ package com.rex.my.business.service.impl;
 
 import com.rex.my.business.service.ComboboxService;
 import com.rex.my.dao.mapper.primary.AccountMapper;
+import com.rex.my.dao.mapper.primary.AccountTypeMapper;
 import com.rex.my.dao.mapper.primary.ItemMapper;
 import com.rex.my.model.constant.TradeTypeEnum;
 import com.rex.my.model.easyui.combobox.ComboboxData;
@@ -17,11 +18,13 @@ public class ComboboxServiceImpl implements ComboboxService {
 
     private AccountMapper accountMapper;
     private ItemMapper itemMapper;
+    private AccountTypeMapper accountTypeMapper;
 
     @Autowired
-    public ComboboxServiceImpl(AccountMapper accountMapper, ItemMapper itemMapper) {
+    public ComboboxServiceImpl(AccountMapper accountMapper, ItemMapper itemMapper, AccountTypeMapper accountTypeMapper) {
         this.accountMapper = accountMapper;
         this.itemMapper = itemMapper;
+        this.accountTypeMapper = accountTypeMapper;
     }
 
     @Override
@@ -37,6 +40,11 @@ public class ComboboxServiceImpl implements ComboboxService {
     @Override
     public List<ComboboxData> getItemComboboxData(String userId) {
         return itemMapper.selectAll(userId).stream().map(ComboboxData::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ComboboxData> getAccountTypeComboboxData(String userId) {
+        return accountTypeMapper.selectAll(userId).stream().map(ComboboxData::new).collect(Collectors.toList());
     }
 
 }
