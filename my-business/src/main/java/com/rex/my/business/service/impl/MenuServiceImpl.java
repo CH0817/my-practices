@@ -68,6 +68,10 @@ public class MenuServiceImpl implements MenuService {
         child.setText("項目");
         children.add(child);
 
+        attribute = new FunctionMenuTreeAttribute();
+        attribute.setUrl("item/content");
+        child.setAttributes(attribute);
+
         tree.setChildren(children);
         result.add(tree);
 

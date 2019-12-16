@@ -60,4 +60,13 @@
             id = #{id} and removed = 0
         </where>
     </update>
+
+    <resultMap id="itemGridResultMap" type="com.rex.my.model.easyui.grid.ItemGridVo">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+
+    <select id="selectForGrid" parameterType="string" resultMap="itemGridResultMap">
+        select id, name from item where user_id = #{id} and removed = 0
+    </select>
 </mapper>

@@ -3,12 +3,14 @@ package com.rex.my.dao.mapper.primary;
 import com.rex.my.dao.mapper.primary.base.BaseMapperTest;
 import com.rex.my.model.dao.primary.Account;
 import com.rex.my.model.dao.primary.Item;
+import com.rex.my.model.easyui.grid.ItemGridVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -55,6 +57,14 @@ public class ItemMapperTest extends BaseMapperTest {
         entity.setUpdateDate(new Date());
         int executeCount = mapper.updateSelectiveByPrimaryKey(entity);
         assertEquals(1, executeCount);
+    }
+
+    @Test
+    public void selectForGrid() {
+        List<ItemGridVo> voList = mapper.selectForGrid("a");
+        assertEquals(3, voList.size());
+        assertEquals("a", voList.get(0).getId());
+        assertEquals("用餐", voList.get(0).getName());
     }
 
 }

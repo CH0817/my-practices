@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -15,6 +16,7 @@ public class DataGrid<R> extends BaseModel {
     private List<R> rows;
 
     public DataGrid(PageInfo<R> pageInfo) {
+        assert Objects.nonNull(pageInfo);
         this.total = pageInfo.getTotal();
         this.rows = pageInfo.getList();
     }
