@@ -1,10 +1,5 @@
 'use strict';
 
-let tradeTypes = null;
-let accounts = null;
-let items = null;
-let clearButton = null;
-
 $.fn.datebox.defaults.formatter = function (date) {
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
@@ -22,20 +17,8 @@ $.fn.datebox.defaults.parser = function (dateString) {
 }
 
 $(function () {
-    initDateboxExtendButton();
     initGrid();
 });
-
-function initDateboxExtendButton() {
-    clearButton = $.extend([], $.fn.datebox.defaults.buttons);
-    clearButton.splice(1, 0, {
-            text: '清除',
-            handler: function (target) {
-                $(target).datebox('clear').datebox('hidePanel');
-            }
-        }
-    );
-}
 
 function initGrid() {
     $('#tradeGrid').datagrid({
@@ -67,45 +50,6 @@ function initGrid() {
             $(this).datagrid('refreshRow', index);
         }
     });
-}
-
-function getTradeTypeComboboxData() {
-    if (tradeTypes === null) {
-        $.ajax({
-            async: false,
-            url: 'combobox//trade/types',
-            success: function (data, textStatusm, jqXHR) {
-                tradeTypes = data;
-            }
-        });
-    }
-    return tradeTypes;
-}
-
-function getAccounts() {
-    if (accounts === null) {
-        $.ajax({
-            async: false,
-            url: 'combobox/accounts',
-            success: function (data, textStatusm, jqXHR) {
-                accounts = data;
-            }
-        });
-    }
-    return accounts;
-}
-
-function getItems() {
-    if (items === null) {
-        $.ajax({
-            async: false,
-            url: 'combobox/items',
-            success: function (data, textStatusm, jqXHR) {
-                items = data;
-            }
-        });
-    }
-    return items;
 }
 
 function getTextFromCombobox(comboboxData, value) {
