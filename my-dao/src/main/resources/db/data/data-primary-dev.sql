@@ -2,11 +2,13 @@ insert into user (id, email, password, create_date) VALUES ('a', 'test@email.com
 insert into user (id, email, password, create_date) VALUES ('b', 'test2@email.com', '11111111', now());
 insert into user (id, email, password, create_date) VALUES ('c', 'test3@email.com', '11111111', now());
 insert into user (id, email, password, removed, create_date) VALUES ('d', 'test4@email.com', '11111111', 1, now());
+
 insert into account_type (id, name, create_date, user_id) VALUES ('a', '現金', now(), 'a');
 insert into account_type (id, name, create_date, user_id) VALUES ('b', '銀行', now(), 'a');
 insert into account_type (id, name, create_date, user_id) VALUES ('c', '信用卡', now(), 'a');
 insert into account_type (id, name, create_date, user_id) VALUES ('e', '現金', now(), 'b');
 insert into account_type (id, name, create_date, user_id) VALUES ('f', '銀行', now(), 'b');
+
 insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('a', '玉山', 1000, now(), 'a', 'b');
 insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('b', '中國信託', 1000, now(), 'a', 'b');
 insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('c', '郵局', 1000, now(), 'a', 'b');
@@ -17,11 +19,13 @@ insert into account (id, name, money, create_date, user_id, account_type_id) VAL
 insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('h', '郵局', 1000, now(), 'b', 'b');
 insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('i', '現金', 1000, now(), 'b', 'a');
 insert into account (id, name, money, create_date, user_id, account_type_id, removed) VALUES ('j', '永豐', 1000, now(), 'b', 'c', 1);
+
 insert into item (id, name, create_date, user_id) VALUES ('a', '用餐', now(), 'a');
 insert into item (id, name, create_date, user_id) VALUES ('b', '睡覺', now(), 'a');
 insert into item (id, name, create_date, user_id) VALUES ('c', '大便', now(), 'a');
 insert into item (id, name, create_date, user_id) VALUES ('e', '用餐', now(), 'b');
 insert into item (id, name, create_date, user_id) VALUES ('f', '睡覺', now(), 'b');
+
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id) values ('a', 10, '1', now(), now(), 'a', 'a', 'a');
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id, removed) select replace(uuid(), '-', ''), 100, '1', now(), now(), 'a', 'a', 'a', true from dual;
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id, removed) select replace(uuid(), '-', ''), 100, '1', now(), now(), 'a', 'a', 'a', true from dual;
@@ -107,3 +111,21 @@ insert into trade (id, money, trade_type, trade_date, create_date, user_id, acco
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id) select replace(uuid(), '-', ''), 162, '1', now(), now(), 'b', 'i', 'e' from dual;
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id) select replace(uuid(), '-', ''), 163, '1', now(), now(), 'b', 'g', 'f' from dual;
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id) select replace(uuid(), '-', ''), 164, '1', now(), now(), 'b', 'h', 'f' from dual;
+
+insert into function (id, name, url, icon) select replace(uuid(), '-', ''), '收支表', 'account-book/content', 'icon-edit' from dual;
+insert into function (id, name) select replace(uuid(), '-', ''), '圖表' from dual;
+insert into function (id, name, url, parent_id) select replace(uuid(), '-', ''), '長條圖', 'chart/bar', select id from function where name = '圖表' from dual;
+insert into function (id, name, url, parent_id) select replace(uuid(), '-', ''), '圓餅圖', 'chart/pie', select id from function where name = '圖表' from dual;
+insert into function (id, name) select replace(uuid(), '-', ''), '設定' from dual;
+insert into function (id, name, url, parent_id) select replace(uuid(), '-', ''), '帳戶', 'account/content', select id from function where name = '設定' from dual;
+insert into function (id, name, url, parent_id) select replace(uuid(), '-', ''), '項目', 'item/content', select id from function where name = '設定' from dual;
+insert into function (id, name, url) select replace(uuid(), '-', ''), '登出', 'logout' from dual;
+
+insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '收支表');
+insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '圖表');
+insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '長條圖');
+insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '圓餅圖');
+insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '設定');
+insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '帳戶');
+insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '項目');
+insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '登出');
