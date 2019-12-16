@@ -77,4 +77,22 @@ CREATE UNIQUE INDEX account_type_name_user_index ON `account_type` (name, user_i
 CREATE UNIQUE INDEX account_name_account_type_user_index ON `account` (name, account_type_id, user_id);
 CREATE UNIQUE INDEX item_name_user_index ON `item` (name, user_id);
 
+CREATE TABLE IF NOT EXISTS `function`
+(
+    id        VARCHAR(32) NOT NULL,
+    name      VARCHAR(10) NOT NULL,
+    url       VARCHAR(150) UNIQUE,
+    icon      VARCHAR(30),
+    parent_id VARCHAR(32),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS `user_function`
+(
+    user_id     VARCHAR(32) NOT NULL,
+    function_id VARCHAR(32) NOT NULL
+);
+
+CREATE UNIQUE INDEX user_function_index ON `user_function` (user_id, function_id);
+
 SET foreign_key_checks = 1;
