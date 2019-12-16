@@ -1,21 +1,5 @@
 'use strict';
 
-$.fn.datebox.defaults.formatter = function (date) {
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    return year + '/' + month + '/' + day;
-}
-
-$.fn.datebox.defaults.parser = function (dateString) {
-    var dateNumber = Date.parse(dateString);
-    if (!isNaN(dateNumber)) {
-        return new Date(dateNumber);
-    } else {
-        return new Date();
-    }
-}
-
 $(function () {
     initGrid();
 });
@@ -115,7 +99,7 @@ function getGridColumns() {
                 closeText: '關閉',
                 okText: '確定',
                 editable: false,
-                buttons: clearButton
+                buttons: addClearButton()
             }
         }
     }, {

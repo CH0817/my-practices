@@ -10,7 +10,6 @@ let comboboxData = {
 
 $(function () {
     initMenu();
-    initDateboxExtendButton();
 });
 
 function initMenu() {
@@ -25,19 +24,6 @@ function initMenu() {
             }
         }
     });
-}
-
-function initDateboxExtendButton() {
-    if (clearButton !== null) {
-        clearButton = $.extend([], $.fn.datebox.defaults.buttons);
-        clearButton.splice(1, 0, {
-                text: '清除',
-                handler: function (target) {
-                    $(target).datebox('clear').datebox('hidePanel');
-                }
-            }
-        );
-    }
 }
 
 function getTradeTypeComboboxData() {
