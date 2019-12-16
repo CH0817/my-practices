@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `function`
     url       VARCHAR(150) UNIQUE,
     icon      VARCHAR(30),
     parent_id VARCHAR(32),
+    sorted    SMALLINT,
     PRIMARY KEY (id)
 );
 

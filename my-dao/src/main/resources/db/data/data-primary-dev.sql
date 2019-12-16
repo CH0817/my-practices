@@ -112,14 +112,14 @@ insert into trade (id, money, trade_type, trade_date, create_date, user_id, acco
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id) select replace(uuid(), '-', ''), 163, '1', now(), now(), 'b', 'g', 'f' from dual;
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id) select replace(uuid(), '-', ''), 164, '1', now(), now(), 'b', 'h', 'f' from dual;
 
-insert into function (id, name, url, icon) select replace(uuid(), '-', ''), '收支表', 'account-book/content', 'icon-edit' from dual;
-insert into function (id, name) select replace(uuid(), '-', ''), '圖表' from dual;
-insert into function (id, name, url, parent_id) select replace(uuid(), '-', ''), '長條圖', 'chart/bar', select id from function where name = '圖表' from dual;
-insert into function (id, name, url, parent_id) select replace(uuid(), '-', ''), '圓餅圖', 'chart/pie', select id from function where name = '圖表' from dual;
-insert into function (id, name) select replace(uuid(), '-', ''), '設定' from dual;
-insert into function (id, name, url, parent_id) select replace(uuid(), '-', ''), '帳戶', 'account/content', select id from function where name = '設定' from dual;
-insert into function (id, name, url, parent_id) select replace(uuid(), '-', ''), '項目', 'item/content', select id from function where name = '設定' from dual;
-insert into function (id, name, url) select replace(uuid(), '-', ''), '登出', 'logout' from dual;
+insert into function (id, name, url, icon, sorted) select replace(uuid(), '-', ''), '收支表', 'account-book/content', 'icon-edit', 1 from dual;
+insert into function (id, name, sorted) select replace(uuid(), '-', ''), '圖表', 2 from dual;
+insert into function (id, name, url, parent_id, sorted) select replace(uuid(), '-', ''), '長條圖', 'chart/bar', select id from function where name = '圖表', 1 from dual;
+insert into function (id, name, url, parent_id, sorted) select replace(uuid(), '-', ''), '圓餅圖', 'chart/pie', select id from function where name = '圖表', 2 from dual;
+insert into function (id, name, sorted) select replace(uuid(), '-', ''), '設定', 3 from dual;
+insert into function (id, name, url, parent_id, sorted) select replace(uuid(), '-', ''), '帳戶', 'account/content', select id from function where name = '設定', 1 from dual;
+insert into function (id, name, url, parent_id, sorted) select replace(uuid(), '-', ''), '項目', 'item/content', select id from function where name = '設定', 2 from dual;
+insert into function (id, name, url, sorted) select replace(uuid(), '-', ''), '登出', 'logout', 4 from dual;
 
 insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '收支表');
 insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '圖表');
