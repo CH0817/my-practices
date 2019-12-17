@@ -5,11 +5,13 @@ import com.rex.my.model.easyui.combobox.ComboboxData;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 public class ComboboxServiceTest extends BaseServiceTest {
 
@@ -18,25 +20,27 @@ public class ComboboxServiceTest extends BaseServiceTest {
 
     @Test
     public void getTradeTypeComboboxData() {
-        verifyComboboxData(service.getTradeTypeComboboxData(), "收入", "支出", "轉帳");
+        String[] names = {"收入", "支出", "轉帳"};
+        List<ComboboxData> result = service.getTradeTypeComboboxData();
+        assertEquals(names.length, result.size());
+        Stream.of(names).forEach(c -> {
+            boolean isMatch = result.stream().anyMatch(t -> c.equals(t.getText()));
+            assertTrue("combobox data 未包含" + c, isMatch);
+        });
     }
 
     @Test
     public void getAccountComboboxData() {
-        verifyComboboxData(service.getAccountComboboxData("a"), "玉山", "中國信託", "郵局", "現金", "永豐信用卡");
+        when(accountMapper.selectAll("a")).thenReturn(Collections.emptyList());
+        service.getAccountComboboxData("a");
+        verify(accountMapper, times(1)).selectAll("a");
     }
 
     @Test
     public void getItemComboboxData() {
-        verifyComboboxData(service.getItemComboboxData("a"), "用餐", "睡覺", "大便");
-    }
-
-    private void verifyComboboxData(List<ComboboxData> dataList, String... contains) {
-        assertEquals(contains.length, dataList.size());
-        Stream.of(contains).forEach(c -> {
-            boolean isMatch = dataList.stream().anyMatch(t -> c.equals(t.getText()));
-            assertTrue("combobox data 未包含" + c, isMatch);
-        });
+        when(itemMapper.selectAll("a")).thenReturn(Collections.emptyList());
+        service.getItemComboboxData("a");
+        verify(itemMapper, times(1)).selectAll("a");
     }
 
 }

@@ -21,7 +21,7 @@ public class LoginServiceTest extends BaseServiceTest {
         user.setId("a");
         user.setEmail("test@mail.com");
         user.setPassword("11111111");
-        when(mapper.findByEmail(anyString())).thenReturn(user);
+        when(userMapper.findByEmail(anyString())).thenReturn(user);
         Login input = new Login();
         input.setEmail("test@mail.com");
         input.setPassword("11111111");

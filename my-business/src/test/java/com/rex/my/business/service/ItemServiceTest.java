@@ -2,16 +2,11 @@ package com.rex.my.business.service;
 
 import com.github.pagehelper.PageInfo;
 import com.rex.my.business.service.base.BaseServiceTest;
-import com.rex.my.dao.mapper.primary.AccountMapper;
-import com.rex.my.dao.mapper.primary.ItemMapper;
-import com.rex.my.model.easyui.grid.AccountGridVo;
 import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.model.easyui.grid.ItemGridVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +15,6 @@ import static org.mockito.Mockito.*;
 
 public class ItemServiceTest extends BaseServiceTest {
 
-    @MockBean
-    protected ItemMapper itemMapper;
     @Autowired
     private ItemService service;
 
