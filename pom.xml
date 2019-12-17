@@ -15,6 +15,7 @@
         <module>my-dao</module>
         <module>my-api</module>
         <module>my-model</module>
+        <module>my-security</module>
     </modules>
 
     <properties>
@@ -95,6 +96,11 @@
             <dependency>
                 <groupId>com.rex</groupId>
                 <artifactId>my-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rex</groupId>
+                <artifactId>my-security</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
