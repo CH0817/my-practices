@@ -29,7 +29,7 @@ function initMenu() {
 
 function getTradeTypeComboboxData() {
     if (comboboxData.tradeTypes === null) {
-        comboboxData.tradeTypes = sendNonAyncAjax('combobox//trade/types');
+        comboboxData.tradeTypes = sendNonAyncAjax('combobox/trade/types');
     }
     return comboboxData.tradeTypes;
 }
