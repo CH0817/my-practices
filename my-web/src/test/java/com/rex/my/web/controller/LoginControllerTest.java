@@ -1,74 +1,60 @@
 package com.rex.my.web.controller;
 
-import com.rex.my.business.service.LoginService;
-import com.rex.my.business.service.UserService;
-import com.rex.my.model.vo.Login;
-import com.rex.my.web.controller.base.BaseControllerTest;
+import com.rex.MyWebApplication;
+import com.rex.my.dao.mapper.primary.UserMapper;
+import com.rex.my.model.dao.primary.User;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@WebMvcTest(controllers = {LoginController.class})
-public class LoginControllerTest extends BaseControllerTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {MyWebApplication.class})
+@AutoConfigureMockMvc
+public class LoginControllerTest {
 
-    private String url;
-    private Map<String, String> paramMap;
+    @Autowired
+    protected MockMvc mvc;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @MockBean
-    protected LoginService loginService;
-    @MockBean
-    protected UserService userService;
+    private UserMapper userMapper;
+    private final String TEST_EMAIL = "test@email.com";
 
     @Before
-    public void setParamMap() {
-        paramMap = new HashMap<>();
-        paramMap.put("email", "test@email.com");
-        paramMap.put("password", "11111111");
-    }
-
-    @Before
-    public void setUrl() {
-        url = "/login";
+    public void setUser() {
+        User user = new User();
+        user.setId("a");
+        user.setEmail(TEST_EMAIL);
+        user.setPassword(passwordEncoder.encode("11111111"));
+        when(userMapper.findByEmail("test@email.com")).thenReturn(user);
     }
 
     @Test
     public void login() throws Exception {
-        when(loginService.login(any(Login.class))).thenReturn(true);
-        sendPostRequest(url, paramMap)
-                .andExpect(status().isOk())
-                .andExpect(view().name("page/main"));
+        mvc.perform(getFormLogin("11111111")).andDo(print()).andExpect(authenticated());
     }
 
     @Test
-    public void loginNoEmailAndPassword() throws Exception {
-        paramMap.put("email", "");
-        paramMap.put("password", "");
-        sendPostRequest(url, paramMap)
-                .andExpect(status().is3xxRedirection())
-                .andExpect(flash().attribute("message", "Email不能為空、密碼長度必須為8~12"));
+    public void invalidLogin() throws Exception {
+        mvc.perform(getFormLogin("1")).andDo(print()).andExpect(unauthenticated());
     }
 
-    @Test
-    public void loginWrongEmailFormat() throws Exception {
-        paramMap.put("email", "test");
-        sendPostRequest(url, paramMap)
-                .andExpect(status().is3xxRedirection())
-                .andExpect(flash().attribute("message", "Email格式錯誤"));
-    }
-
-    @Test
-    public void loginWrongPasswordFormat() throws Exception {
-        paramMap.put("password", "1111");
-        sendPostRequest(url, paramMap)
-                .andExpect(status().is3xxRedirection())
-                .andExpect(flash().attribute("message", "密碼長度必須為8~12"));
+    private RequestBuilder getFormLogin(String password) {
+        return formLogin().userParameter("email").user(TEST_EMAIL).password(password);
     }
 
 }
