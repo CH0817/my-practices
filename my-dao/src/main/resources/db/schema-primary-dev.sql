@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `user`
 (
     id          VARCHAR(32) NOT NULL,
     email       VARCHAR(50) NOT NULL UNIQUE,
-    password    VARCHAR(50) NOT NULL,
+    password    VARCHAR(68) NOT NULL,
     removed     BIT         NOT NULL DEFAULT 0,
     create_date DATETIME    NOT NULL,
     update_date DATETIME,
