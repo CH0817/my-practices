@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().loginPage("/login")// 指定登入頁
                 .usernameParameter("email")// username 與 html email input name 對應
                 .passwordParameter("password")// password 與 html pwd input name 對應
-                .successForwardUrl("/main")// 驗證成功轉跳頁面，不能與 defaultSuccessUrl 、 successHandler 共用
+                .defaultSuccessUrl("/main")// 驗證成功轉跳頁面，不能與 successForwardUrl、successHandler 共用
                 .failureForwardUrl("/login-error");// 驗證失敗轉跳頁面
         // 所有請求均要被驗證，anyRequest()必須在最後否則antMatchers()會出錯
         http.authorizeRequests().anyRequest().authenticated().and();
