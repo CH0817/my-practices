@@ -10,8 +10,21 @@ let comboboxData = {
 }
 
 $(function () {
+    setAjaxDefaultCsrf();
     initMenu();
 });
+
+function setAjaxDefaultCsrf() {
+    let token = $("meta[name='_csrf']").attr('content');
+    let header = $("meta[name='_csrf_header']").attr('content');
+
+    let headers = {};
+    headers[header] = token;
+
+    $.ajaxSetup({
+        headers: headers
+    });
+}
 
 function initMenu() {
     $('#functionTree').tree({
