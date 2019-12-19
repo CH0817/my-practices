@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 登出
         http.logout().logoutUrl("/logout").logoutSuccessUrl("/login").and();
         // 所有請求均要被驗證，anyRequest()必須在最後否則antMatchers()會出錯
-        // http.authorizeRequests().anyRequest().authenticated().and();
+        http.authorizeRequests().anyRequest().authenticated().and();
     }
 
     private void ignoreH2Console(HttpSecurity http) throws Exception {
