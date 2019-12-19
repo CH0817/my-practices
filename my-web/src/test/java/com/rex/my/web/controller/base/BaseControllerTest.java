@@ -1,52 +1,51 @@
 package com.rex.my.web.controller.base;
 
-import com.rex.MyWebApplication;
-import com.rex.my.business.service.LoginService;
-import com.rex.my.model.dao.primary.User;
-import com.rex.my.web.constant.SessionAttribute;
-import com.rex.my.web.controller.AccountBookController;
-import org.junit.Before;
+import com.rex.my.business.service.AccountService;
+import com.rex.my.business.service.ComboboxService;
+import com.rex.my.business.service.ItemService;
+import com.rex.my.business.service.TradeService;
+import com.rex.my.business.service.impl.MenuServiceImpl;
+import com.rex.my.web.controller.*;
+import com.rex.my.web.controller.security.MockSecuredUser;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpSession;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import java.util.Map;
-import java.util.Objects;
-
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {MyWebApplication.class})
-@WebAppConfiguration
+@EnableWebMvc
+@AutoConfigureMockMvc
+@MockSecuredUser
+@SpringBootTest(classes = {AccountBookController.class, AccountController.class, ComboboxController.class,
+        FunctionController.class, ItemController.class})
 @Ignore
 public abstract class BaseControllerTest {
 
     @Autowired
     protected MockMvc mvc;
-    @Autowired
-    protected MockHttpSession session;
-
-    @Before
-    public void setUserSession() {
-        User user = new User();
-        user.setId("a");
-        user.setEmail("test@email.com");
-        session.setAttribute(SessionAttribute.USER, user);
-    }
+    @MockBean
+    protected TradeService tradeService;
+    @MockBean
+    protected AccountService accountService;
+    @MockBean
+    protected ComboboxService comboboxService;
+    @MockBean
+    protected ItemService itemService;
+    @MockBean
+    protected MenuServiceImpl menuService;
 
     protected ResultActions sendGetRequest(String url) throws Exception {
         return sendRequest(get(url));
@@ -56,32 +55,15 @@ public abstract class BaseControllerTest {
         return sendRequest(get(url).contentType(MediaType.APPLICATION_JSON));
     }
 
-    protected ResultActions sendGetJsonRequestWithUserSession(String url) throws Exception {
-        return sendRequest(get(url).session(session).contentType(MediaType.APPLICATION_JSON));
+    protected ResultActions sendPostJsonRequest(String url) throws Exception {
+        return sendRequest(post(url).with(csrf()).contentType(MediaType.APPLICATION_JSON));
     }
 
-    protected ResultActions sendPostRequest(String url) throws Exception {
-        return sendRequest(post(url));
-    }
-
-    protected ResultActions sendPostRequest(String url, Map<String, String> paramMap) throws Exception {
-        MockHttpServletRequestBuilder postRequest = post(url);
-        if (Objects.nonNull(paramMap)) {
-            paramMap.forEach(postRequest::param);
-        }
-        return sendRequest(postRequest);
-    }
-
-    protected ResultActions sendPostJsonRequestWithUserSession(String url) throws Exception {
-        return sendPostJsonRequestWithUserSession(url, null);
-    }
-
-    protected ResultActions sendPostJsonRequestWithUserSession(String url, Map<String, String> paramMap) throws Exception {
-        MockHttpServletRequestBuilder postRequest = post(url).session(session).contentType(MediaType.APPLICATION_JSON);
-        if (Objects.nonNull(paramMap)) {
-            paramMap.forEach(postRequest::param);
-        }
-        return sendRequest(postRequest);
+    protected ResultActions sendPaginationPostJsonRequest(String url) throws Exception {
+        return sendRequest(post(url).with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("page", "1")
+                .param("rows", "30"));
     }
 
     private ResultActions sendRequest(MockHttpServletRequestBuilder request) throws Exception {
