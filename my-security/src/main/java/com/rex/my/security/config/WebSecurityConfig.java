@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/main")// 驗證成功轉跳頁面，不能與 successForwardUrl、successHandler 共用
                 .failureForwardUrl("/login-error");// 驗證失敗轉跳頁面
         // 所有請求均要被驗證，anyRequest()必須在最後否則antMatchers()會出錯
-        http.authorizeRequests().anyRequest().authenticated().and();
+        // http.authorizeRequests().anyRequest().authenticated().and();
     }
 
     private void ignoreH2Console(HttpSecurity http) throws Exception {
