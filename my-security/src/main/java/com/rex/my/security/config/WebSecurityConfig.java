@@ -4,6 +4,7 @@ package com.rex.my.security.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -21,8 +22,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         ignoreH2Console(http);
-        // 靜態資源
-        http.authorizeRequests().antMatchers("/js/**", "/easy-ui-1.9.0/**").permitAll().and();
         // 不限制請求
         http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll().and();
         // role = USER 可使用
@@ -48,6 +47,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/h2-console/**").and();
         //H2 console 不須驗證
         http.authorizeRequests().antMatchers("/h2-console/**").permitAll().and();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        // 靜態資源
+        web.ignoring().antMatchers("/js/**", "/easy-ui-1.9.0/**").and();
     }
 
 }
