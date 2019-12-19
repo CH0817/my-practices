@@ -16,5 +16,10 @@
         Copyright © 2019-2019 RexYu
     </div>
 </div>
+<div style="display:none;">
+    <form id="logoutForm" th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    </form>
+</div>
 </body>
 </html>

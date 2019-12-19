@@ -7,7 +7,7 @@ let comboboxData = {
     accounts: null,
     items: null,
     accountTypes: null
-}
+};
 
 $(function () {
     setAjaxDefaultCsrf();
@@ -34,7 +34,7 @@ function initMenu() {
             if (attributes !== undefined && attributes.url !== 'logout') {
                 $('body').layout('panel', 'center').panel('clear').panel('refresh', attributes.url);
             } else if (attributes.url === 'logout') {
-                $('<form action="' + attributes.url + '"></form>').appendTo('body').submit();
+                $('#logoutForm').submit();
             }
         }
     });
