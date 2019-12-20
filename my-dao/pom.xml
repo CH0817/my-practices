@@ -7,7 +7,6 @@
         <artifactId>my-practices</artifactId>
         <groupId>com.rex</groupId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>my-dao</artifactId>
     <packaging>jar</packaging>
@@ -50,6 +49,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <!--log4j-->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+        <!--module-->
         <dependency>
             <groupId>com.rex</groupId>
             <artifactId>my-model</artifactId>
