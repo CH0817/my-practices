@@ -1,6 +1,6 @@
 package com.rex.my.business.service.base;
 
-import com.rex.my.business.service.config.BusinessConfig;
+import com.rex.my.business.config.BusinessConfig;
 import com.rex.my.dao.mapper.primary.AccountMapper;
 import com.rex.my.dao.mapper.primary.FunctionMapper;
 import com.rex.my.dao.mapper.primary.ItemMapper;

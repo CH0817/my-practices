@@ -1,4 +1,4 @@
-package com.rex.my.business.service.config;
+package com.rex.my.business.config;
 
 import com.rex.my.dao.config.DaoConfig;
 import org.springframework.context.annotation.ComponentScan;
