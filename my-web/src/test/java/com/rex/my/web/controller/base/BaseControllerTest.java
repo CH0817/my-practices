@@ -5,6 +5,8 @@ import com.rex.my.business.service.ComboboxService;
 import com.rex.my.business.service.ItemService;
 import com.rex.my.business.service.TradeService;
 import com.rex.my.business.service.impl.MenuServiceImpl;
+import com.rex.my.web.advice.ControllerDataBindAdvice;
+import com.rex.my.web.config.WebConfig;
 import com.rex.my.web.controller.*;
 import com.rex.my.web.controller.security.MockSecuredUser;
 import org.junit.Ignore;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @MockSecuredUser
 @SpringBootTest(classes = {AccountBookController.class, AccountController.class, ComboboxController.class,
         FunctionController.class, ItemController.class})
+@Import({WebConfig.class, ControllerDataBindAdvice.class})
 @Ignore
 public abstract class BaseControllerTest {
 

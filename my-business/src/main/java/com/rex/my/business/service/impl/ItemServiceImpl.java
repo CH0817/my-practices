@@ -4,11 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.rex.my.business.service.ItemService;
 import com.rex.my.dao.mapper.primary.ItemMapper;
+import com.rex.my.model.dao.primary.Item;
 import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.model.easyui.grid.ItemGridVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -27,6 +30,20 @@ public class ItemServiceImpl implements ItemService {
             PageHelper.orderBy(pagination.getSort() + " " + pagination.getOrder());
         }
         return new PageInfo<>(mapper.selectForGrid(userId));
+    }
+
+    @Override
+    public String save(String name, String userId) {
+        Item entity = createSaveItem(name, userId);
+        return mapper.insertSelective(entity) == 1 ? entity.getId() : "";
+    }
+
+    private Item createSaveItem(String name, String userId) {
+        Item entity = new Item();
+        entity.setName(name);
+        entity.setCreateDate(new Date());
+        entity.setUserId(userId);
+        return entity;
     }
 
 }

@@ -1,5 +1,7 @@
 'use strict';
 
+let editingIndex = null;
+let isAdd = false;
 let clearButton = null;
 
 let comboboxData = {
@@ -15,8 +17,8 @@ $(function () {
 });
 
 function setAjaxDefaultCsrf() {
-    let token = $("meta[name='_csrf']").attr('content');
-    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $('meta[name=\'_csrf\']').attr('content');
+    let header = $('meta[name=\'_csrf_header\']').attr('content');
 
     let headers = {};
     headers[header] = token;
@@ -87,4 +89,22 @@ function getTextFromCombobox(comboboxData, value) {
         }
     }
     return value;
+}
+
+function resetGridOperation(gridId) {
+    editingIndex = null;
+    isAdd = null;
+    $('#' + gridId).datagrid('acceptChanges');
+}
+
+function isEditing() {
+    return editingIndex === null;
+}
+
+function checkEditing() {
+    let result = isEditing();
+    if (!result) {
+        $.messager.alert('提示', '資料編輯中', 'info');
+    }
+    return result;
 }

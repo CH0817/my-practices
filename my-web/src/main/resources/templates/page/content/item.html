@@ -1,5 +1,11 @@
 <!--FIXME 帳戶設定內容未完成-->
 <div id="content" class="easyui-panel" data-options="fit:true,border:false" xmlns:th="http://www.thymeleaf.org">
     <script th:src="@{/js/item.js}"></script>
-    <table th:id="itemGrid" th:title="項目"></table>
+    <table id="itemGrid" title="項目"></table>
+    <div id="itemGridToolBar">
+        <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true" onClick="addRow()">新增</a>
+        <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onClick="deleteRow()">刪除</a>
+        <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-save" plain="true" disabled="true" onClick="saveEdit()">保存</a>
+        <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" disabled="true" onClick="cancelEdit()">取消</a>
+    </div>
 </div>

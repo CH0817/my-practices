@@ -2,11 +2,13 @@ package com.rex.my.business.service;
 
 import com.github.pagehelper.PageInfo;
 import com.rex.my.business.service.base.BaseServiceTest;
+import com.rex.my.model.dao.primary.Item;
 import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.model.easyui.grid.ItemGridVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +47,18 @@ public class ItemServiceTest extends BaseServiceTest {
         assertEquals(1, result.getTotal());
         assertEquals("id 不相同", vo.getId(), result.getList().get(0).getId());
         assertEquals("name 不相同", vo.getName(), result.getList().get(0).getName());
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void saveWithNoParams() {
+        service.save("", "");
+    }
+
+    @Test
+    public void save() {
+        when(itemMapper.insertSelective(any(Item.class))).thenReturn(1);
+        service.save("測試", "a");
+        verify(itemMapper, times(1)).insertSelective(any(Item.class));
     }
 
 }

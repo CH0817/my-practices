@@ -15,4 +15,8 @@ public abstract class BaseController {
         return (SecuredUser) authentication.getPrincipal();
     }
 
+    protected String getUserId() {
+        return getSecuredUser().getId();
+    }
+
 }
