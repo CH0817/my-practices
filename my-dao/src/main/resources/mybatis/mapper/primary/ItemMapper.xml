@@ -69,4 +69,15 @@
     <select id="selectForGrid" parameterType="string" resultMap="itemGridResultMap">
         select id, name from item where user_id = #{id} and removed = 0
     </select>
+
+    <update id="updateToDeleteByIds">
+        update item set removed = 1
+        <where>
+            <foreach collection="ids" item="id" open="and id in (" close=")" separator=",">
+                #{id}
+            </foreach>
+            and removed = 0
+            and user_id = #{userId}
+        </where>
+    </update>
 </mapper>

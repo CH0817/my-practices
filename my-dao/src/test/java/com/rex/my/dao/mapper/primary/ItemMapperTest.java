@@ -1,19 +1,16 @@
 package com.rex.my.dao.mapper.primary;
 
 import com.rex.my.dao.mapper.primary.base.BaseMapperTest;
-import com.rex.my.model.dao.primary.Account;
 import com.rex.my.model.dao.primary.Item;
 import com.rex.my.model.easyui.grid.ItemGridVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class ItemMapperTest extends BaseMapperTest {
 
@@ -65,6 +62,16 @@ public class ItemMapperTest extends BaseMapperTest {
         assertEquals(3, voList.size());
         assertEquals("a", voList.get(0).getId());
         assertEquals("用餐", voList.get(0).getName());
+    }
+
+    @Test
+    public void deleteByIdsContainErrorId() {
+        assertNotEquals(3, mapper.updateToDeleteByIds(new String[]{"a", "b", "e"}, "a"));
+    }
+
+    @Test
+    public void deleteByIds() {
+        assertEquals(2, mapper.updateToDeleteByIds(new String[]{"a", "b"}, "a"));
     }
 
 }

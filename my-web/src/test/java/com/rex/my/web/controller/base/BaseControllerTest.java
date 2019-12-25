@@ -38,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @Ignore
 public abstract class BaseControllerTest {
 
+    protected String userId = "a";
     @Autowired
     protected MockMvc mvc;
     @MockBean

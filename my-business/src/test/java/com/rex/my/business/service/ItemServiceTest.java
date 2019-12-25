@@ -61,4 +61,16 @@ public class ItemServiceTest extends BaseServiceTest {
         verify(itemMapper, times(1)).insertSelective(any(Item.class));
     }
 
+    @Test(expected = ConstraintViolationException.class)
+    public void deleteWithNoParams() {
+        service.updateToDeleteByIds(new String[]{}, "");
+    }
+
+    @Test
+    public void deleteByIds() {
+        when(itemMapper.updateToDeleteByIds(any(String[].class), eq(userId))).thenReturn(3);
+        service.updateToDeleteByIds(new String[]{"a", "b"}, userId);
+        verify(itemMapper, times(1)).updateToDeleteByIds(any(String[].class), eq(userId));
+    }
+
 }

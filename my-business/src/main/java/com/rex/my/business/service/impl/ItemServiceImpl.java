@@ -38,6 +38,11 @@ public class ItemServiceImpl implements ItemService {
         return mapper.insertSelective(entity) == 1 ? entity.getId() : "";
     }
 
+    @Override
+    public boolean updateToDeleteByIds(String[] ids, String userId) {
+        return ids.length == mapper.updateToDeleteByIds(ids, userId);
+    }
+
     private Item createSaveItem(String name, String userId) {
         Item entity = new Item();
         entity.setName(name);

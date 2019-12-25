@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Ignore
 public abstract class BaseServiceTest {
 
+    protected String userId = "a";
     @MockBean
     protected UserMapper userMapper;
     @MockBean

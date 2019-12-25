@@ -10,6 +10,7 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -46,5 +47,25 @@ public class ItemControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk());
         verify(itemService, times(1)).save(name, userId);
     }
+
+    @Test
+    public void deleteWithNoIds() throws Exception {
+        mvc.perform(delete("/item/delete").with(csrf()))
+                .andDo(print())
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$").value("未選擇刪除項目"));
+    }
+
+    @Test
+    public void deleteByIds() throws Exception {
+        when(itemService.updateToDeleteByIds(any(String[].class), eq(userId))).thenReturn(Boolean.TRUE);
+        mvc.perform(delete("/item/delete").with(csrf())
+                .param("ids", "a", "b"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(Boolean.TRUE));
+        verify(itemService, times(1)).updateToDeleteByIds(any(String[].class), eq(userId));
+    }
+
 
 }
