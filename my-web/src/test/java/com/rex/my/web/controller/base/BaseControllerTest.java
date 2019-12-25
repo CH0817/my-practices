@@ -21,7 +21,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.Map;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -58,6 +61,18 @@ public abstract class BaseControllerTest {
 
     protected ResultActions sendGetJsonRequest(String url) throws Exception {
         return sendRequest(get(url).contentType(MediaType.APPLICATION_JSON));
+    }
+
+    protected ResultActions sendPostRequest(String url) throws Exception {
+        return sendPostRequest(url, null);
+    }
+
+    protected ResultActions sendPostRequest(String url, Map<String, String> params) throws Exception {
+        MockHttpServletRequestBuilder request = post(url).with(csrf());
+        if (!CollectionUtils.isEmpty(params)) {
+            params.forEach(request::param);
+        }
+        return sendRequest(request);
     }
 
     protected ResultActions sendPostJsonRequest(String url) throws Exception {

@@ -1,15 +1,18 @@
 'use strict';
 
 $(function () {
+    initDataGridOperate('accountGrid', 'accountGridToolBar',
+        new DataGridOperateUrlClass('account/save', 'account/update', 'account/delete'));
     initGrid();
 });
 
 function initGrid() {
-    $('#tradeGrid').datagrid({
+    $('#accountGrid').datagrid({
         url: 'account/list',
         fit: true,
         border: false,
         rownumbers: true,
+        toolbar: '#accountGridToolBar',
         pagination: true,
         pageSize: 30,
         pageList: [10, 20, 30],
@@ -71,33 +74,9 @@ function getGridColumns() {
         field: 'operate',
         title: '操作',
         align: 'center',
-        width: 80,
+        width: 60,
         formatter: function (value, row, index) {
-            if (row.editing) {
-                var saveLink = '<a href="javascript:void(0);" onclick="saveRow(this)">保存</a> ';
-                var cancelLink = '<a href="javascript:void(0);" onclick="cancelRow(this)">取消</a>';
-                return saveLink + ' | ' + cancelLink;
-            } else {
-                var editLink = '<a href="javascript:void(0);" onclick="editRow(this)">修改</a> ';
-                var deleteLink = '<a href="javascript:void(0);" onclick="deleteRow(this)">刪除</a>';
-                return editLink + ' | ' + deleteLink;
-            }
+            return '<a href="javascript:void(0);" onclick="editRow(\'' + row.id + '\')">修改</a>';
         }
     }]];
-}
-
-function saveRow() {
-
-}
-
-function cancelRow() {
-
-}
-
-function editRow() {
-
-}
-
-function deleteRow() {
-
 }

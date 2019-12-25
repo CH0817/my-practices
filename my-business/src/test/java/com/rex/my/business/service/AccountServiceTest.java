@@ -2,11 +2,14 @@ package com.rex.my.business.service;
 
 import com.github.pagehelper.PageInfo;
 import com.rex.my.business.service.base.BaseServiceTest;
+import com.rex.my.model.dao.primary.Account;
 import com.rex.my.model.easyui.grid.AccountGridVo;
 import com.rex.my.model.easyui.grid.GridPagination;
+import com.rex.my.model.input.SaveAccount;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +53,17 @@ public class AccountServiceTest extends BaseServiceTest {
         assertEquals("name 不相同", account.getName(), result.getList().get(0).getName());
         assertEquals("account type id 不相同", account.getAccount_type_id(), result.getList().get(0).getAccount_type_id());
         assertEquals("money 不相同", 0, account.getMoney().compareTo(result.getList().get(0).getMoney()));
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void saveWithNoParams() {
+        service.save(null);
+    }
+
+    @Test
+    public void save() {
+        service.save(new SaveAccount());
+        verify(accountMapper, times(1)).insertSelective(any(Account.class));
     }
 
 }
