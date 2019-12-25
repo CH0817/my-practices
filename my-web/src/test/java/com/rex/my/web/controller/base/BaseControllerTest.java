@@ -27,8 +27,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.util.Map;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @RunWith(SpringRunner.class)
@@ -67,7 +66,7 @@ public abstract class BaseControllerTest {
         return sendPostRequest(url, null);
     }
 
-    protected ResultActions sendPostRequest(String url, Map<String, String> params) throws Exception {
+    protected ResultActions sendPostRequest(String url, Map<String, String[]> params) throws Exception {
         MockHttpServletRequestBuilder request = post(url).with(csrf());
         if (!CollectionUtils.isEmpty(params)) {
             params.forEach(request::param);
@@ -84,6 +83,18 @@ public abstract class BaseControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("page", "1")
                 .param("rows", "30"));
+    }
+
+    protected ResultActions sendDeleteRequest(String url) throws Exception {
+        return sendDeleteRequest(url, null);
+    }
+
+    protected ResultActions sendDeleteRequest(String url, Map<String, String[]> params) throws Exception {
+        MockHttpServletRequestBuilder request = delete(url).with(csrf());
+        if (!CollectionUtils.isEmpty(params)) {
+            params.forEach(request::param);
+        }
+        return sendRequest(request);
     }
 
     private ResultActions sendRequest(MockHttpServletRequestBuilder request) throws Exception {

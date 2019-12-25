@@ -75,4 +75,19 @@
     <select id="selectForGrid" parameterType="string" resultMap="AccountGridResultMap">
         select * from account where removed = 0 and user_id = #{userId}
     </select>
+
+    <update id="updateToDeleteByIds">
+        update account
+        <set>
+            removed = 1,
+            update_date = now(),
+        </set>
+        <where>
+            <foreach collection="ids" item="id" open="and id in (" close=")" separator=",">
+                #{id}
+            </foreach>
+            and user_id = #{userId}
+            and removed = 0
+        </where>
+    </update>
 </mapper>

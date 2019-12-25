@@ -69,4 +69,9 @@ public class AccountMapperTest extends BaseMapperTest {
         assertEquals("b", entities.get(0).getAccount_type_id());
     }
 
+    @Test
+    public void updateToDeleteByIds() {
+        assertEquals(2, mapper.updateToDeleteByIds(new String[]{"a", "b"}, "a"));
+    }
+
 }

@@ -39,13 +39,31 @@ public class AccountControllerTest extends BaseControllerTest {
     public void save() throws Exception {
         String id = UUID.randomUUID().toString().replace("-", "");
         when(accountService.save(any(Account.class))).thenReturn(id);
-        Map<String, String> params = new HashMap<>();
-        params.put("name", "測試");
-        params.put("account_type_id", "a");
+        Map<String, String[]> params = new HashMap<>();
+        params.put("name", new String[]{"測試"});
+        params.put("account_type_id", new String[]{"a"});
         sendPostRequest("/account/save", params)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(id));
         verify(accountService, times(1)).save(any(Account.class));
+    }
+
+    @Test
+    public void deleteByIds() throws Exception {
+        when(accountService.updateToDeleteByIds(any(String[].class), eq(userId))).thenReturn(Boolean.TRUE);
+        Map<String, String[]> params = new HashMap<>();
+        params.put("ids", new String[]{"a", "b"});
+        sendDeleteRequest("/account/delete", params)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(Boolean.TRUE));
+        verify(accountService, times(1)).updateToDeleteByIds(any(String[].class), eq(userId));
+    }
+
+    @Test
+    public void deleteByIdsWithNoData() throws Exception {
+        sendDeleteRequest("/account/delete")
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$").value("未選擇刪除項目"));
     }
 
 }

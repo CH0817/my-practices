@@ -8,6 +8,7 @@ import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.model.input.SaveAccount;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Validated
@@ -16,5 +17,7 @@ public interface AccountService {
     PageInfo<AccountGridVo> getAccountsForGrid(GridPagination pagination, String userId);
 
     <E extends Account> String save(@NotNull E input);
+
+    boolean updateToDeleteByIds(@NotNull String[] ids, @NotBlank String userId);
 
 }

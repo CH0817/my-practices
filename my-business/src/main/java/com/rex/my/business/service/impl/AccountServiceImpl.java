@@ -38,4 +38,9 @@ public class AccountServiceImpl implements AccountService {
         return 1 == mapper.insertSelective(entity) ? entity.getId() : "";
     }
 
+    @Override
+    public boolean updateToDeleteByIds(String[] ids, String userId) {
+        return ids.length == mapper.updateToDeleteByIds(ids, userId);
+    }
+
 }
