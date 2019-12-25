@@ -58,7 +58,7 @@
             <if test="userId != null">user_id = #{userId},</if>
         </set>
         <where>
-            id = #{id} and removed = 0
+            id = #{id} and removed = 0 and user_id = #{userId}
         </where>
     </update>
 </mapper>

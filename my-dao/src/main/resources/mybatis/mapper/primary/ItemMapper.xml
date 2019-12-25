@@ -57,7 +57,7 @@
             update_date = #{updateDate},
         </set>
         <where>
-            id = #{id} and removed = 0
+            id = #{id} and removed = 0 and user_id = #{userId}
         </where>
     </update>
 
