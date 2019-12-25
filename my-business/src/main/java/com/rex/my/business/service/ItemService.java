@@ -8,13 +8,14 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Validated
 public interface ItemService {
 
     PageInfo<ItemGridVo> getItemsForGrid(GridPagination pagination, String userId);
 
-    String save(@NotBlank String name, @NotBlank String userId);
+    <E extends Item> String save(@NotNull E entity);
 
     boolean updateToDeleteByIds(@NotEmpty String[] ids, @NotBlank String userId);
 

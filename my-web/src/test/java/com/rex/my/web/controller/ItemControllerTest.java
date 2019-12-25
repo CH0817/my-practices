@@ -3,6 +3,7 @@ package com.rex.my.web.controller;
 import com.github.pagehelper.PageInfo;
 import com.rex.my.model.dao.primary.Item;
 import com.rex.my.model.easyui.grid.GridPagination;
+import com.rex.my.model.input.SaveItem;
 import com.rex.my.web.controller.base.BaseControllerTest;
 import org.junit.Test;
 
@@ -39,13 +40,13 @@ public class ItemControllerTest extends BaseControllerTest {
 
     @Test
     public void save() throws Exception {
-        String userId = "a";
         String name = "測試";
-        when(itemService.save(eq(name), eq(userId))).thenReturn(UUID.randomUUID().toString().replace("-", ""));
-        mvc.perform(post("/item/save").with(csrf()).param("name", name))
+        when(itemService.save(any(SaveItem.class))).thenReturn(UUID.randomUUID().toString().replace("-", ""));
+        mvc.perform(post("/item/save").with(csrf())
+                .param("name", name))
                 .andDo(print())
                 .andExpect(status().isOk());
-        verify(itemService, times(1)).save(name, userId);
+        verify(itemService, times(1)).save(any(SaveItem.class));
     }
 
     @Test

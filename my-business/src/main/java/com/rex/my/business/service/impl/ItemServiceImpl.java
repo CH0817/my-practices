@@ -33,8 +33,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public String save(String name, String userId) {
-        Item entity = createSaveItem(name, userId);
+    public <E extends Item> String save(E entity) {
+        entity.setCreateDate(new Date());
         return mapper.insertSelective(entity) == 1 ? entity.getId() : "";
     }
 
@@ -47,14 +47,6 @@ public class ItemServiceImpl implements ItemService {
     public <E extends Item> Boolean updateById(E entity) {
         entity.setUpdateDate(new Date());
         return 1 == mapper.updateSelectiveByPrimaryKey(entity);
-    }
-
-    private Item createSaveItem(String name, String userId) {
-        Item entity = new Item();
-        entity.setName(name);
-        entity.setCreateDate(new Date());
-        entity.setUserId(userId);
-        return entity;
     }
 
 }

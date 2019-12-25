@@ -4,6 +4,7 @@ import com.rex.my.business.service.ItemService;
 import com.rex.my.model.easyui.grid.DataGrid;
 import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.model.easyui.grid.ItemGridVo;
+import com.rex.my.model.input.SaveItem;
 import com.rex.my.model.input.UpdateItem;
 import com.rex.my.web.controller.base.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 @Controller
@@ -41,8 +41,9 @@ public class ItemController extends BaseController {
 
     @PostMapping("/save")
     @ResponseBody
-    public ResponseEntity<String> save(@NotBlank(message = "名稱不能為空") String name) {
-        return ResponseEntity.ok().body(service.save(name, getUserId()));
+    public ResponseEntity<String> save(@Validated SaveItem item) {
+        item.setUserId(getUserId());
+        return ResponseEntity.ok().body(service.save(item));
     }
 
     @DeleteMapping(value = "/delete", produces = {MediaType.APPLICATION_JSON_VALUE})

@@ -5,6 +5,7 @@ import com.rex.my.business.service.base.BaseServiceTest;
 import com.rex.my.model.dao.primary.Item;
 import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.model.easyui.grid.ItemGridVo;
+import com.rex.my.model.input.SaveItem;
 import com.rex.my.model.input.UpdateItem;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,13 +53,16 @@ public class ItemServiceTest extends BaseServiceTest {
 
     @Test(expected = ConstraintViolationException.class)
     public void saveWithNoParams() {
-        service.save("", "");
+        service.save(null);
     }
 
     @Test
     public void save() {
+        SaveItem entity = new SaveItem();
+        entity.setName("測試");
+        entity.setUserId("a");
         when(itemMapper.insertSelective(any(Item.class))).thenReturn(1);
-        service.save("測試", "a");
+        service.save(entity);
         verify(itemMapper, times(1)).insertSelective(any(Item.class));
     }
 
