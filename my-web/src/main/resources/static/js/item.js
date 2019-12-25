@@ -118,15 +118,15 @@ function editRow(rowId) {
 async function saveEdit() {
     $('#itemGrid').datagrid('endEdit', editingIndex);
     let id = await saveChange({
-        url: isAdd ? 'item/save' : '/item/update',
+        url: isAdd ? 'item/save' : 'item/update',
         data: $('#itemGrid').datagrid('getChanges')[0],
-        method: 'post'
+        method: isAdd ? 'post' : 'put'
     });
     if (id) {
         isAddHandle(id);
         resetGridOperation('itemGrid');
         upsideDownToolBarButtonStatus();
-        showMessage('新增成功');
+        showMessage(isAdd ? '新增成功' : '修改成功');
     }
 }
 

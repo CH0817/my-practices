@@ -10,7 +10,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -23,16 +22,16 @@ public class ControllerDataBindAdvice {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @ExceptionHandler(BindException.class)
-    public String nullPointExHandler(BindException e, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public ResponseEntity<String> nullPointExHandler(BindException e) {
+        logger.error("error: {}", e.getMessage(), e);
         String errorMessage = e.getFieldErrors().stream()
-                .peek(error -> logger.info("error field: {}, message: {}", error.getField(), error.getDefaultMessage()))
+                .peek(error -> logger.info("collect error field: {}, message: {}", error.getField(), error.getDefaultMessage()))
                 .map(FieldError::getDefaultMessage)
                 .filter(Objects::nonNull)
                 .sorted()
                 .collect(Collectors.joining("、"));
-        logger.info("error message: {}", errorMessage);
-        redirectAttributes.addFlashAttribute("message", errorMessage);
-        return "redirect:/";
+        return createResponse(errorMessage);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -43,6 +42,10 @@ public class ControllerDataBindAdvice {
                 .map(ConstraintViolation::getMessage)
                 .peek(m -> logger.info("collect error message: {}", m))
                 .collect(Collectors.joining("、"));
+        return createResponse(errorMessage);
+    }
+
+    private ResponseEntity<String> createResponse(String errorMessage) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .header(HttpHeaders.CONTENT_TYPE, "text/plain;charset=UTF-8")
                 .body(errorMessage);

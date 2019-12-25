@@ -4,6 +4,7 @@ import com.rex.my.business.service.ItemService;
 import com.rex.my.model.easyui.grid.DataGrid;
 import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.model.easyui.grid.ItemGridVo;
+import com.rex.my.model.input.UpdateItem;
 import com.rex.my.web.controller.base.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -48,6 +49,13 @@ public class ItemController extends BaseController {
     @ResponseBody
     public ResponseEntity<Boolean> delete(@NotEmpty(message = "未選擇刪除項目") String[] ids) {
         return ResponseEntity.ok().body(service.updateToDeleteByIds(ids, getUserId()));
+    }
+
+    @PutMapping(value = "/update", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<Boolean> update(@Validated UpdateItem item) {
+        item.setUserId(getUserId());
+        return ResponseEntity.ok().body(service.updateById(item));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.rex.my.web.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.rex.my.model.dao.primary.Item;
 import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.web.controller.base.BaseControllerTest;
 import org.junit.Test;
@@ -10,8 +11,7 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -67,5 +67,24 @@ public class ItemControllerTest extends BaseControllerTest {
         verify(itemService, times(1)).updateToDeleteByIds(any(String[].class), eq(userId));
     }
 
+    @Test
+    public void update() throws Exception {
+        when(itemService.updateById(any(Item.class))).thenReturn(Boolean.TRUE);
+        mvc.perform(put("/item/update").with(csrf())
+                .param("id", "a")
+                .param("name", "測試"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(Boolean.TRUE));
+        verify(itemService, times(1)).updateById(any(Item.class));
+    }
+
+    @Test
+    public void updateWithNoData() throws Exception {
+        mvc.perform(put("/item/update").with(csrf()))
+                .andDo(print())
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$").value("ID不能為空、名稱不能為空"));
+    }
 
 }

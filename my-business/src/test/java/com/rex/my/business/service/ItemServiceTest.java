@@ -5,6 +5,7 @@ import com.rex.my.business.service.base.BaseServiceTest;
 import com.rex.my.model.dao.primary.Item;
 import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.model.easyui.grid.ItemGridVo;
+import com.rex.my.model.input.UpdateItem;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -71,6 +72,13 @@ public class ItemServiceTest extends BaseServiceTest {
         when(itemMapper.updateToDeleteByIds(any(String[].class), eq(userId))).thenReturn(3);
         service.updateToDeleteByIds(new String[]{"a", "b"}, userId);
         verify(itemMapper, times(1)).updateToDeleteByIds(any(String[].class), eq(userId));
+    }
+
+    @Test
+    public void updateById() {
+        when(itemMapper.updateSelectiveByPrimaryKey(any(UpdateItem.class))).thenReturn(1);
+        service.updateById(new Item());
+        verify(itemMapper, times(1)).updateSelectiveByPrimaryKey(any(Item.class));
     }
 
 }

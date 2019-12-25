@@ -43,6 +43,12 @@ public class ItemServiceImpl implements ItemService {
         return ids.length == mapper.updateToDeleteByIds(ids, userId);
     }
 
+    @Override
+    public <E extends Item> Boolean updateById(E entity) {
+        entity.setUpdateDate(new Date());
+        return 1 == mapper.updateSelectiveByPrimaryKey(entity);
+    }
+
     private Item createSaveItem(String name, String userId) {
         Item entity = new Item();
         entity.setName(name);
