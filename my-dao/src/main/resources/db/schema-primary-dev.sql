@@ -73,9 +73,9 @@ CREATE TABLE IF NOT EXISTS `trade`
     FOREIGN KEY (item_id) REFERENCES `item` (id)
 );
 
-CREATE UNIQUE INDEX account_type_name_user_index ON `account_type` (name, user_id);
-CREATE UNIQUE INDEX account_name_account_type_user_index ON `account` (name, account_type_id, user_id);
-CREATE UNIQUE INDEX item_name_user_index ON `item` (name, user_id);
+-- CREATE UNIQUE INDEX account_type_name_user_index ON `account_type` (name, user_id);
+-- CREATE UNIQUE INDEX account_name_account_type_user_index ON `account` (name, account_type_id, user_id);
+-- CREATE UNIQUE INDEX item_name_user_index ON `item` (name, user_id);
 
 CREATE TABLE IF NOT EXISTS `function`
 (
