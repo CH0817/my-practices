@@ -12,6 +12,7 @@ public interface BaseMapper<E> {
 
     E selectByPrimaryKey(String id);
 
+    @Deprecated
     int update2DeleteByPrimaryKey(String id);
 
     int updateSelectiveByPrimaryKey(E entity);
