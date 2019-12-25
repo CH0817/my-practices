@@ -47,23 +47,3 @@ function getGridColumns() {
         }
     }]];
 }
-
-function addRow() {
-    dataGridOperate.addRow();
-}
-
-async function deleteRow() {
-    dataGridOperate.deleteRow();
-}
-
-function editRow(rowId) {
-    dataGridOperate.editRow(rowId);
-}
-
-function saveEdit() {
-    dataGridOperate.saveEdit();
-}
-
-function cancelEdit() {
-    dataGridOperate.cancelEdit();
-}
