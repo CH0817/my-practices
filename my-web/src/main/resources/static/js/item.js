@@ -1,11 +1,8 @@
 'use strict';
 
 $(function () {
-    dataGridOperate = new DataGridOperateClass('itemGrid', 'itemGridToolBar', {
-        saveUrl: 'item/save',
-        updateUrl: 'item/update',
-        deleteUrl: 'item/delete'
-    });
+    initDataGridOperate('itemGrid', 'itemGridToolBar',
+        new DataGridOperateUrlClass('item/save', 'item/update', 'item/delete'));
     initGrid();
 });
 

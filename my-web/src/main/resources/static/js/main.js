@@ -90,6 +90,10 @@ function getTextFromCombobox(comboboxData, value) {
     return value;
 }
 
+function initDataGridOperate(gridId, toolBarId, dataGridOperateUrlClass) {
+    dataGridOperate = new DataGridOperateClass(gridId, toolBarId, dataGridOperateUrlClass);
+}
+
 function isRowEditing() {
     return dataGridOperate.isEditing();
 }

@@ -1,9 +1,5 @@
 class DataGridOperateClass {
-    constructor(gridId, toolBarId, operateUrls = {
-        saveUrl: '',
-        updateUrl: '',
-        deleteUrl: ''
-    }) {
+    constructor(gridId, toolBarId, operateUrls) {
         this.gridId = gridId;
         this.grid = $('#' + gridId);
         this.toolBarId = toolBarId;
