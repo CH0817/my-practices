@@ -1,7 +1,6 @@
 'use strict';
 
-let editingIndex = null;
-let isAdd = false;
+let dataGridOperate = null;
 let clearButton = null;
 
 let comboboxData = {
@@ -91,92 +90,6 @@ function getTextFromCombobox(comboboxData, value) {
     return value;
 }
 
-function resetGridOperation(gridId) {
-    editingIndex = null;
-    isAdd = null;
-    $('#' + gridId).datagrid('acceptChanges');
-}
-
-function isEditing() {
-    return editingIndex === null;
-}
-
-function checkEditing() {
-    let result = isEditing();
-    if (!result) {
-        $.messager.alert('提示', '資料編輯中', 'info');
-    }
-    return result;
-}
-
-function showMessage(message = '') {
-    $.messager.show({
-        title: '訊息',
-        msg: message,
-        showType: 'fade'
-    });
-}
-
-function saveChange(settings = {}, gridId) {
-    verifyAjaxSettings(settings);
-    let defaultSettings = {
-        beforeSend: function (jqXHR, settings) {
-            $.messager.progress();
-        },
-        complete: function (jqXHR, textStatus) {
-            $.messager.progress('close');
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            // TODO 加強這裡
-            if (jqXHR.status == 400) {
-                $.messager.alert('錯誤', jqXHR.responseText, 'error');
-            }
-            $('#' + gridId).datagrid('beginEdit', editingIndex);
-        },
-        success: function (data, textStatus, jqXHR) {
-            return data;
-        }
-    };
-    return $.ajax($.extend(defaultSettings, settings));
-}
-
-function verifyAjaxSettings(settings) {
-    if (!settings.url) {
-        throw 'AJAX settings must contain url';
-    }
-}
-
-function getRowIndexByRowId(gridId, rowId) {
-    for (let row of $('#' + gridId).datagrid('getRows')) {
-        if (row.id == rowId) {
-            return $('#' + gridId).datagrid('getRowIndex', row);
-        }
-    }
-}
-
-function afterCreateItemHandle(gridId, itemId) {
-    $('#' + gridId).datagrid('updateRow', {
-        index: editingIndex,
-        row: {
-            id: itemId
-        }
-    });
-}
-
-function upsideDownToolBarButtonStatus(toolBarId) {
-    $.map($('#' + toolBarId + ' a'), function (linkbutton) {
-        let method = 'enable';
-        if (!$(linkbutton).linkbutton('options').disabled) {
-            method = 'disable';
-        }
-        $(linkbutton).linkbutton(method);
-    });
-}
-
-function confirmPromise(message) {
-    return new Promise((resolve, reject) => {
-        $.messager.confirm('確認', message, function (r) {
-            resolve(r);
-        });
-    });
+function isRowEditing() {
+    return dataGridOperate.isEditing();
 }
