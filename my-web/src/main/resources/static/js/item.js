@@ -47,16 +47,6 @@ function getGridColumns() {
     }]];
 }
 
-function upsideDownToolBarButtonStatus() {
-    $.map($('#itemGridToolBar a'), function (linkbutton) {
-        let method = 'enable';
-        if (!$(linkbutton).linkbutton('options').disabled) {
-            method = 'disable';
-        }
-        $(linkbutton).linkbutton(method);
-    });
-}
-
 function addRow() {
     if (checkEditing()) {
         editingIndex = 0;
@@ -65,7 +55,7 @@ function addRow() {
             index: editingIndex,
             row: {}
         }).datagrid('beginEdit', editingIndex);
-        upsideDownToolBarButtonStatus();
+        upsideDownToolBarButtonStatus('itemGridToolBar');
     }
 }
 
@@ -75,7 +65,7 @@ async function deleteRow() {
         if (rows.length <= 0) {
             $.messager.alert('提示', '請先選擇', 'info');
         } else {
-            let isConfirm = await confirm('確定刪除？');
+            let isConfirm = await confirmPromise('確定刪除？');
             if (isConfirm) {
                 let ids = [];
                 for (let row of rows) {
@@ -99,74 +89,43 @@ async function deleteRow() {
     }
 }
 
-function confirm(message) {
-    return new Promise((resolve, reject) => {
-        $.messager.confirm('確認', message, function (r) {
-            resolve(r);
-        });
-    });
-}
-
 function editRow(rowId) {
     if (checkEditing()) {
-        editingIndex = getRowIndexByRowId(rowId);
+        editingIndex = getRowIndexByRowId('itemGrid', rowId);
         $('#itemGrid').datagrid('beginEdit', editingIndex);
-        upsideDownToolBarButtonStatus();
+        upsideDownToolBarButtonStatus('itemGridToolBar');
     }
 }
 
-async function saveEdit() {
+function saveEdit() {
     $('#itemGrid').datagrid('endEdit', editingIndex);
+    isAdd ? createItem() : editItem();
+}
+
+async function createItem() {
     let id = await saveChange({
-        url: isAdd ? 'item/save' : 'item/update',
+        url: 'item/save',
         data: $('#itemGrid').datagrid('getChanges')[0],
-        method: isAdd ? 'post' : 'put'
-    });
+        method: 'post'
+    }, 'itemGrid');
     if (id) {
-        isAddHandle(id);
+        afterCreateItemHandle('itemGrid', id);
         resetGridOperation('itemGrid');
-        upsideDownToolBarButtonStatus();
-        showMessage(isAdd ? '新增成功' : '修改成功');
+        upsideDownToolBarButtonStatus('itemGridToolBar');
+        showMessage('新增成功');
     }
 }
 
-function isAddHandle(id) {
-    if (isAdd) {
-        $('#itemGrid').datagrid('updateRow', {
-            index: editingIndex,
-            row: {
-                id: id
-            }
-        });
-    }
-}
-
-function saveChange(settings = {}) {
-    verifyAjaxSettings(settings);
-    let defaultSettings = {
-        beforeSend: function (jqXHR, settings) {
-            $.messager.progress();
-        },
-        complete: function (jqXHR, textStatus) {
-            $.messager.progress('close');
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            // TODO 加強這裡
-            if (jqXHR.status == 400) {
-                $.messager.alert('錯誤', jqXHR.responseText, 'error');
-            }
-            $('#itemGrid').datagrid('beginEdit', editingIndex);
-        },
-        success: function (data, textStatus, jqXHR) {
-            return data;
-        }
-    };
-    return $.ajax($.extend(defaultSettings, settings));
-}
-
-function verifyAjaxSettings(settings) {
-    if (!settings.url) {
-        throw 'AJAX settings must contain url';
+async function editItem() {
+    let result = await saveChange({
+        url: 'item/update',
+        data: $('#itemGrid').datagrid('getChanges')[0],
+        method: 'put'
+    });
+    if (result) {
+        resetGridOperation('itemGrid');
+        upsideDownToolBarButtonStatus('itemGridToolBar');
+        showMessage('修改成功');
     }
 }
 
@@ -178,23 +137,7 @@ function cancelEdit() {
                 $('#itemGrid').datagrid('deleteRow', editingIndex);
             }
             resetGridOperation('itemGrid');
-            upsideDownToolBarButtonStatus();
+            upsideDownToolBarButtonStatus('itemGridToolBar');
         }
-    });
-}
-
-function getRowIndexByRowId(rowId) {
-    for (let row of $('#itemGrid').datagrid('getRows')) {
-        if (row.id == rowId) {
-            return $('#itemGrid').datagrid('getRowIndex', row);
-        }
-    }
-}
-
-function showMessage(message = '') {
-    $.messager.show({
-        title: '訊息',
-        msg: message,
-        showType: 'fade'
     });
 }
