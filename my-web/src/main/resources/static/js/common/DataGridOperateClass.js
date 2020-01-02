@@ -141,6 +141,7 @@ class DataGridOperateClass {
     }
 
     saveChange(settings = {}, gridId) {
+        let editingIndex = this.editingIndex;
         let defaultSettings = {
             beforeSend: function (jqXHR, settings) {
                 $.messager.progress();
@@ -153,7 +154,7 @@ class DataGridOperateClass {
                 if (jqXHR.status == 400) {
                     $.messager.alert('錯誤', jqXHR.responseText, 'error');
                 }
-                $('#' + gridId).datagrid('beginEdit', this.editingIndex);
+                $('#' + gridId).datagrid('beginEdit', editingIndex);
             },
             success: function (data, textStatus, jqXHR) {
                 return data;
