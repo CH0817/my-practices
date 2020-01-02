@@ -1,13 +1,13 @@
-package com.rex;
+package com.rex.my.api.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MyWebApplication {
+public class MyApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MyWebApplication.class);
+        SpringApplication.run(MyApiApplication.class);
     }
 
 }
