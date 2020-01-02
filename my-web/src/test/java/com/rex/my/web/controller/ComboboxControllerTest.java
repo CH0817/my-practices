@@ -1,11 +1,13 @@
 package com.rex.my.web.controller;
 
 import com.rex.my.web.controller.base.BaseControllerTest;
+import com.rex.my.web.controller.security.MockSecuredUser;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@MockSecuredUser
 public class ComboboxControllerTest extends BaseControllerTest {
 
     @Test

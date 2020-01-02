@@ -5,6 +5,7 @@ import com.rex.my.model.dao.primary.Item;
 import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.model.input.SaveItem;
 import com.rex.my.web.controller.base.BaseControllerTest;
+import com.rex.my.web.controller.security.MockSecuredUser;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -16,6 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@MockSecuredUser
 public class ItemControllerTest extends BaseControllerTest {
 
     @Test

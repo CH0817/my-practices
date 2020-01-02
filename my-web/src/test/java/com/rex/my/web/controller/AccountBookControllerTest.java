@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.model.input.SaveTrade;
 import com.rex.my.web.controller.base.BaseControllerTest;
+import com.rex.my.web.controller.security.MockSecuredUser;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@MockSecuredUser
 public class AccountBookControllerTest extends BaseControllerTest {
 
     @Test

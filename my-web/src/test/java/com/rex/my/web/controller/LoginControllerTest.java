@@ -1,13 +1,7 @@
 package com.rex.my.web.controller;
 
-import com.rex.my.web.MyWebApplication;
+import com.rex.my.web.controller.base.BaseControllerTest;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
@@ -15,13 +9,7 @@ import static org.springframework.security.test.web.servlet.response.SecurityMoc
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = {MyWebApplication.class})
-@AutoConfigureMockMvc
-public class LoginControllerTest {
-
-    @Autowired
-    private MockMvc mvc;
+public class LoginControllerTest extends BaseControllerTest {
 
     @Test
     public void login() throws Exception {
