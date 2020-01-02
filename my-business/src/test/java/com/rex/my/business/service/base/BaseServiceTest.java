@@ -1,10 +1,7 @@
 package com.rex.my.business.service.base;
 
 import com.rex.my.business.config.BusinessConfig;
-import com.rex.my.dao.mapper.primary.AccountMapper;
-import com.rex.my.dao.mapper.primary.FunctionMapper;
-import com.rex.my.dao.mapper.primary.ItemMapper;
-import com.rex.my.dao.mapper.primary.UserMapper;
+import com.rex.my.dao.mapper.primary.*;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,5 +22,7 @@ public abstract class BaseServiceTest {
     protected AccountMapper accountMapper;
     @MockBean
     protected FunctionMapper functionMapper;
+    @MockBean
+    protected TradeMapper tradeMapper;
 
 }

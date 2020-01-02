@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.rex.my.business.service.TradeService;
 import com.rex.my.dao.mapper.primary.TradeMapper;
+import com.rex.my.model.dao.primary.Trade;
 import com.rex.my.model.easyui.grid.GridPagination;
 import com.rex.my.model.easyui.grid.TradeGridVo;
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class TradeServiceImpl implements TradeService {
@@ -31,6 +34,12 @@ public class TradeServiceImpl implements TradeService {
             PageHelper.orderBy(pagination.getSort() + " " + pagination.getOrder());
         }
         return new PageInfo<>(mapper.selectForGrid(userId));
+    }
+
+    @Override
+    public <E extends Trade> String save(E entity) {
+        entity.setCreateDate(new Date());
+        return mapper.insertSelective(entity) == 1 ? entity.getId() : "";
     }
 
 }

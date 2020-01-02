@@ -1,8 +1,9 @@
 package com.rex.my.dao.mapper.primary;
 
-import com.rex.my.model.constant.TradeTypeEnum;
 import com.rex.my.dao.mapper.primary.base.BaseMapperTest;
+import com.rex.my.model.constant.TradeTypeEnum;
 import com.rex.my.model.dao.primary.Trade;
+import com.rex.my.model.input.SaveTrade;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -28,6 +29,26 @@ public class TradeMapperTest extends BaseMapperTest {
         entity.setMoney(new BigDecimal(100));
         entity.setTradeType(TradeTypeEnum.INCOME.getCode());
         entity.setTradeDate(today);
+        entity.setRemoved(Boolean.TRUE);
+        entity.setCreateDate(today);
+        entity.setUpdateDate(today);
+        int executeCount = mapper.insertSelective(entity);
+        logger.info("id: {}", entity.getId());
+        assertFalse(StringUtils.isEmpty(entity.getId()));
+        assertEquals(32, entity.getId().length());
+        assertEquals(1, executeCount);
+    }
+
+    @Test
+    public void insertSelectiveSaveTrade() {
+        Date today = new Date();
+        SaveTrade entity = new SaveTrade();
+        entity.setUserId("a");
+        entity.setAccount_id("a");
+        entity.setItem_id("a");
+        entity.setMoney(new BigDecimal(100));
+        entity.setTrade_type(TradeTypeEnum.INCOME.getCode());
+        entity.setTrade_date(today);
         entity.setRemoved(Boolean.TRUE);
         entity.setCreateDate(today);
         entity.setUpdateDate(today);

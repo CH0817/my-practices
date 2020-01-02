@@ -1,6 +1,8 @@
 'use strict';
 
 $(function () {
+    initDataGridOperate('tradeGrid', 'tradeGridToolBar',
+        new DataGridOperateUrlClass('account-book/save', 'account-book/update', 'account-book/delete'));
     initGrid();
 });
 
@@ -10,29 +12,11 @@ function initGrid() {
         fit: true,
         border: false,
         rownumbers: true,
+        toolbar: '#tradeGridToolBar',
         pagination: true,
         pageSize: 30,
         pageList: [10, 30, 50, 70, 100],
-        columns: getGridColumns(),
-        onEndEdit: function (index, row) {
-            // var ed = $(this).datagrid('getEditor', {
-            //     index: index,
-            //     field: 'productid'
-            // });
-            // row.productname = $(ed.target).combobox('getText');
-        },
-        onBeforeEdit: function (index, row) {
-            row.editing = true;
-            $(this).datagrid('refreshRow', index);
-        },
-        onAfterEdit: function (index, row) {
-            row.editing = false;
-            $(this).datagrid('refreshRow', index);
-        },
-        onCancelEdit: function (index, row) {
-            row.editing = false;
-            $(this).datagrid('refreshRow', index);
-        }
+        columns: getGridColumns()
     });
 }
 
@@ -128,40 +112,7 @@ function getGridColumns() {
     }, {
         field: 'operate', title: '操作', align: 'center',
         formatter: function (value, row, index) {
-            if (row.editing) {
-                var saveLink = '<a href="javascript:void(0);" onclick="saveRow(this)">保存</a> ';
-                var cancelLink = '<a href="javascript:void(0);" onclick="cancelRow(this)">取消</a>';
-                return saveLink + ' | ' + cancelLink;
-            } else {
-                var editLink = '<a href="javascript:void(0);" onclick="editRow(this)">修改</a> ';
-                var deleteLink = '<a href="javascript:void(0);" onclick="deleteRow(this)">刪除</a>';
-                return editLink + ' | ' + deleteLink;
-            }
+            return '<a href="javascript:void(0);" onclick="editRow(\'' + row.id + '\')">修改</a>';
         }
     }]];
-}
-
-function getRowIndex(target) {
-    var tr = $(target).closest('tr.datagrid-row');
-    return parseInt(tr.attr('datagrid-row-index'));
-}
-
-function saveRow(target) {
-    $('#tradeGrid').datagrid('endEdit', getRowIndex(target));
-}
-
-function cancelRow(target) {
-    $('#tradeGrid').datagrid('cancelEdit', getRowIndex(target));
-}
-
-function editRow(target) {
-    $('#tradeGrid').datagrid('beginEdit', getRowIndex(target));
-}
-
-function deleteRow(target) {
-    $.messager.confirm('確認', '確定刪除？', function (r) {
-        if (r) {
-            $('#tradeGrid').datagrid('deleteRow', getRowIndex(target));
-        }
-    });
 }

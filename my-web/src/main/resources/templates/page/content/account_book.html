@@ -2,4 +2,10 @@
 <div id="content" class="easyui-panel" data-options="fit:true,border:false" xmlns:th="http://www.thymeleaf.org">
     <script th:src="@{/js/account_book.js}"></script>
     <table th:id="tradeGrid" th:title="收支表"></table>
+    <div id="tradeGridToolBar">
+        <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true" onClick="addRow()">新增</a>
+        <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onClick="deleteRow()">刪除</a>
+        <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-save" plain="true" disabled="true" onClick="saveEdit()">保存</a>
+        <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" disabled="true" onClick="cancelEdit()">取消</a>
+    </div>
 </div>
