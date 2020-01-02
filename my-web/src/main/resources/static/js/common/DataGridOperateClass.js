@@ -118,7 +118,7 @@ class DataGridOperateClass {
             url: this.operateUrls.saveUrl,
             data: this.grid.datagrid('getChanges')[0],
             method: 'post'
-        }, this.gridId);
+        });
         if (insertedId) {
             this.afterRemoteCreateHandle(insertedId);
             this.resetGridOperation();
@@ -140,8 +140,9 @@ class DataGridOperateClass {
         }
     }
 
-    saveChange(settings = {}, gridId) {
+    saveChange(settings = {}) {
         let editingIndex = this.editingIndex;
+        let gridId = this.gridId;
         let defaultSettings = {
             beforeSend: function (jqXHR, settings) {
                 $.messager.progress();
