@@ -8,7 +8,8 @@
 <body class="easyui-layout">
 <div data-options="region:'center'">
     <div id="loginWindow" title="登入" style="width:500px;height:200px;padding:10px;">
-        <form id="loginForm" th:action="@{/login}" th:method="post" style="height:55%;width:100%;">
+        <!--th:action必須與security的loginPage()一致-->
+        <form id="loginForm" th:action="@{/login}" method="post" style="height:55%;width:100%;">
             <div>
                 <input th:id="email" th:name="email" style="width: 100%"/>
             </div>
