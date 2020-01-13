@@ -71,6 +71,17 @@ public class LoginTest {
     }
 
     @Test
+    public void loginFailure() {
+        setTextBoxValue("email", "test11111@email.com");
+        setTextBoxValue("password", "11111111");
+
+        // 找到 #loginBtn button 並執行 click event
+        driver.findElement(By.id("loginBtn")).click();
+
+        assertEquals("帳號或密碼錯誤", driver.findElement(By.xpath("//*[@id='loginWindow']/div[1]")).getText());
+    }
+
+    @Test
     public void errorEmailFormat() {
         setTextBoxValue("email", "test@email");
 
