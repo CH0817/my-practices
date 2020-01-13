@@ -47,17 +47,13 @@ public class LoginTest {
             driver.get("http://localhost:8080/my-web/login");
 
             // 輸入 email
-            WebElement email = driver.findElement(By.xpath("//*[@id='email']/following-sibling::span/input[1]"));
-            email.sendKeys("test@email.com");
+            driver.findElement(By.xpath("//*[@id='email']/following-sibling::span/input[1]")).sendKeys("test@email.com");
 
             // 輸入 password
-            WebElement password = driver.findElement(By.xpath("//*[@id='password']/following-sibling::span/input[1]"));
-            password.sendKeys("11111111");
+            driver.findElement(By.xpath("//*[@id='password']/following-sibling::span/input[1]")).sendKeys("11111111");
 
             // 停頓一秒，等待 EasyUI 反應
             Thread.sleep(1000);
-
-            // 模擬滑鼠移動到 Email input 的 span
 
             // 找到 #loginBtn button 並執行 click event
             driver.findElement(By.id("loginBtn")).click();
