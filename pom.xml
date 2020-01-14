@@ -199,6 +199,9 @@
                 <configuration>
                     <forkMode>once</forkMode>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <excludes>
+                        <exclude>**/integration/*.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
