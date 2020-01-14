@@ -48,7 +48,7 @@ public class LoginTest {
             // 找到 #loginBtn button 並執行 click event
             driver.findElement(By.id("loginBtn")).click();
             // 驗證
-            assertEquals("主頁", driver.getTitle());
+            assertEquals("http://localhost:8080/my-web/main", driver.getCurrentUrl());
         } finally {
             driver.close();
         }
