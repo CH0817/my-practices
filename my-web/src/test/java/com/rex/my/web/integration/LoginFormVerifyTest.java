@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
-public class LoginTest {
+public class LoginFormVerifyTest {
 
     private static WebDriver driver;
 
@@ -30,28 +30,6 @@ public class LoginTest {
     public static void closeDriver() {
         // 關閉網頁
         driver.close();
-    }
-
-    @Test
-    public void loginSuccess() throws InterruptedException {
-        // 登入測試，單獨的 WebDriver
-        WebDriver driver = new ChromeDriver();
-        try {
-            driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-            driver.get("http://localhost:8080/my-web/login");
-            // 輸入 email
-            driver.findElement(By.xpath("//*[@id='email']/following-sibling::span/input[1]")).sendKeys("test@email.com");
-            // 輸入 password
-            driver.findElement(By.xpath("//*[@id='password']/following-sibling::span/input[1]")).sendKeys("11111111");
-            // 停頓 0.5 秒，等待 EasyUI 反應
-            Thread.sleep(500);
-            // 找到 #loginBtn button 並執行 click event
-            driver.findElement(By.id("loginBtn")).click();
-            // 驗證
-            assertEquals("http://localhost:8080/my-web/main", driver.getCurrentUrl());
-        } finally {
-            driver.close();
-        }
     }
 
     @Test
