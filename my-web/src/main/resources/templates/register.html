@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/common/header::commonHead(~{::title},_,~{::script})">
-    <title>登入</title>
-    <link rel="stylesheet" th:href="@{/css/my_css.css}"/>
-    <script th:src="@{/js/login.js}"></script>
+    <title>註冊</title>
+    <script th:src="@{/js/register.js}"></script>
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
-    <div id="loginWindow" title="登入" style="width:500px;height:200px;padding:10px;">
-        <!--th:action必須與security的loginPage()一致-->
-        <form id="loginForm" th:action="@{/login}" method="post" style="height:55%;width:100%;">
+    <div id="registerWindow" style="width:500px;height:225px;padding:10px;">
+        <form id="registerForm" th:action="@{/reigster}" method="post" style="height:55%;width:100%;">
             <div>
                 <input th:id="email" th:name="email" style="width: 100%"/>
             </div>
             <div style="margin-top: 5px;">
                 <input th:id="password" th:name="password" style="width: 100%"/>
             </div>
+            <div style="margin-top: 5px;">
+                <input th:id="confirmPassword" th:name="password" style="width: 100%"/>
+            </div>
         </form>
         <div style="display:flex;justify-content:center;height:25%;color:red" th:text="${message}"/>
         <div style="display:flex;align-items:center;justify-content:space-between;height:20%;">
             <div>
-                <a href="#">忘記密碼</a>&nbsp;|&nbsp;<a th:href="@{/register}">註冊</a>
+                <a th:href="@{/login}">登入</a>
             </div>
             <div>
-                <a id="loginBtn" href="javascript:void(0);">登入</a>
+                <a id="registerBtn" href="javascript:void(0);">註冊</a>
             </div>
         </div>
     </div>
