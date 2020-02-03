@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -30,23 +32,15 @@ public class RegisterController {
         return "register";
     }
 
-    @PostMapping("/add")
+    @PostMapping(value = {"", "/"})
     public String register(@Validated Register register, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", getValidationErrorMessage(bindingResult));
+        Optional<String> verifyOptional = service.verify(register, bindingResult);
+        if (verifyOptional.isPresent()) {
+            redirectAttributes.addFlashAttribute("message", verifyOptional.get());
             return "redirect:/register";
         }
-        if (!register.getPassword().equals(register.getConfirmPassword())) {
-            redirectAttributes.addFlashAttribute("message", "二次密碼不相同");
-            return "redirect:/register";
-        }
+        service.register(register);
         return "redirect:/login";
-    }
-
-    private String getValidationErrorMessage(BindingResult bindingResult) {
-        return bindingResult.getFieldErrors().stream()
-                .map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining("，"));
     }
 
 }

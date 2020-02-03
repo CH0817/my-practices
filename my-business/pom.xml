@@ -22,5 +22,9 @@
             <groupId>com.rex</groupId>
             <artifactId>my-dao</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.rex</groupId>
+            <artifactId>my-security</artifactId>
+        </dependency>
     </dependencies>
 </project>

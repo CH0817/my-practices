@@ -55,7 +55,7 @@ function initInputBox() {
         missingMessage: '請再次輸入密碼',
         validType: {
             'range': [8, 12, '密碼'],
-            // 'identicalTo': 'password'
+            'identicalTo': 'password'
         }
     });
 }

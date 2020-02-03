@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         ignoreH2Console(http);
         // 不限制請求
-        http.authorizeRequests().antMatchers("/", "/login", "/logout", "/register/**").permitAll().and();
+        http.authorizeRequests().antMatchers("/", "/login", "/logout", "/register").permitAll().and();
         // role = USER 可使用
         http.authorizeRequests().antMatchers("/main", "/account-book/**", "/account/**", "/combobox/**", "/function/**", "/item/**")
                 .hasRole("USER").and();
@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         // 靜態資源
         web.ignoring().antMatchers("/js/**", "/easy-ui-1.9.0/**").and();
     }

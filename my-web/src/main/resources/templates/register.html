@@ -7,15 +7,15 @@
 <body class="easyui-layout">
 <div data-options="region:'center'">
     <div id="registerWindow" style="width:500px;height:225px;padding:10px;">
-        <form id="registerForm" th:action="@{/register/add}" method="post" style="height:55%;width:100%;">
+        <form id="registerForm" th:action="@{/register}" method="post" style="height:55%;width:100%;">
             <div>
-                <input value="1@1.c" th:id="email" th:name="email" style="width: 100%"/>
+                <input th:id="email" th:name="email" style="width: 100%"/>
             </div>
             <div style="margin-top: 5px;">
-                <input value="11111111" th:id="password" th:name="password" style="width: 100%"/>
+                <input th:id="password" th:name="password" style="width: 100%"/>
             </div>
             <div style="margin-top: 5px;">
-                <input value="11111111" th:id="confirmPassword" th:name="confirmPassword" style="width: 100%"/>
+                <input th:id="confirmPassword" th:name="confirmPassword" style="width: 100%"/>
             </div>
         </form>
         <div style="display:flex;justify-content:center;height:25%;color:red;margin-top:20px;" th:text="${message}"/>
