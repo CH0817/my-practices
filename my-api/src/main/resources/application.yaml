@@ -1,6 +1,0 @@
-spring:
-  profiles:
-    include: @profile.includes@
-server:
-  servlet:
-    context-path: /my-api
