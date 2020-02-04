@@ -6,6 +6,27 @@ spring:
       charset: UTF-8
       force: true
       enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: yu.chenhang
+    password: eokdfugndmqxdrin
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
 server:
   servlet:
     context-path: /my-web
+
+# custom properties
+recaptcha:
+  verify-url: https://www.google.com/recaptcha/api/siteverify
+  v2-checkbox: 6LdiftUUAAAAAKV7Vf_mdY11WKADb0urMx6CAXN1
+  v2-invisible: 6LdcftUUAAAAADqeP0zQnRvuccgJe1BYNkSdgbDk
+  v3: 6LcWN9UUAAAAAJVqjpqJ_K63HleBseo7_2vBARJ0
