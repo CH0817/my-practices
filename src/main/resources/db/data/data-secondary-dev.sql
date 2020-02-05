@@ -1,1 +1,0 @@
-insert into customer (id, email) VALUES ('a', 'test@email.com');

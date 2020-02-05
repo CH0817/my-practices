@@ -1,7 +1,7 @@
-package com.rex.practice.dao.mapper.primary;
+package com.rex.practice.dao.mapper;
 
 import com.rex.practice.constant.TradeTypeEnum;
-import com.rex.practice.dao.mapper.primary.base.BaseMapperTest;
+import com.rex.practice.dao.mapper.base.BaseMapperTest;
 import com.rex.practice.dao.model.primary.Trade;
 import com.rex.practice.model.input.SaveTrade;
 import org.junit.Test;

@@ -1,6 +1,0 @@
-CREATE TABLE IF NOT EXISTS customer
-(
-    id    VARCHAR(36) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id)
-) ENGINE = InnoDB;

@@ -1,9 +1,9 @@
 package com.rex.practice.service.impl;
 
 import com.rex.practice.constant.TradeTypeEnum;
-import com.rex.practice.dao.mapper.primary.AccountMapper;
-import com.rex.practice.dao.mapper.primary.AccountTypeMapper;
-import com.rex.practice.dao.mapper.primary.ItemMapper;
+import com.rex.practice.dao.mapper.AccountMapper;
+import com.rex.practice.dao.mapper.AccountTypeMapper;
+import com.rex.practice.dao.mapper.ItemMapper;
 import com.rex.practice.model.easyui.combobox.ComboboxData;
 import com.rex.practice.service.ComboboxService;
 import org.springframework.beans.factory.annotation.Autowired;

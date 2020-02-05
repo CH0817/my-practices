@@ -1,6 +1,6 @@
-package com.rex.practice.dao.mapper.primary;
+package com.rex.practice.dao.mapper;
 
-import com.rex.practice.dao.mapper.primary.base.BaseMapperTest;
+import com.rex.practice.dao.mapper.base.BaseMapperTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

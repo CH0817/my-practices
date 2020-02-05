@@ -1,6 +1,6 @@
 package com.rex.practice.service.impl;
 
-import com.rex.practice.dao.mapper.primary.FunctionMapper;
+import com.rex.practice.dao.mapper.FunctionMapper;
 import com.rex.practice.dao.model.primary.Function;
 import com.rex.practice.model.easyui.FunctionMenuTreeAttribute;
 import com.rex.practice.model.easyui.Tree;

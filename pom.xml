@@ -27,15 +27,10 @@
         <pagehelper.version>1.2.13</pagehelper.version>
         <log4j.version>1.2.17</log4j.version>
         <selenium.version>3.141.59</selenium.version>
-        <profile.includes>${profileActive},${profileActive}Db,daoLog</profile.includes>
     </properties>
 
     <dependencies>
         <!--Spring Boot-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jta-atomikos</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -106,13 +101,12 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
-            <scope>runtime,test</scope>
         </dependency>
-        <!--log4j-->
+        <!--MySQL-->
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.19</version>
         </dependency>
         <!--Apache commons-->
         <dependency>
@@ -164,12 +158,8 @@
                 <includes>
                     <include>**/application.yaml</include>
                     <include>**/application-${profileActive}.yaml</include>
-                    <include>**/schema-primary-${profileActive}.sql</include>
-                    <include>**/schema-secondary-${profileActive}.sql</include>
-                    <include>**/data-primary-${profileActive}.sql</include>
-                    <include>**/data-secondary-${profileActive}.sql</include>
-                    <include>**/${profileActive}DB.properties</include>
-                    <include>**/log4j.properties</include>
+                    <include>**/schema.sql</include>
+                    <include>**/data-${profileActive}.sql</include>
                 </includes>
             </resource>
         </resources>

@@ -1,6 +1,6 @@
 package com.rex.practice.service.impl;
 
-import com.rex.practice.dao.mapper.primary.UserMapper;
+import com.rex.practice.dao.mapper.UserMapper;
 import com.rex.practice.dao.model.primary.User;
 import com.rex.practice.model.vo.Login;
 import com.rex.practice.service.LoginService;

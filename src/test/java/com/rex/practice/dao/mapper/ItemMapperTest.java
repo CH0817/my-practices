@@ -1,6 +1,6 @@
-package com.rex.practice.dao.mapper.primary;
+package com.rex.practice.dao.mapper;
 
-import com.rex.practice.dao.mapper.primary.base.BaseMapperTest;
+import com.rex.practice.dao.mapper.base.BaseMapperTest;
 import com.rex.practice.dao.model.primary.Item;
 import com.rex.practice.model.easyui.grid.ItemGridVo;
 import org.junit.Test;

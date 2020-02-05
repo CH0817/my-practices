@@ -1,11 +1,11 @@
 spring:
   profiles:
-    include: @profile.includes@
+    active: @profileActive@
   http:
     encoding:
       charset: UTF-8
-      force: true
-      enabled: true
+      force: on
+      enabled: on
   mail:
     host: smtp.gmail.com
     port: 587
@@ -20,11 +20,25 @@ spring:
           writetimeout: 5000
           starttls:
             enable: true
+  datasource:
+    sql-script-encoding: UTF-8
 server:
   servlet:
     context-path: /my-web
 
-# custom properties
+# MyBatis
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+logging:
+  level:
+    com:
+      rex:
+        practice:
+          dao:
+            mapper: debug
+
+# reCAPTCHA properties
 recaptcha:
   verify-url: https://www.google.com/recaptcha/api/siteverify
   v2-checkbox: 6LdiftUUAAAAAKV7Vf_mdY11WKADb0urMx6CAXN1
