@@ -9,3 +9,6 @@ spring:
     initialization-mode: always
     schema: classpath:db/schema.sql
     data: classpath:db/data/data-dev.sql
+  h2:
+    console:
+      enabled: on

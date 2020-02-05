@@ -1,12 +1,4 @@
-SET foreign_key_checks = 0;
-
-DROP TABLE IF EXISTS `user`;
-DROP TABLE IF EXISTS `account_type`;
-DROP TABLE IF EXISTS `account`;
-DROP TABLE IF EXISTS `item`;
-DROP TABLE IF EXISTS `trade`;
-
-CREATE TABLE IF NOT EXISTS `user`
+CREATE TABLE `user`
 (
     id          VARCHAR(32) NOT NULL,
     email       VARCHAR(50) NOT NULL UNIQUE,
@@ -16,7 +8,8 @@ CREATE TABLE IF NOT EXISTS `user`
     update_date DATETIME,
     PRIMARY KEY (id)
 );
-CREATE TABLE IF NOT EXISTS `account_type`
+
+CREATE TABLE `account_type`
 (
     id          VARCHAR(32) NOT NULL,
     name        VARCHAR(10) NOT NULL,
@@ -28,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `account_type`
     FOREIGN KEY (user_id) REFERENCES `user` (id)
 );
 
-CREATE TABLE IF NOT EXISTS `account`
+CREATE TABLE `account`
 (
     id              VARCHAR(32)    NOT NULL,
     name            VARCHAR(50)    NOT NULL,
@@ -43,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `account`
     FOREIGN KEY (account_type_id) REFERENCES `account_type` (id)
 );
 
-CREATE TABLE IF NOT EXISTS `item`
+CREATE TABLE `item`
 (
     id          VARCHAR(32) NOT NULL,
     name        VARCHAR(50) NOT NULL,
@@ -55,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `item`
     FOREIGN KEY (user_id) REFERENCES `user` (id)
 );
 
-CREATE TABLE IF NOT EXISTS `trade`
+CREATE TABLE `trade`
 (
     id          VARCHAR(32)    NOT NULL,
     money       DECIMAL(10, 2) NOT NULL,
@@ -73,11 +66,7 @@ CREATE TABLE IF NOT EXISTS `trade`
     FOREIGN KEY (item_id) REFERENCES `item` (id)
 );
 
--- CREATE UNIQUE INDEX account_type_name_user_index ON `account_type` (name, user_id);
--- CREATE UNIQUE INDEX account_name_account_type_user_index ON `account` (name, account_type_id, user_id);
--- CREATE UNIQUE INDEX item_name_user_index ON `item` (name, user_id);
-
-CREATE TABLE IF NOT EXISTS `function`
+CREATE TABLE `function`
 (
     id        VARCHAR(32) NOT NULL,
     name      VARCHAR(10) NOT NULL,
@@ -88,12 +77,10 @@ CREATE TABLE IF NOT EXISTS `function`
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS `user_function`
+CREATE TABLE `user_function`
 (
     user_id     VARCHAR(32) NOT NULL,
     function_id VARCHAR(32) NOT NULL
 );
 
 CREATE UNIQUE INDEX user_function_index ON `user_function` (user_id, function_id);
-
-SET foreign_key_checks = 1;
