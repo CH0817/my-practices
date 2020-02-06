@@ -7,6 +7,7 @@ import com.rex.practice.model.easyui.grid.ItemGridVo;
 import com.rex.practice.model.input.SaveItem;
 import com.rex.practice.model.input.UpdateItem;
 import com.rex.practice.service.base.BaseServiceTest;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -52,6 +53,8 @@ public class ItemServiceTest extends BaseServiceTest {
     }
 
     @Test(expected = ConstraintViolationException.class)
+    @Ignore
+    @Deprecated
     public void saveWithNoParams() {
         service.save(null);
     }
@@ -67,6 +70,8 @@ public class ItemServiceTest extends BaseServiceTest {
     }
 
     @Test(expected = ConstraintViolationException.class)
+    @Ignore
+    @Deprecated
     public void deleteWithNoParams() {
         service.updateToDeleteByIds(new String[]{}, "");
     }

@@ -1,15 +1,22 @@
 package com.rex.practice.service.base;
 
-import com.rex.practice.PracticeApplication;
+import com.rex.practice.config.BeansConfig;
 import com.rex.practice.dao.mapper.*;
+import com.rex.practice.service.impl.*;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {PracticeApplication.class})
+// TODO 這邊如何減少 class 的宣告？
+@ContextConfiguration(classes = {AccountServiceImpl.class, ComboboxServiceImpl.class, ItemServiceImpl.class,
+        LoginServiceImpl.class, MenuServiceImpl.class, RegisterServiceImpl.class, TradeServiceImpl.class,
+        UserServiceImpl.class})
+@MockBean(classes = {AccountTypeMapper.class})
+@Import({BeansConfig.class})
 @Ignore
 public abstract class BaseServiceTest {
 

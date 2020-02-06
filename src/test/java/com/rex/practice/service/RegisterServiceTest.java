@@ -58,6 +58,7 @@ public class RegisterServiceTest extends BaseServiceTest {
 
     @Test
     public void emailAlreadyRegistered() {
+        bindingResult.addError(new FieldError("", "email", "Email已被註冊"));
         when(userMapper.findByEmail(anyString())).thenReturn(new User());
         Optional<String> verify = service.verify(register, bindingResult);
         assertTrue(verify.isPresent());
