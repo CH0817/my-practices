@@ -1,12 +1,17 @@
 package com.rex.practice.web.controller;
 
+import com.rex.practice.model.input.Register;
 import com.rex.practice.web.controller.base.BaseControllerTest;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.validation.BindingResult;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class RegisterControllerTest extends BaseControllerTest {
@@ -37,6 +42,7 @@ public class RegisterControllerTest extends BaseControllerTest {
 
     @Test
     public void registerHasError() throws Exception {
+        when(registerService.verify(any(Register.class), any(BindingResult.class))).thenReturn(Optional.of("Email已被註冊"));
         params.put("email", new String[]{"test@email.com"});
         sendPostRequest("/register", params)
                 .andExpect(status().is3xxRedirection())

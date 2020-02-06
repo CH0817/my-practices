@@ -1,18 +1,17 @@
 package com.rex.practice.web.controller.base;
 
-import com.rex.practice.PracticeApplication;
-import com.rex.practice.service.AccountService;
-import com.rex.practice.service.ComboboxService;
-import com.rex.practice.service.ItemService;
-import com.rex.practice.service.TradeService;
+import com.rex.practice.model.recapthcha.ReCaptchaProperty;
+import com.rex.practice.service.*;
 import com.rex.practice.service.impl.MenuServiceImpl;
+import com.rex.practice.web.controller.*;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -26,8 +25,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {PracticeApplication.class})
+@WebMvcTest(controllers = {AccountBookController.class, AccountController.class, ComboboxController.class,
+        FunctionController.class, ItemController.class, LoginController.class, RegisterController.class})
 @AutoConfigureMockMvc
+@MockBean(classes = {UserService.class, JavaMailSender.class, ReCaptchaProperty.class})
 @Ignore
 public abstract class BaseControllerTest {
 
@@ -44,6 +45,8 @@ public abstract class BaseControllerTest {
     protected ItemService itemService;
     @MockBean
     protected MenuServiceImpl menuService;
+    @MockBean
+    protected RegisterService registerService;
 
     protected ResultActions sendGetRequest(String url) throws Exception {
         return sendRequest(get(url));
