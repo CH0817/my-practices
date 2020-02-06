@@ -4,6 +4,8 @@ import com.rex.practice.model.input.Register;
 import com.rex.practice.service.RegisterService;
 import com.rex.practice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -17,10 +19,12 @@ import java.util.stream.Collectors;
 public class RegisterServiceImpl implements RegisterService {
 
     private UserService userService;
+    private JavaMailSender javaMailSender;
 
     @Autowired
-    public RegisterServiceImpl(UserService userService) {
+    public RegisterServiceImpl(UserService userService, JavaMailSender javaMailSender) {
         this.userService = userService;
+        this.javaMailSender = javaMailSender;
     }
 
     @Override
@@ -40,7 +44,18 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public void register(Register register) {
-        userService.addUser(register);
+        if (userService.addUser(register)) {
+            sendConfirmEmail(register.getEmail());
+        }
+    }
+
+    private void sendConfirmEmail(String email) {
+        // TODO 註冊後要發送檢核 email 信件，資料庫要增加確定欄位，確認時間，確認 URL 有效期限
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(email);
+        msg.setSubject("Email確認");
+        msg.setText("點此連結前往重設密碼頁面\nhttps://www.google.com");
+        javaMailSender.send(msg);
     }
 
     private String getFieldErrorDefaultMessages(BindingResult bindingResult) {

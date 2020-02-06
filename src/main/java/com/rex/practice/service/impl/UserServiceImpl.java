@@ -27,12 +27,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(Register register) {
+    public boolean addUser(Register register) {
         User user = new User();
         BeanUtils.copyProperties(register, user);
         user.setPassword(passwordEncoder.encode(register.getPassword()));
         user.setCreateDate(new Date());
-        userMapper.insertSelective(user);
+        return userMapper.insertSelective(user) == 1;
     }
 
     @Override
