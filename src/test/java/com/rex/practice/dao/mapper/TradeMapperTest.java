@@ -68,12 +68,7 @@ public class TradeMapperTest extends BaseMapperTest {
     public void selectByPrimaryKey() {
         assertEquals("a", mapper.selectByPrimaryKey("a").getId());
     }
-
-    @Test
-    public void update2DeleteByPrimaryKey() {
-        assertEquals(1, mapper.update2DeleteByPrimaryKey("a"));
-    }
-
+    
     @Test
     public void updateSelectiveByPrimaryKey() {
         Trade entity = mapper.selectByPrimaryKey("a");

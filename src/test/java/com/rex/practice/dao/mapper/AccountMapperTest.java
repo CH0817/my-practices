@@ -48,11 +48,6 @@ public class AccountMapperTest extends BaseMapperTest {
     }
 
     @Test
-    public void update2DeleteByPrimaryKey() {
-        assertEquals(1, mapper.update2DeleteByPrimaryKey("a"));
-    }
-
-    @Test
     public void updateByPrimaryKey() {
         Account entity = mapper.selectByPrimaryKey("a");
         entity.setUpdateDate(new Date());

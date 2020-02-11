@@ -44,11 +44,6 @@ public class ItemMapperTest extends BaseMapperTest {
     }
 
     @Test
-    public void update2DeleteByPrimaryKey() {
-        assertEquals(1, mapper.update2DeleteByPrimaryKey("a"));
-    }
-
-    @Test
     public void updateSelectiveByPrimaryKey() {
         Item entity = mapper.selectByPrimaryKey("a");
         entity.setUpdateDate(new Date());
