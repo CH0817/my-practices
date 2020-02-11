@@ -9,4 +9,15 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="token" jdbcType="VARCHAR" property="token" />
   </resultMap>
+
+  <insert id="insertSelective" parameterType="com.rex.practice.dao.model.RegisterToken">
+    insert into register_token
+    <trim prefix="(" suffix=")">
+      email, token
+    </trim>
+    values
+    <trim prefix="(" suffix=")">
+      #{email}, #{token}
+    </trim>
+  </insert>
 </mapper>
