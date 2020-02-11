@@ -13,4 +13,9 @@
     <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
     <result column="sorted" jdbcType="SMALLINT" property="sorted" />
   </resultMap>
+
+  <select id="findFunctions" parameterType="string" resultMap="BaseResultMap">
+    select f.* from function f, user_function uf
+    where uf.user_id = #{userId} and f.id = uf.function_id
+  </select>
 </mapper>

@@ -17,4 +17,68 @@
     <result column="account_id" jdbcType="VARCHAR" property="accountId" />
     <result column="item_id" jdbcType="VARCHAR" property="itemId" />
   </resultMap>
+
+  <insert id="insertSelective" parameterType="com.rex.practice.dao.model.Trade">
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into trade
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id, money, trade_type, trade_date,
+      <if test="removed != null">removed,</if>
+      create_date,
+      <if test="updateDate != null">update_date,</if>
+      user_id, account_id, item_id,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      #{id}, #{money}, #{tradeType}, #{tradeDate},
+      <if test="removed != null">#{removed},</if>
+      #{createDate},
+      <if test="updateDate != null">#{updateDate},</if>
+      #{userId}, #{accountId}, #{itemId},
+    </trim>
+  </insert>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from trade
+    where removed = 0 and user_id = #{userId}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="string" resultMap="BaseResultMap">
+    select * from trade where id = #{id} and removed = 0
+  </select>
+
+  <update id="updateSelectiveByPrimaryKey" parameterType="com.rex.practice.dao.model.Trade">
+    update trade
+    <set>
+      <if test="money != null">money = #{money},</if>
+      <if test="tradeType != null">trade_type = #{tradeType},</if>
+      <if test="tradeDate != null">trade_date = #{tradeDate},</if>
+      <if test="removed != null">removed = #{removed},</if>
+      <if test="accountId != null">account_id = #{accountId},</if>
+      <if test="itemId != null">item_id = #{itemId},</if>
+      update_date = #{updateDate},
+    </set>
+    <where>
+      id = #{id} and removed = 0 and user_id = #{userId}
+    </where>
+  </update>
+
+  <resultMap id="TradeGridResultMap" type="com.rex.practice.model.easyui.grid.TradeGridVo">
+    <id column="id" jdbcType="VARCHAR" property="id"/>
+    <result column="money" jdbcType="DECIMAL" property="money"/>
+    <result column="trade_type" jdbcType="VARCHAR" property="trade_type"/>
+    <result column="trade_date" jdbcType="DATE" property="trade_date"/>
+    <result column="account_id" jdbcType="VARCHAR" property="account_id"/>
+    <result column="item_id" jdbcType="VARCHAR" property="item_id"/>
+  </resultMap>
+
+  <select id="selectForGrid" resultMap="TradeGridResultMap">
+    select t.id, t.money, t.trade_type, t.trade_date, t.account_id, t.item_id
+    from trade t
+    left join account a on t.account_id = a.id
+    left join item i on t.item_id = i.id
+    where t.removed = 0 and t.user_id = #{userId}
+  </select>
 </mapper>

@@ -15,4 +15,75 @@
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="account_type_id" jdbcType="VARCHAR" property="accountTypeId" />
   </resultMap>
+
+  <insert id="insertSelective" parameterType="com.rex.practice.dao.model.Account">
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id, name, money,
+      <if test="removed != null">removed,</if>
+      create_date,
+      <if test="updateDate != null">update_date,</if>
+      user_id, account_type_id,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      #{id}, #{name}, #{money},
+      <if test="removed != null">#{removed},</if>
+      #{createDate},
+      <if test="updateDate != null">#{updateDate},</if>
+      #{userId}, #{accountTypeId}
+    </trim>
+  </insert>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from account
+    where removed = 0 and user_id = #{userId}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="string" resultMap="BaseResultMap">
+    select * from account where id = #{id} and removed = 0
+  </select>
+
+  <update id="updateSelectiveByPrimaryKey" parameterType="com.rex.practice.dao.model.Account">
+    update account
+    <set>
+      <if test="name != null">name = #{name},</if>
+      <if test="money != null">money = #{money},</if>
+      <if test="removed != null">removed = #{removed},</if>
+      <if test="accountTypeId != null">account_type_id = #{accountTypeId},</if>
+      update_date = #{updateDate}
+    </set>
+    <where>
+      id = #{id} and removed = 0 and user_id = #{userId}
+    </where>
+  </update>
+
+  <resultMap id="AccountGridResultMap" type="com.rex.practice.model.easyui.grid.AccountGridVo">
+    <id column="id" jdbcType="VARCHAR" property="id"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="money" jdbcType="DECIMAL" property="money"/>
+    <result column="account_type_id" jdbcType="VARCHAR" property="account_type_id"/>
+  </resultMap>
+
+  <select id="selectForGrid" parameterType="string" resultMap="AccountGridResultMap">
+    select * from account where removed = 0 and user_id = #{userId}
+  </select>
+
+  <update id="updateToDeleteByIds">
+    update account
+    <set>
+      removed = 1,
+      update_date = now(),
+    </set>
+    <where>
+      <foreach collection="ids" item="id" open="and id in (" close=")" separator=",">
+        #{id}
+      </foreach>
+      and user_id = #{userId}
+      and removed = 0
+    </where>
+  </update>
 </mapper>

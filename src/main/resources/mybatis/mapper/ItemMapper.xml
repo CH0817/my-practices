@@ -13,4 +13,67 @@
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
   </resultMap>
+
+  <insert id="insertSelective" parameterType="com.rex.practice.dao.model.Item">
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id, name,
+      <if test="removed != null">removed,</if>
+      create_date,
+      <if test="updateDate != null">update_date,</if>
+      user_id,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      #{id}, #{name},
+      <if test="removed != null">#{removed},</if>
+      #{createDate},
+      <if test="updateDate != null">#{updateDate},</if>
+      #{userId},
+    </trim>
+  </insert>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from item
+    where removed = 0 and user_id = #{userId}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="string" resultMap="BaseResultMap">
+    select * from item where id = #{id} and removed = 0
+  </select>
+
+  <update id="updateSelectiveByPrimaryKey" parameterType="com.rex.practice.dao.model.Item">
+    update item
+    <set>
+      <if test="name != null">name = #{name},</if>
+      <if test="removed != null">removed = #{removed},</if>
+      update_date = #{updateDate},
+    </set>
+    <where>
+      id = #{id} and removed = 0 and user_id = #{userId}
+    </where>
+  </update>
+
+  <resultMap id="itemGridResultMap" type="com.rex.practice.model.easyui.grid.ItemGridVo">
+    <id column="id" jdbcType="VARCHAR" property="id"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+  </resultMap>
+
+  <select id="selectForGrid" parameterType="string" resultMap="itemGridResultMap">
+    select id, name from item where user_id = #{id} and removed = 0
+  </select>
+
+  <update id="updateToDeleteByIds">
+    update item set removed = 1
+    <where>
+      <foreach collection="ids" item="id" open="and id in (" close=")" separator=",">
+        #{id}
+      </foreach>
+      and removed = 0
+      and user_id = #{userId}
+    </where>
+  </update>
 </mapper>
