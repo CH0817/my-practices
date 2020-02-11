@@ -1,7 +1,7 @@
 package com.rex.practice.web.controller.security.config;
 
 import com.rex.practice.dao.mapper.UserMapper;
-import com.rex.practice.dao.model.primary.User;
+import com.rex.practice.dao.model.User;
 import com.rex.practice.model.security.CustomUserDetailsServiceImpl;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;

@@ -1,10 +1,10 @@
 package com.rex.practice.model.easyui.combobox;
 
 import com.rex.practice.constant.TradeTypeEnum;
+import com.rex.practice.dao.model.Account;
+import com.rex.practice.dao.model.AccountType;
+import com.rex.practice.dao.model.Item;
 import com.rex.practice.model.base.BaseModel;
-import com.rex.practice.dao.model.primary.Account;
-import com.rex.practice.dao.model.primary.AccountType;
-import com.rex.practice.dao.model.primary.Item;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,6 @@
 package com.rex.practice.model.input;
 
-import com.rex.practice.dao.model.primary.Trade;
+import com.rex.practice.dao.model.Trade;
 import lombok.Getter;
 import lombok.Setter;
 

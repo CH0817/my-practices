@@ -3,7 +3,7 @@ package com.rex.practice.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.rex.practice.dao.mapper.AccountMapper;
-import com.rex.practice.dao.model.primary.Account;
+import com.rex.practice.dao.model.Account;
 import com.rex.practice.model.easyui.grid.AccountGridVo;
 import com.rex.practice.model.easyui.grid.GridPagination;
 import com.rex.practice.service.AccountService;

@@ -1,6 +1,6 @@
 package com.rex.practice.service;
 
-import com.rex.practice.dao.model.primary.User;
+import com.rex.practice.dao.model.User;
 import com.rex.practice.model.input.Register;
 import com.rex.practice.service.base.BaseServiceTest;
 import org.junit.Test;

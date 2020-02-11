@@ -1,6 +1,6 @@
 package com.rex.practice.service;
 
-import com.rex.practice.dao.model.primary.Function;
+import com.rex.practice.dao.model.Function;
 import com.rex.practice.model.easyui.FunctionMenuTreeAttribute;
 import com.rex.practice.model.easyui.Tree;
 import com.rex.practice.service.base.BaseServiceTest;

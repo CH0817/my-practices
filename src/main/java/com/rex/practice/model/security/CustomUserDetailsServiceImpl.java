@@ -1,7 +1,7 @@
 package com.rex.practice.model.security;
 
 import com.rex.practice.dao.mapper.UserMapper;
-import com.rex.practice.dao.model.primary.User;
+import com.rex.practice.dao.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,7 +1,7 @@
 package com.rex.practice.dao.mapper;
 
 import com.rex.practice.dao.mapper.base.BaseMapperTest;
-import com.rex.practice.dao.model.primary.Item;
+import com.rex.practice.dao.model.Item;
 import com.rex.practice.model.easyui.grid.ItemGridVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

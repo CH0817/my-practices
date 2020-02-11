@@ -1,7 +1,7 @@
 package com.rex.practice.dao.mapper;
 
 import com.rex.practice.dao.mapper.base.BaseMapperTest;
-import com.rex.practice.dao.model.primary.AccountType;
+import com.rex.practice.dao.model.AccountType;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;

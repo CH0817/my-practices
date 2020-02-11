@@ -1,6 +1,6 @@
 package com.rex.practice.web.controller.security;
 
-import com.rex.practice.dao.model.primary.User;
+import com.rex.practice.dao.model.User;
 import com.rex.practice.model.security.SecuredUser;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

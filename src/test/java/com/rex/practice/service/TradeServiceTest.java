@@ -1,6 +1,6 @@
 package com.rex.practice.service;
 
-import com.rex.practice.dao.model.primary.Trade;
+import com.rex.practice.dao.model.Trade;
 import com.rex.practice.model.input.SaveTrade;
 import com.rex.practice.service.base.BaseServiceTest;
 import org.junit.Test;

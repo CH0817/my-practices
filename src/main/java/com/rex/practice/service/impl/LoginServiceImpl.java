@@ -1,7 +1,7 @@
 package com.rex.practice.service.impl;
 
 import com.rex.practice.dao.mapper.UserMapper;
-import com.rex.practice.dao.model.primary.User;
+import com.rex.practice.dao.model.User;
 import com.rex.practice.model.vo.Login;
 import com.rex.practice.service.LoginService;
 import org.slf4j.Logger;

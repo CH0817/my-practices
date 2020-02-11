@@ -1,8 +1,8 @@
 package com.rex.practice.model.easyui;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.rex.practice.dao.model.Function;
 import com.rex.practice.model.base.BaseModel;
-import com.rex.practice.dao.model.primary.Function;
 import com.rex.practice.model.easyui.base.TreeAttribute;
 import lombok.Getter;
 import lombok.Setter;
