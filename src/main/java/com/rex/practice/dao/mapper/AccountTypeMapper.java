@@ -1,7 +1,7 @@
 package com.rex.practice.dao.mapper;
 
 import com.rex.practice.dao.mapper.base.BaseMapper;
-import com.rex.practice.dao.model.primary.AccountType;
+import com.rex.practice.dao.model.AccountType;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
