@@ -80,7 +80,12 @@ CREATE TABLE `function`
 CREATE TABLE `user_function`
 (
     user_id     VARCHAR(32) NOT NULL,
-    function_id VARCHAR(32) NOT NULL
+    function_id VARCHAR(32) NOT NULL,
+    PRIMARY KEY (user_id, function_id)
 );
 
-CREATE UNIQUE INDEX user_function_index ON `user_function` (user_id, function_id);
+CREATE TABLE `register_token`
+(
+    email VARCHAR(50) NOT NULL UNIQUE,
+    token VARCHAR(32) NOT NULL
+);
