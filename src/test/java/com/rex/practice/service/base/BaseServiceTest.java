@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 // TODO 這邊如何減少 class 的宣告？
 @ContextConfiguration(classes = {AccountServiceImpl.class, ComboboxServiceImpl.class, ItemServiceImpl.class,
         LoginServiceImpl.class, MenuServiceImpl.class, RegisterServiceImpl.class, TradeServiceImpl.class,
-        UserServiceImpl.class})
+        UserServiceImpl.class, TokenServiceImpl.class})
 @MockBean(classes = {AccountTypeMapper.class, JavaMailSender.class})
 @Import({BeansConfig.class})
 @Ignore
@@ -32,5 +32,7 @@ public abstract class BaseServiceTest {
     protected FunctionMapper functionMapper;
     @MockBean
     protected TradeMapper tradeMapper;
+    @MockBean
+    protected RegisterTokenMapper registerTokenMapper;
 
 }
