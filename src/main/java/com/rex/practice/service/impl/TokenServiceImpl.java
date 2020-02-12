@@ -7,6 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -26,6 +29,7 @@ public class TokenServiceImpl implements TokenService {
         RegisterToken entity = new RegisterToken();
         entity.setEmail(email);
         entity.setToken(UUID.randomUUID().toString().replace("-", ""));
+        entity.setExpireDate(Date.from(LocalDate.now().plusDays(7L).atStartOfDay(ZoneId.systemDefault()).toInstant()));
         return registerTokenMapper.insertSelective(entity) == 1 ? entity.getToken() : "";
     }
 

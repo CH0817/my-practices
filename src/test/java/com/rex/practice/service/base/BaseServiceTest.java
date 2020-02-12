@@ -30,7 +30,7 @@ public abstract class BaseServiceTest {
     @MockBean
     protected AccountMapper accountMapper;
     @MockBean
-    protected FunctionMapper functionMapper;
+    protected FunctionsMapper functionMapper;
     @MockBean
     protected TradeMapper tradeMapper;
     @MockBean

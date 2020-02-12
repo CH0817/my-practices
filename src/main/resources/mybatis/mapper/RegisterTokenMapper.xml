@@ -14,11 +14,11 @@
   <insert id="insertSelective" parameterType="com.rex.practice.dao.model.RegisterToken">
     insert into register_token
     <trim prefix="(" suffix=")">
-      email, token
+      email, token, expire_date
     </trim>
     values
     <trim prefix="(" suffix=")">
-      #{email}, #{token}
+      #{email}, #{token}, #{expireDate}
     </trim>
   </insert>
 

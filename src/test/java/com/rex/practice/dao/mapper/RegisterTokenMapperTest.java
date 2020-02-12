@@ -5,6 +5,9 @@ import com.rex.practice.dao.model.RegisterToken;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -21,6 +24,7 @@ public class RegisterTokenMapperTest extends BaseMapperTest {
         RegisterToken entity = new RegisterToken();
         entity.setEmail("test@mail.com");
         entity.setToken(UUID.randomUUID().toString().replace("-", ""));
+        entity.setExpireDate(Date.from(LocalDate.now().plusDays(7L).atStartOfDay(ZoneId.systemDefault()).toInstant()));
         assertEquals(1, mapper.insertSelective(entity));
     }
 
