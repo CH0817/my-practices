@@ -4,4 +4,6 @@ public interface TokenService {
 
     String createRegisterToken(String email);
 
+    String getRegisterToken(String email);
+
 }
