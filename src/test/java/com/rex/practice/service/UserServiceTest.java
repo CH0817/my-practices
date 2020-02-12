@@ -5,22 +5,36 @@ import com.rex.practice.model.input.Register;
 import com.rex.practice.service.base.BaseServiceTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
+import java.util.UUID;
+
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class UserServiceTest extends BaseServiceTest {
 
     @Autowired
     private UserService service;
+    @SpyBean
+    private TokenService tokenService;
 
     @Test
     public void addUser() {
+        String email = "1@1.c";
+
+        when(userMapper.insertSelective(any(User.class))).thenReturn(1);
+        doReturn(UUID.randomUUID().toString()).when(tokenService).createRegisterToken(email);
+
         Register register = new Register();
-        register.setEmail("1@1.c");
+        register.setEmail(email);
         register.setPassword("11111111");
-        service.addUser(register);
+
+        assertTrue(service.addUser(register));
+
+        verify(userMapper, times(1)).insertSelective(any(User.class));
+        verify(tokenService, times(1)).createRegisterToken(email);
     }
 
     @Test

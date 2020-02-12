@@ -3,6 +3,7 @@ package com.rex.practice.service.impl;
 import com.rex.practice.dao.mapper.UserMapper;
 import com.rex.practice.dao.model.User;
 import com.rex.practice.model.input.Register;
+import com.rex.practice.service.TokenService;
 import com.rex.practice.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ public class UserServiceImpl implements UserService {
 
     private UserMapper userMapper;
     private PasswordEncoder passwordEncoder;
+    private TokenService tokenService;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder, TokenService tokenService) {
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.tokenService = tokenService;
     }
 
     @Override
@@ -32,7 +35,11 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(register, user);
         user.setPassword(passwordEncoder.encode(register.getPassword()));
         user.setCreateDate(new Date());
-        return userMapper.insertSelective(user) == 1;
+        boolean result = userMapper.insertSelective(user) == 1;
+        if (result) {
+            tokenService.createRegisterToken(register.getEmail());
+        }
+        return result;
     }
 
     @Override
