@@ -7,8 +7,8 @@ import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -16,8 +16,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ContextConfiguration(classes = {AccountServiceImpl.class, ComboboxServiceImpl.class, ItemServiceImpl.class,
         LoginServiceImpl.class, MenuServiceImpl.class, RegisterServiceImpl.class, TradeServiceImpl.class,
         UserServiceImpl.class, TokenServiceImpl.class})
-@MockBean(classes = {AccountTypeMapper.class, JavaMailSender.class})
+@MockBean(classes = {AccountTypeMapper.class})
 @Import({BeansConfig.class})
+@TestPropertySource(locations = {"classpath:test.properties"})
 @Ignore
 public abstract class BaseServiceTest {
 
