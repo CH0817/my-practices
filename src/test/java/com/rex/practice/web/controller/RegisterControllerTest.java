@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class RegisterControllerTest extends BaseControllerTest {
@@ -38,15 +38,17 @@ public class RegisterControllerTest extends BaseControllerTest {
         sendPostRequest("/register", params)
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/login"));
+        verify(registerService, times(1)).register(any(Register.class));
     }
 
     @Test
     public void registerHasError() throws Exception {
-        when(registerService.verify(any(Register.class), any(BindingResult.class))).thenReturn(Optional.of("Email已被註冊"));
+        Optional<String> verifyOptional = Optional.of("Email已被註冊");
+        when(registerService.verify(any(Register.class), any(BindingResult.class))).thenReturn(verifyOptional);
         params.put("email", new String[]{"test@email.com"});
         sendPostRequest("/register", params)
                 .andExpect(status().is3xxRedirection())
-                .andExpect(flash().attributeExists("message"))
+                .andExpect(flash().attribute("message", verifyOptional.get()))
                 .andExpect(view().name("redirect:/register"));
     }
 
