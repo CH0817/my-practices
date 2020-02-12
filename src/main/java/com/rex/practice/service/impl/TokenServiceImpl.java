@@ -25,7 +25,7 @@ public class TokenServiceImpl implements TokenService {
         assert StringUtils.isNotBlank(email);
         RegisterToken entity = new RegisterToken();
         entity.setEmail(email);
-        entity.setToken(UUID.randomUUID().toString());
+        entity.setToken(UUID.randomUUID().toString().replace("-", ""));
         return registerTokenMapper.insertSelective(entity) == 1 ? entity.getToken() : "";
     }
 
