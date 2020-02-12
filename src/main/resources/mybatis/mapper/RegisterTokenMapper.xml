@@ -20,4 +20,8 @@
       #{email}, #{token}
     </trim>
   </insert>
+
+  <select id="findByEmail" parameterType="string" resultMap="BaseResultMap">
+    select * from register_token where email = #{email}
+  </select>
 </mapper>

@@ -5,9 +5,11 @@ import com.rex.practice.dao.model.RegisterToken;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class RegisterTokenMapperTest extends BaseMapperTest {
 
@@ -20,6 +22,11 @@ public class RegisterTokenMapperTest extends BaseMapperTest {
         entity.setEmail("test@mail.com");
         entity.setToken(UUID.randomUUID().toString().replace("-", ""));
         assertEquals(1, mapper.insertSelective(entity));
+    }
+
+    @Test
+    public void findByEmail() {
+        assertTrue(Objects.nonNull(mapper.findByEmail("test@email.com")));
     }
 
 }

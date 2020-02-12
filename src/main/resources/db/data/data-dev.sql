@@ -129,3 +129,5 @@ insert into user_function (user_id, function_id) values (select id from user whe
 insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '帳戶');
 insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '項目');
 insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '登出');
+
+insert into register_token (email, token) values ('test@email.com', select replace(uuid(), '-', ''));
