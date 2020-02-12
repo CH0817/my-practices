@@ -5,8 +5,10 @@ import com.rex.practice.model.input.Register;
 import com.rex.practice.service.base.BaseServiceTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
+import javax.mail.MessagingException;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -19,9 +21,11 @@ public class UserServiceTest extends BaseServiceTest {
     private UserService service;
     @SpyBean
     private TokenService tokenService;
+    @MockBean
+    private EmailService emailService;
 
     @Test
-    public void addUser() {
+    public void addUser() throws MessagingException {
         String email = "1@1.c";
 
         when(userMapper.insertSelective(any(User.class))).thenReturn(1);
@@ -35,6 +39,7 @@ public class UserServiceTest extends BaseServiceTest {
 
         verify(userMapper, times(1)).insertSelective(any(User.class));
         verify(tokenService, times(1)).createRegisterToken(email);
+        verify(emailService, times(1)).sendConfirmRegisterEmail(email);
     }
 
     @Test
