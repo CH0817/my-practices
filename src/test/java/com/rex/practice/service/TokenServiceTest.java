@@ -6,6 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -33,6 +36,20 @@ public class TokenServiceTest extends BaseServiceTest {
         registerToken.setToken(UUID.randomUUID().toString());
         when(registerTokenMapper.findByEmail(eq(EMAIL))).thenReturn(registerToken);
         assertEquals(registerToken.getToken(), service.getRegisterToken(EMAIL));
+    }
+
+    @Test
+    public void isTokenExpired() throws Exception {
+        RegisterToken token = new RegisterToken();
+        token.setExpireDate(Date.from(LocalDate.now().minusDays(1L).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        when(registerTokenMapper.findByEmail(eq(EMAIL))).thenReturn(token);
+        assertTrue(service.isTokenExpired(EMAIL));
+    }
+
+    @Test(expected = Exception.class)
+    public void isTokenExpiredEmailNotFound() throws Exception {
+        when(registerTokenMapper.findByEmail(eq(EMAIL))).thenReturn(null);
+        assertTrue(service.isTokenExpired(EMAIL));
     }
 
 }
