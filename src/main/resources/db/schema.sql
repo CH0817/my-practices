@@ -86,6 +86,8 @@ CREATE TABLE `user_function`
 
 CREATE TABLE `register_token`
 (
-    email VARCHAR(50) NOT NULL UNIQUE,
-    token VARCHAR(32) NOT NULL
+    email       VARCHAR(50) NOT NULL UNIQUE,
+    token       VARCHAR(32) NOT NULL,
+    expire_date DATE        NOT NULL,
+    PRIMARY KEY (email)
 );

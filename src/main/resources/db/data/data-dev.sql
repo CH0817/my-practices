@@ -130,4 +130,5 @@ insert into user_function (user_id, function_id) values (select id from user whe
 insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '項目');
 insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '登出');
 
-insert into register_token (email, token) values ('test@email.com', select replace(uuid(), '-', ''));
+INSERT INTO register_token ( email, token, expire_date ) SELECT 'test@email.com', REPLACE ( uuid(), '-', '' ) as token, '2099-12-31' from dual;
+INSERT INTO register_token ( email, token, expire_date ) SELECT 'test_02@email.com', REPLACE ( uuid(), '-', '' ) as token, '2099-12-31' from dual;
