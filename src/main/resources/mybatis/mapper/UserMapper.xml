@@ -15,7 +15,7 @@
   </resultMap>
 
   <insert id="insertSelective" parameterType="com.rex.practice.dao.model.User">
-    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+    <selectKey keyProperty="id" order="BEFORE" resultType="string">
       select replace(uuid(), '-', '') as id from dual
     </selectKey>
     insert into user

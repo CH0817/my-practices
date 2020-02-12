@@ -19,7 +19,7 @@
   </resultMap>
 
   <insert id="insertSelective" parameterType="com.rex.practice.dao.model.Trade">
-    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+    <selectKey keyProperty="id" order="BEFORE" resultType="string">
       select replace(uuid(), '-', '') as id from dual
     </selectKey>
     insert into trade
@@ -66,12 +66,12 @@
   </update>
 
   <resultMap id="TradeGridResultMap" type="com.rex.practice.model.easyui.grid.TradeGridVo">
-    <id column="id" jdbcType="VARCHAR" property="id"/>
-    <result column="money" jdbcType="DECIMAL" property="money"/>
-    <result column="trade_type" jdbcType="VARCHAR" property="trade_type"/>
-    <result column="trade_date" jdbcType="DATE" property="trade_date"/>
-    <result column="account_id" jdbcType="VARCHAR" property="account_id"/>
-    <result column="item_id" jdbcType="VARCHAR" property="item_id"/>
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="trade_type" jdbcType="VARCHAR" property="trade_type" />
+    <result column="trade_date" jdbcType="DATE" property="trade_date" />
+    <result column="account_id" jdbcType="VARCHAR" property="account_id" />
+    <result column="item_id" jdbcType="VARCHAR" property="item_id" />
   </resultMap>
 
   <select id="selectForGrid" resultMap="TradeGridResultMap">

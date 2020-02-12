@@ -17,7 +17,7 @@
   </resultMap>
 
   <insert id="insertSelective" parameterType="com.rex.practice.dao.model.Account">
-    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+    <selectKey keyProperty="id" order="BEFORE" resultType="string">
       select replace(uuid(), '-', '') as id from dual
     </selectKey>
     insert into account
@@ -62,10 +62,10 @@
   </update>
 
   <resultMap id="AccountGridResultMap" type="com.rex.practice.model.easyui.grid.AccountGridVo">
-    <id column="id" jdbcType="VARCHAR" property="id"/>
-    <result column="name" jdbcType="VARCHAR" property="name"/>
-    <result column="money" jdbcType="DECIMAL" property="money"/>
-    <result column="account_type_id" jdbcType="VARCHAR" property="account_type_id"/>
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="account_type_id" jdbcType="VARCHAR" property="account_type_id" />
   </resultMap>
 
   <select id="selectForGrid" parameterType="string" resultMap="AccountGridResultMap">
@@ -79,7 +79,7 @@
       update_date = now(),
     </set>
     <where>
-      <foreach collection="ids" item="id" open="and id in (" close=")" separator=",">
+      <foreach close=")" collection="ids" item="id" open="and id in (" separator=",">
         #{id}
       </foreach>
       and user_id = #{userId}

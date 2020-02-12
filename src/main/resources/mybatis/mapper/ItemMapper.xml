@@ -15,7 +15,7 @@
   </resultMap>
 
   <insert id="insertSelective" parameterType="com.rex.practice.dao.model.Item">
-    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+    <selectKey keyProperty="id" order="BEFORE" resultType="string">
       select replace(uuid(), '-', '') as id from dual
     </selectKey>
     insert into item
@@ -58,8 +58,8 @@
   </update>
 
   <resultMap id="itemGridResultMap" type="com.rex.practice.model.easyui.grid.ItemGridVo">
-    <id column="id" jdbcType="VARCHAR" property="id"/>
-    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
 
   <select id="selectForGrid" parameterType="string" resultMap="itemGridResultMap">
@@ -69,7 +69,7 @@
   <update id="updateToDeleteByIds">
     update item set removed = 1
     <where>
-      <foreach collection="ids" item="id" open="and id in (" close=")" separator=",">
+      <foreach close=")" collection="ids" item="id" open="and id in (" separator=",">
         #{id}
       </foreach>
       and removed = 0
