@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 // TODO 這邊如何減少 class 的宣告？
 @ContextConfiguration(classes = {AccountServiceImpl.class, ComboboxServiceImpl.class, ItemServiceImpl.class,
         LoginServiceImpl.class, MenuServiceImpl.class, RegisterServiceImpl.class, TradeServiceImpl.class,
-        UserServiceImpl.class, TokenServiceImpl.class})
+        UserServiceImpl.class, TokenServiceImpl.class, EmailServiceImpl.class})
 @MockBean(classes = {AccountTypeMapper.class})
 @Import({BeansConfig.class})
 @TestPropertySource(locations = {"classpath:test.properties"})
