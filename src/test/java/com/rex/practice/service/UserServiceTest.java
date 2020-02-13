@@ -46,14 +46,14 @@ public class UserServiceTest extends BaseServiceTest {
     public void isUserExists() {
         String email = "1@1.c";
         when(userMapper.findByEmail(email)).thenReturn(new User());
-        assertTrue(service.isUserExists(email));
+        assertTrue(service.isEmailExists(email));
     }
 
     @Test
     public void isUserNotExists() {
         String email = "1@1.c";
         when(userMapper.findByEmail(email)).thenReturn(null);
-        assertFalse(service.isUserExists(email));
+        assertFalse(service.isEmailExists(email));
     }
 
 }

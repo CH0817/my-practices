@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isUserExists(String email) {
+    public boolean isEmailExists(String email) {
         return Objects.nonNull(userMapper.findByEmail(email));
     }
 

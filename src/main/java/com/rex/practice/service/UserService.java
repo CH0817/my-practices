@@ -6,6 +6,6 @@ public interface UserService {
 
     boolean addUser(Register register);
 
-    boolean isUserExists(String email);
+    boolean isEmailExists(String email);
 
 }
