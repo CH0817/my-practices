@@ -1,7 +1,8 @@
 package com.rex.practice.service.impl;
 
 import com.rex.practice.service.EmailService;
-import com.rex.practice.service.TokenService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,6 +20,7 @@ import java.util.Map;
 @Service
 public class EmailServiceImpl implements EmailService {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Value("${server.servlet.context-path}")
     private String contextPath;
     @Value("${app.url}")
@@ -26,38 +28,39 @@ public class EmailServiceImpl implements EmailService {
     @Value("${app.port}")
     private String appPort;
     private JavaMailSender javaMailSender;
-    private TokenService tokenService;
     private SpringTemplateEngine templateEngine;
 
     @Autowired
-    public EmailServiceImpl(JavaMailSender javaMailSender, TokenService tokenService, SpringTemplateEngine templateEngine) {
+    public EmailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine templateEngine) {
         this.javaMailSender = javaMailSender;
-        this.tokenService = tokenService;
         this.templateEngine = templateEngine;
     }
 
     @Override
-    public void sendConfirmRegisterEmail(String email) throws MessagingException {
+    public void sendConfirmRegisterEmail(String email, String token) {
+        // TODO 這是用 Thymeleaf 做 template ，改用 freemarker 試試？
         MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message,
-                MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                StandardCharsets.UTF_8.name());
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message,
+                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name());
 
-        Context context = new Context();
+            Context context = new Context();
 
-        Map<String, Object> variables = new HashMap<>();
-        String token = tokenService.getRegisterToken(email);
-        variables.put("link", "http://" + appUrl + ":" + appPort + contextPath + "/register/verify/" + token);
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("link", "http://" + appUrl + ":" + appPort + contextPath + "/register/verify/" + email + "/" + token);
 
-        context.setVariables(variables);
-        String html = templateEngine.process("email/registerConfirm", context);
+            context.setVariables(variables);
 
-        helper.setTo(email);
-        helper.setText(html, true);
-        helper.setSubject("Email認證信，請勿回復");
-        helper.setFrom("yu.chenhang@gmail.com");
+            helper.setTo(email);
+            helper.setText(templateEngine.process("email/registerConfirm", context), true);
+            helper.setSubject("Email認證信，請勿回復");
+            helper.setFrom("yu.chenhang@gmail.com");
 
-        javaMailSender.send(message);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            logger.error("send register verify email error", e);
+        }
     }
 
 }

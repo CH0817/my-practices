@@ -43,21 +43,17 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(register, user);
         user.setPassword(passwordEncoder.encode(register.getPassword()));
         user.setCreateDate(new Date());
-        boolean result = userMapper.insertSelective(user) == 1;
-        if (result) {
-            tokenService.createRegisterToken(register.getEmail());
-            try {
-                emailService.sendConfirmRegisterEmail(register.getEmail());
-            } catch (MessagingException e) {
-                logger.error("send register verify email error", e);
-            }
-        }
-        return result;
+        return userMapper.insertSelective(user) == 1;
     }
 
     @Override
     public boolean isEmailExists(String email) {
         return Objects.nonNull(userMapper.findByEmail(email));
+    }
+
+    @Override
+    public boolean isEmailVerified(String email) {
+        return userMapper.findByEmail(email).getIsEmailVerify();
     }
 
 }

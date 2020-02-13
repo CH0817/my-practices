@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @WebMvcTest(controllers = {AccountBookController.class, AccountController.class, ComboboxController.class,
         FunctionController.class, ItemController.class, LoginController.class, RegisterController.class})
 @AutoConfigureMockMvc
-@MockBean(classes = {UserService.class, JavaMailSender.class, ReCaptchaProperty.class})
+@MockBean(classes = {JavaMailSender.class, ReCaptchaProperty.class})
 @Ignore
 public abstract class BaseControllerTest {
 
@@ -47,6 +47,12 @@ public abstract class BaseControllerTest {
     protected MenuServiceImpl menuService;
     @MockBean
     protected RegisterService registerService;
+    @MockBean
+    protected UserService userService;
+    @MockBean
+    protected TokenService tokenService;
+    @MockBean
+    protected EmailService emailService;
 
     protected ResultActions sendGetRequest(String url) throws Exception {
         return sendRequest(get(url));

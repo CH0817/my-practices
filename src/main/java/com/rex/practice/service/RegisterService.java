@@ -5,6 +5,7 @@ import org.springframework.validation.BindingResult;
 
 import java.util.Optional;
 
+@Deprecated
 public interface RegisterService {
 
     Optional<String> verify(Register register, BindingResult bindingResult);

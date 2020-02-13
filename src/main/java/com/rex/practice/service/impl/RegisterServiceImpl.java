@@ -12,6 +12,7 @@ import org.springframework.validation.FieldError;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Deprecated
 @Service
 @Transactional
 public class RegisterServiceImpl implements RegisterService {
@@ -32,7 +33,7 @@ public class RegisterServiceImpl implements RegisterService {
         if (!register.getPassword().equals(register.getConfirmPassword())) {
             result = Optional.of("二次密碼不相同");
         }
-        if (userService.isUserExists(register.getEmail())) {
+        if (userService.isEmailExists(register.getEmail())) {
             result = Optional.of("Email已被註冊");
         }
         return result;
