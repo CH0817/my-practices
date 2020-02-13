@@ -4,6 +4,7 @@ import com.rex.practice.dao.mapper.base.BaseMapperTest;
 import com.rex.practice.dao.model.RegisterToken;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@Sql({"/db/data/data-dev-register_token.sql"})
 public class RegisterTokenMapperTest extends BaseMapperTest {
 
     @Autowired

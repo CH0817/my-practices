@@ -1,30 +1,3 @@
-insert into user (id, email, password, create_date) VALUES ('a', 'test@email.com', '{bcrypt}$2a$10$wq1FE6qSyJGi/vhQ4/b82uU.6n.g6b6mhLChG9Xb8K5rcKgLyeZcq', now());
-insert into user (id, email, password, create_date) VALUES ('b', 'test2@email.com', '11111111', now());
-insert into user (id, email, password, create_date) VALUES ('c', 'test3@email.com', '11111111', now());
-insert into user (id, email, password, removed, create_date) VALUES ('d', 'test4@email.com', '11111111', 1, now());
-
-insert into account_type (id, name, create_date, user_id) VALUES ('a', '現金', now(), 'a');
-insert into account_type (id, name, create_date, user_id) VALUES ('b', '銀行', now(), 'a');
-insert into account_type (id, name, create_date, user_id) VALUES ('c', '信用卡', now(), 'a');
-insert into account_type (id, name, create_date, user_id) VALUES ('e', '現金', now(), 'b');
-insert into account_type (id, name, create_date, user_id) VALUES ('f', '銀行', now(), 'b');
-
-insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('a', '玉山', 1000, now(), 'a', 'b');
-insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('b', '中國信託', 1000, now(), 'a', 'b');
-insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('c', '郵局', 1000, now(), 'a', 'b');
-insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('d', '現金', 1000, now(), 'a', 'a');
-insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('e', '永豐信用卡', 1000, now(), 'a', 'c');
-insert into account (id, name, money, create_date, user_id, account_type_id, removed) VALUES ('f', '永豐', 1000, now(), 'a', 'c', 1);
-insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('g', '中國信託', 1000, now(), 'b', 'b');
-insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('h', '郵局', 1000, now(), 'b', 'b');
-insert into account (id, name, money, create_date, user_id, account_type_id) VALUES ('i', '現金', 1000, now(), 'b', 'a');
-insert into account (id, name, money, create_date, user_id, account_type_id, removed) VALUES ('j', '永豐', 1000, now(), 'b', 'c', 1);
-
-insert into item (id, name, create_date, user_id) VALUES ('a', '用餐', now(), 'a');
-insert into item (id, name, create_date, user_id) VALUES ('b', '睡覺', now(), 'a');
-insert into item (id, name, create_date, user_id) VALUES ('c', '大便', now(), 'a');
-insert into item (id, name, create_date, user_id) VALUES ('e', '用餐', now(), 'b');
-insert into item (id, name, create_date, user_id) VALUES ('f', '睡覺', now(), 'b');
 
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id) values ('a', 10, '1', now(), now(), 'a', 'a', 'a');
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id, removed) select replace(uuid(), '-', ''), 100, '1', now(), now(), 'a', 'a', 'a', true from dual;
@@ -111,24 +84,3 @@ insert into trade (id, money, trade_type, trade_date, create_date, user_id, acco
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id) select replace(uuid(), '-', ''), 162, '1', now(), now(), 'b', 'i', 'e' from dual;
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id) select replace(uuid(), '-', ''), 163, '1', now(), now(), 'b', 'g', 'f' from dual;
 insert into trade (id, money, trade_type, trade_date, create_date, user_id, account_id, item_id) select replace(uuid(), '-', ''), 164, '1', now(), now(), 'b', 'h', 'f' from dual;
-
-insert into function (id, name, url, icon, sorted) select replace(uuid(), '-', ''), '收支表', 'account-book/content', 'icon-edit', 1 from dual;
-insert into function (id, name, sorted) select replace(uuid(), '-', ''), '圖表', 2 from dual;
-insert into function (id, name, url, parent_id, sorted) select replace(uuid(), '-', ''), '長條圖', 'chart/bar', select id from function where name = '圖表', 1 from dual;
-insert into function (id, name, url, parent_id, sorted) select replace(uuid(), '-', ''), '圓餅圖', 'chart/pie', select id from function where name = '圖表', 2 from dual;
-insert into function (id, name, sorted) select replace(uuid(), '-', ''), '設定', 3 from dual;
-insert into function (id, name, url, parent_id, sorted) select replace(uuid(), '-', ''), '帳戶', 'account/content', select id from function where name = '設定', 1 from dual;
-insert into function (id, name, url, parent_id, sorted) select replace(uuid(), '-', ''), '項目', 'item/content', select id from function where name = '設定', 2 from dual;
-insert into function (id, name, url, sorted) select replace(uuid(), '-', ''), '登出', 'logout', 4 from dual;
-
-insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '收支表');
-insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '圖表');
-insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '長條圖');
-insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '圓餅圖');
-insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '設定');
-insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '帳戶');
-insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '項目');
-insert into user_function (user_id, function_id) values (select id from user where email = 'test@email.com', select id from function where name = '登出');
-
-INSERT INTO register_token ( email, token, expire_date ) SELECT 'test@email.com', REPLACE ( uuid(), '-', '' ) as token, '2099-12-31' from dual;
-INSERT INTO register_token ( email, token, expire_date ) SELECT 'test_02@email.com', REPLACE ( uuid(), '-', '' ) as token, '2099-12-31' from dual;

@@ -4,6 +4,7 @@ import com.rex.practice.dao.mapper.base.BaseMapperTest;
 import com.rex.practice.dao.model.AccountType;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+@Sql({"/db/data/data-dev-user.sql", "/db/data/data-dev-account_type.sql"})
 public class AccountTypeMapperTest extends BaseMapperTest {
 
     @Autowired

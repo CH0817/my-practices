@@ -1,0 +1,8 @@
+insert into user_functions (user_id, functions_id) select (select id from user where email = 'test@email.com') as user_id, (select id from functions where name = '收支表') as functions_id from dual;
+insert into user_functions (user_id, functions_id) select (select id from user where email = 'test@email.com') as user_id, (select id from functions where name = '圖表') as functions_id from dual;
+insert into user_functions (user_id, functions_id) select (select id from user where email = 'test@email.com') as user_id, (select id from functions where name = '長條圖') as functions_id from dual;
+insert into user_functions (user_id, functions_id) select (select id from user where email = 'test@email.com') as user_id, (select id from functions where name = '圓餅圖') as functions_id from dual;
+insert into user_functions (user_id, functions_id) select (select id from user where email = 'test@email.com') as user_id, (select id from functions where name = '設定') as functions_id from dual;
+insert into user_functions (user_id, functions_id) select (select id from user where email = 'test@email.com') as user_id, (select id from functions where name = '帳戶') as functions_id from dual;
+insert into user_functions (user_id, functions_id) select (select id from user where email = 'test@email.com') as user_id, (select id from functions where name = '項目') as functions_id from dual;
+insert into user_functions (user_id, functions_id) select (select id from user where email = 'test@email.com') as user_id, (select id from functions where name = '登出') as functions_id from dual;

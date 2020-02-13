@@ -171,7 +171,7 @@
                     <include>**/application.yaml</include>
                     <include>**/application-${profileActive}.yaml</include>
                     <include>**/schema.sql</include>
-                    <include>**/data-${profileActive}.sql</include>
+                    <include>**/data-${profileActive}-*.sql</include>
                 </includes>
             </resource>
         </resources>
