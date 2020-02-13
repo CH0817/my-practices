@@ -1,0 +1,9 @@
+@startuml
+start
+    if(是否有該token資料) then (Y)
+        :更新使用者驗證狀態;
+    else (N)
+        :導向錯誤頁;
+    endif
+end
+@enduml
