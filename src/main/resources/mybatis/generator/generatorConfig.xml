@@ -57,12 +57,12 @@
             <property name="modelOnly" value="true"/>
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
-        <table tableName="function" enableCountByExample="false" enableSelectByExample="false"
+        <table tableName="functions" enableCountByExample="false" enableSelectByExample="false"
                enableDeleteByExample="false" enableUpdateByExample="false">
             <property name="modelOnly" value="true"/>
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
-        <table tableName="user_function" enableCountByExample="false" enableSelectByExample="false"
+        <table tableName="user_functions" enableCountByExample="false" enableSelectByExample="false"
                enableDeleteByExample="false" enableUpdateByExample="false">
             <property name="modelOnly" value="true"/>
             <property name="ignoreQualifiersAtRuntime" value="true"/>

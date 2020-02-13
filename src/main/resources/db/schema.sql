@@ -66,7 +66,7 @@ CREATE TABLE `trade`
     FOREIGN KEY (item_id) REFERENCES `item` (id)
 );
 
-CREATE TABLE `function`
+CREATE TABLE `functions`
 (
     id        VARCHAR(32) NOT NULL,
     name      VARCHAR(10) NOT NULL,
@@ -77,11 +77,11 @@ CREATE TABLE `function`
     PRIMARY KEY (id)
 );
 
-CREATE TABLE `user_function`
+CREATE TABLE `user_functions`
 (
     user_id     VARCHAR(32) NOT NULL,
-    function_id VARCHAR(32) NOT NULL,
-    PRIMARY KEY (user_id, function_id)
+    functions_id VARCHAR(32) NOT NULL,
+    PRIMARY KEY (user_id, functions_id)
 );
 
 CREATE TABLE `register_token`

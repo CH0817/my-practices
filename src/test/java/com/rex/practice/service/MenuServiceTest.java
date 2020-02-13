@@ -1,6 +1,6 @@
 package com.rex.practice.service;
 
-import com.rex.practice.dao.model.Function;
+import com.rex.practice.dao.model.Functions;
 import com.rex.practice.model.easyui.FunctionMenuTreeAttribute;
 import com.rex.practice.model.easyui.Tree;
 import com.rex.practice.service.base.BaseServiceTest;
@@ -44,10 +44,10 @@ public class MenuServiceTest extends BaseServiceTest {
         verify(functionMapper, times(1)).findFunctions("a");
     }
 
-    private List<Function> fundFunctionsResult() {
-        List<Function> result = new ArrayList<>();
+    private List<Functions> fundFunctionsResult() {
+        List<Functions> result = new ArrayList<>();
 
-        Function function = new Function();
+        Functions function = new Functions();
         function.setId("a");
         function.setName("收支表");
         function.setUrl("account-book/content");
@@ -55,13 +55,13 @@ public class MenuServiceTest extends BaseServiceTest {
         function.setSorted((short) 1);
         result.add(function);
 
-        function = new Function();
+        function = new Functions();
         function.setId("b");
         function.setName("圖表");
         function.setSorted((short) 2);
         result.add(function);
 
-        function = new Function();
+        function = new Functions();
         function.setId("c");
         function.setName("長條圖");
         function.setUrl("chart/bar");
@@ -69,7 +69,7 @@ public class MenuServiceTest extends BaseServiceTest {
         function.setParentId("b");
         result.add(function);
 
-        function = new Function();
+        function = new Functions();
         function.setId("d");
         function.setName("圓餅圖");
         function.setUrl("chart/pie");
@@ -77,13 +77,13 @@ public class MenuServiceTest extends BaseServiceTest {
         function.setParentId("b");
         result.add(function);
 
-        function = new Function();
+        function = new Functions();
         function.setId("e");
         function.setName("設定");
         function.setSorted((short) 3);
         result.add(function);
 
-        function = new Function();
+        function = new Functions();
         function.setId("f");
         function.setName("帳戶");
         function.setUrl("account/content");
@@ -91,7 +91,7 @@ public class MenuServiceTest extends BaseServiceTest {
         function.setParentId("e");
         result.add(function);
 
-        function = new Function();
+        function = new Functions();
         function.setId("g");
         function.setName("項目");
         function.setUrl("item/content");
@@ -99,7 +99,7 @@ public class MenuServiceTest extends BaseServiceTest {
         function.setParentId("e");
         result.add(function);
 
-        function = new Function();
+        function = new Functions();
         function.setId("h");
         function.setName("登出");
         function.setUrl("logout");

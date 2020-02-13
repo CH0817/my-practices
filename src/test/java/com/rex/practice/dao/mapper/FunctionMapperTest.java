@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class FunctionMapperTest extends BaseMapperTest {
 
     @Autowired
-    private FunctionMapper mapper;
+    private FunctionsMapper mapper;
 
     @Test
     public void selectAll() {
