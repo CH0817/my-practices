@@ -10,6 +10,7 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="removed" jdbcType="BIT" property="removed" />
+    <result column="email_verify" jdbcType="BIT" property="isEmailVerify" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
   </resultMap>

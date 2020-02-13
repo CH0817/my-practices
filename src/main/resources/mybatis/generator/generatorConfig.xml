@@ -36,6 +36,7 @@
                enableDeleteByExample="false" enableUpdateByExample="false">
             <property name="modelOnly" value="true"/>
             <property name="ignoreQualifiersAtRuntime" value="true"/>
+            <columnOverride column="email_verify" property="isEmailVerify"/>
         </table>
         <table tableName="account_type" enableCountByExample="false" enableSelectByExample="false"
                enableDeleteByExample="false" enableUpdateByExample="false">

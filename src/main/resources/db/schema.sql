@@ -1,11 +1,12 @@
 CREATE TABLE `user`
 (
-    id          VARCHAR(32) NOT NULL,
-    email       VARCHAR(50) NOT NULL UNIQUE,
-    password    VARCHAR(68) NOT NULL,
-    removed     BIT         NOT NULL DEFAULT 0,
-    create_date DATETIME    NOT NULL,
-    update_date DATETIME,
+    id           VARCHAR(32) NOT NULL,
+    email        VARCHAR(50) NOT NULL UNIQUE,
+    password     VARCHAR(68) NOT NULL,
+    removed      BIT         NOT NULL DEFAULT 0,
+    email_verify BIT         NOT NULL DEFAULT 0,
+    create_date  DATETIME    NOT NULL,
+    update_date  DATETIME,
     PRIMARY KEY (id)
 );
 
@@ -79,7 +80,7 @@ CREATE TABLE `functions`
 
 CREATE TABLE `user_functions`
 (
-    user_id     VARCHAR(32) NOT NULL,
+    user_id      VARCHAR(32) NOT NULL,
     functions_id VARCHAR(32) NOT NULL,
     PRIMARY KEY (user_id, functions_id)
 );
