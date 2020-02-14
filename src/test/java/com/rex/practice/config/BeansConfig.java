@@ -1,5 +1,6 @@
 package com.rex.practice.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,6 +16,9 @@ import java.util.Properties;
 
 @TestConfiguration
 public class BeansConfig {
+
+    @Value("${mail.debug}")
+    private String mailDebug;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -35,7 +39,7 @@ public class BeansConfig {
         props.put("mail.smtp.timeout", "5000");
         props.put("mail.smtp.writetimeout", "5000");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", "true");
+        props.put("mail.debug", mailDebug);
 
         return result;
     }
@@ -48,7 +52,7 @@ public class BeansConfig {
     }
 
     @Bean
-    public SpringResourceTemplateResolver htmlTemplateResolver(){
+    public SpringResourceTemplateResolver htmlTemplateResolver() {
         SpringResourceTemplateResolver emailTemplateResolver = new SpringResourceTemplateResolver();
         emailTemplateResolver.setPrefix("classpath:/templates/");
         emailTemplateResolver.setSuffix(".html");

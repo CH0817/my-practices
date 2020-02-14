@@ -1,15 +1,15 @@
 package com.rex.practice.service;
 
 import com.rex.practice.model.input.Register;
+import com.rex.practice.model.verify.RegisterError;
 import org.springframework.validation.BindingResult;
 
 import java.util.Optional;
 
-@Deprecated
 public interface RegisterService {
 
-    Optional<String> verify(Register register, BindingResult bindingResult);
+    Optional<RegisterError> verify(Register register, BindingResult bindingResult);
 
-    void register(Register register);
+    boolean register(Register register);
 
 }
