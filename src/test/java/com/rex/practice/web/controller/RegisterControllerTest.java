@@ -51,50 +51,44 @@ public class RegisterControllerTest extends BaseControllerTest {
     @Test
     public void emailIsEmpty() throws Exception {
         params.put("email", new String[]{""});
-        verifyFieldError("Email不能為空");
+        verifyError("Email不能為空", "redirect:/register");
     }
 
     @Test
     public void emailFormatError() throws Exception {
         params.put("email", new String[]{"111"});
-        verifyFieldError("錯誤的Email格式");
+        verifyError("錯誤的Email格式", "redirect:/register");
     }
 
     @Test
     public void passwordIsEmpty() throws Exception {
         params.put("password", new String[]{""});
-        verifyFieldError("密碼不能為空，密碼必須是8~12碼");
+        verifyError("密碼不能為空，密碼必須是8~12碼", "redirect:/register");
     }
 
     @Test
     public void passwordFormatError() throws Exception {
         params.put("password", new String[]{"111"});
-        verifyFieldError("密碼必須是8~12碼");
+        verifyError("密碼必須是8~12碼", "redirect:/register");
     }
 
     @Test
     public void confirmPasswordIsEmpty() throws Exception {
         params.put("confirmPassword", new String[]{""});
-        verifyFieldError("確認密碼不能為空");
+        verifyError("確認密碼不能為空", "redirect:/register");
     }
 
     @Test
     public void passwordDifferent() throws Exception {
         params.put("confirmPassword", new String[]{"22222222"});
-        sendPostRequest("/register", params)
-                .andExpect(status().is3xxRedirection())
-                .andExpect(flash().attribute("message", "兩次密碼不相同"))
-                .andExpect(view().name("redirect:/register"));
+        verifyError("兩次密碼不相同", "redirect:/register");
     }
 
     @Test
     public void emailRegistered() throws Exception {
         when(userService.isEmailExists(anyString())).thenReturn(true);
         when(userService.isEmailVerified(anyString())).thenReturn(true);
-        sendPostRequest("/register", params)
-                .andExpect(status().is3xxRedirection())
-                .andExpect(flash().attribute("message", "Email已被註冊"))
-                .andExpect(view().name("redirect:/register"));
+        verifyError("Email已被註冊", "redirect:/register");
         verify(userService, times(1)).isEmailExists(anyString());
     }
 
@@ -102,20 +96,17 @@ public class RegisterControllerTest extends BaseControllerTest {
     public void emailVerifying() throws Exception {
         when(userService.isEmailExists(anyString())).thenReturn(true);
         when(userService.isEmailVerified(anyString())).thenReturn(false);
-        sendPostRequest("/register", params)
-                .andExpect(status().is3xxRedirection())
-                .andExpect(flash().attribute("message", "Email驗證中"))
-                .andExpect(view().name("redirect:/login"));
+        verifyError("Email驗證中", "redirect:/login");
         verify(userService, times(1)).isEmailExists(anyString());
         verify(userService, times(1)).isEmailVerified(anyString());
     }
 
 
-    private void verifyFieldError(String expectMessage) throws Exception {
+    private void verifyError(String expectMessage, String viewName) throws Exception {
         sendPostRequest("/register", params)
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("message", expectMessage))
-                .andExpect(view().name("redirect:/register"));
+                .andExpect(view().name(viewName));
     }
 
 }
