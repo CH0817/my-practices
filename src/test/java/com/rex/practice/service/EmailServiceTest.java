@@ -4,7 +4,6 @@ import com.rex.practice.service.base.BaseServiceTest;
 import com.rex.practice.service.impl.EmailServiceImpl;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.UUID;
@@ -17,7 +16,7 @@ public class EmailServiceTest extends BaseServiceTest {
 
     @Test
     public void sendConfirmRegisterEmail() {
-        service.sendConfirmRegisterEmail("rexyu0817@gmail.com", UUID.randomUUID().toString().replace("-", ""));
+        service.sendConfirmRegisterEmail(registerEmail, UUID.randomUUID().toString().replace("-", ""));
     }
 
 }

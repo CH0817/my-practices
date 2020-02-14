@@ -23,8 +23,6 @@ public class RegisterServiceTest extends BaseServiceTest {
 
     private Register register;
     private BindingResult bindingResult;
-    @Value("${register.email}")
-    private String registerEmail;
     @Autowired
     private RegisterService service;
     @SpyBean

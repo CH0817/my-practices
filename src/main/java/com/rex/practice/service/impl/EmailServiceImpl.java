@@ -41,28 +41,34 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendConfirmRegisterEmail(String email, String token) {
         // TODO 這是用 Thymeleaf 做 template ，改用 freemarker 試試？
-        MimeMessage message = javaMailSender.createMimeMessage();
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(message,
-                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                    StandardCharsets.UTF_8.name());
-
-            Context context = new Context();
-
-            Map<String, Object> variables = new HashMap<>();
-            variables.put("link", "http://" + appUrl + ":" + appPort + contextPath + "/register/verify/" + email + "/" + token);
-
-            context.setVariables(variables);
-
-            helper.setTo(email);
-            helper.setText(templateEngine.process("email/registerConfirm", context), true);
-            helper.setSubject("Email認證信，請勿回復");
-            helper.setFrom("yu.chenhang@gmail.com");
-
+            MimeMessage message = javaMailSender.createMimeMessage();
+            setMailHelper(message, email, mailContent(email, token));
             javaMailSender.send(message);
         } catch (MessagingException e) {
             logger.error("send register verify email error", e);
         }
+    }
+
+    private Context mailContent(String email, String token) {
+        Context context = new Context();
+
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("link", "http://" + appUrl + ":" + appPort + contextPath + "/register/verify/" + email + "/" + token);
+
+        context.setVariables(variables);
+
+        return context;
+    }
+
+    private void setMailHelper(MimeMessage message, String email, Context context) throws MessagingException {
+        MimeMessageHelper helper = new MimeMessageHelper(message,
+                MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                StandardCharsets.UTF_8.name());
+        helper.setTo(email);
+        helper.setText(templateEngine.process("email/registerConfirm", context), true);
+        helper.setSubject("Email認證信，請勿回復");
+        helper.setFrom("yu.chenhang@gmail.com");
     }
 
 }

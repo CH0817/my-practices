@@ -5,6 +5,7 @@ import com.rex.practice.dao.mapper.*;
 import com.rex.practice.service.impl.*;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,6 +24,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 public abstract class BaseServiceTest {
 
     protected String userId = "a";
+    @Value("${register.email}")
+    protected String registerEmail;
     @MockBean
     protected UserMapper userMapper;
     @MockBean
