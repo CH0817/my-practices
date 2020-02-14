@@ -38,8 +38,7 @@ public class RegisterController extends BaseController {
     }
 
     @PostMapping(value = {"", "/"})
-    public String register(@Validated Register register, BindingResult bindingResult, RedirectAttributes redirectAttributes)
-            throws MessagingException {
+    public String register(@Validated Register register, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasFieldErrors()) {
             redirectAttributes.addFlashAttribute("message", BindingResultUtils.getFieldErrorMessages(bindingResult));
             return "redirect:/register";
