@@ -1,10 +1,11 @@
 package com.rex.practice.service.impl;
 
-import com.rex.practice.dao.mapper.FunctionMapper;
-import com.rex.practice.dao.model.primary.Function;
+import com.rex.practice.dao.mapper.FunctionsMapper;
+import com.rex.practice.dao.model.Functions;
 import com.rex.practice.model.easyui.FunctionMenuTreeAttribute;
 import com.rex.practice.model.easyui.Tree;
 import com.rex.practice.service.MenuService;
+import com.rex.practice.service.base.BaseServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,27 +17,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
 
-    private FunctionMapper mapper;
+    private FunctionsMapper mapper;
 
     @Autowired
-    public MenuServiceImpl(FunctionMapper mapper) {
+    public MenuServiceImpl(FunctionsMapper mapper) {
         this.mapper = mapper;
     }
 
     @Override
     public List<Tree<FunctionMenuTreeAttribute>> getFunctionMenuTree(String userId) {
-        List<Function> functions = mapper.findFunctions(userId);
+        List<Functions> functions = mapper.findFunctions(userId);
         List<Tree<FunctionMenuTreeAttribute>> result = functions.stream()
                 .filter(f -> StringUtils.isBlank(f.getParentId()))
-                .sorted(Comparator.comparing(Function::getSorted))
+                .sorted(Comparator.comparing(Functions::getSorted))
                 .map(createTree(functions))
                 .collect(Collectors.toList());
         return result;
     }
 
-    private java.util.function.Function<Function, Tree<FunctionMenuTreeAttribute>> createTree(List<Function> allFunctions) {
+    private java.util.function.Function<Functions, Tree<FunctionMenuTreeAttribute>> createTree(List<Functions> allFunctions) {
         return function -> {
             Tree<FunctionMenuTreeAttribute> tree = new Tree<>(function);
             tree.setAttributes(createAttribute(function.getUrl()));
@@ -53,10 +54,10 @@ public class MenuServiceImpl implements MenuService {
         return result;
     }
 
-    private List<Tree<FunctionMenuTreeAttribute>> createChildrenTree(Tree<FunctionMenuTreeAttribute> parent, List<Function> allFunctions) {
+    private List<Tree<FunctionMenuTreeAttribute>> createChildrenTree(Tree<FunctionMenuTreeAttribute> parent, List<Functions> allFunctions) {
         List<Tree<FunctionMenuTreeAttribute>> children = allFunctions.stream()
                 .filter(c -> parent.getId().equals(c.getParentId()))
-                .sorted(Comparator.comparing(Function::getSorted))
+                .sorted(Comparator.comparing(Functions::getSorted))
                 .map(createTree(allFunctions))
                 .collect(Collectors.toList());
         return CollectionUtils.isEmpty(children) ? Collections.emptyList() : children;

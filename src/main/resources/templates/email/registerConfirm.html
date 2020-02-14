@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Email確認</title>
+</head>
+<body>
+<h1>感謝您的註冊</h1>
+<p>請點擊<a th:href="@{${link}}">此處</a>進行Email認證</p>
+<p>若上方超連結無法使用，請自行複製下方網址進行Email認證</p>
+<p th:text="${link}"></p>
+</body>
+</html>

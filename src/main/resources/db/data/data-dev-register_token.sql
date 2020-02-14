@@ -1,0 +1,2 @@
+INSERT INTO register_token (email, token, expire_date) SELECT 'test@email.com', REPLACE (uuid(), '-', '') as token, '2099-12-31' from dual;
+INSERT INTO register_token (email, token, expire_date) SELECT 'test_02@email.com', REPLACE (uuid(), '-', '') as token, '2099-12-31' from dual;

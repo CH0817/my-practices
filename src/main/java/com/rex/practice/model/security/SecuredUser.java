@@ -16,7 +16,7 @@ public class SecuredUser extends User {
     private String id;
     private String email;
 
-    public SecuredUser(com.rex.practice.dao.model.primary.User user, Collection<? extends GrantedAuthority> authorities) {
+    public SecuredUser(com.rex.practice.dao.model.User user, Collection<? extends GrantedAuthority> authorities) {
         super(user.getEmail(), user.getPassword(), authorities);
         this.id = user.getId();
         this.email = user.getEmail();

@@ -1,7 +1,6 @@
-package com.rex.practice.dao.model.primary;
+package com.rex.practice.dao.model;
 
 import com.rex.practice.model.base.BaseModel;
-
 import java.math.BigDecimal;
 import java.util.Date;
 

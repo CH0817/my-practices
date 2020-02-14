@@ -1,8 +1,8 @@
 package com.rex.practice.model.easyui;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.rex.practice.dao.model.Functions;
 import com.rex.practice.model.base.BaseModel;
-import com.rex.practice.dao.model.primary.Function;
 import com.rex.practice.model.easyui.base.TreeAttribute;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +25,7 @@ public class Tree<A extends TreeAttribute> extends BaseModel {
 
     public Tree() {}
 
-    public Tree(Function function) {
+    public Tree(Functions function) {
         this.id = function.getId();
         this.text = function.getName();
         this.iconCls = function.getIcon();

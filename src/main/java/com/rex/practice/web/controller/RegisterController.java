@@ -1,6 +1,7 @@
 package com.rex.practice.web.controller;
 
 import com.rex.practice.model.input.Register;
+import com.rex.practice.model.verify.RegisterError;
 import com.rex.practice.service.RegisterService;
 import com.rex.practice.web.controller.base.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,11 @@ import java.util.Optional;
 @RequestMapping("/register")
 public class RegisterController extends BaseController {
 
-    private RegisterService service;
+    private RegisterService registerService;
 
     @Autowired
-    public RegisterController(RegisterService service) {
-        this.service = service;
+    public RegisterController(RegisterService registerService) {
+        this.registerService = registerService;
     }
 
     @GetMapping(value = {"", "/"})
@@ -32,12 +33,13 @@ public class RegisterController extends BaseController {
 
     @PostMapping(value = {"", "/"})
     public String register(@Validated Register register, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        Optional<String> verifyOptional = service.verify(register, bindingResult);
+        Optional<RegisterError> verifyOptional = registerService.verify(register, bindingResult);
         if (verifyOptional.isPresent()) {
-            redirectAttributes.addFlashAttribute("message", verifyOptional.get());
-            return "redirect:/register";
+            redirectAttributes.addFlashAttribute("message", verifyOptional.get().getErrorMessage());
+            return verifyOptional.get().getViewName();
         }
-        service.register(register);
+
+        registerService.register(register);
         return "redirect:/login";
     }
 

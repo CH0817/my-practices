@@ -1,0 +1,26 @@
+@startuml
+start
+    fork
+        :檢查Email格式;
+    fork again
+        :檢查密碼格式;
+    end fork
+    if(檢查通過？) then (Y)
+        if(Email與密碼是否匹配？) then (Y)
+            if(Email是否已驗證？) then (Y)
+            else (N)
+                if(Email驗證期限是否已到期) then (Y)
+                    :刪除註冊Email;
+                    :導向註冊頁並提示重新註冊;
+                else (N)
+                    :登入並提示執行驗證;
+                endif
+            endif
+        else (N)
+            :返回登入頁並顯示錯誤;
+        endif
+    else (N)
+        :返回登入頁並顯示錯誤;
+    endif
+end
+@enduml

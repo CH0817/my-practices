@@ -1,7 +1,7 @@
 package com.rex.practice.service;
 
 import com.github.pagehelper.PageInfo;
-import com.rex.practice.dao.model.primary.Item;
+import com.rex.practice.dao.model.Item;
 import com.rex.practice.model.easyui.grid.GridPagination;
 import com.rex.practice.model.easyui.grid.ItemGridVo;
 

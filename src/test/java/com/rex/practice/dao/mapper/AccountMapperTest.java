@@ -1,10 +1,11 @@
 package com.rex.practice.dao.mapper;
 
 import com.rex.practice.dao.mapper.base.BaseMapperTest;
-import com.rex.practice.dao.model.primary.Account;
+import com.rex.practice.dao.model.Account;
 import com.rex.practice.model.easyui.grid.AccountGridVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+@Sql({"/db/data/data-dev-user.sql", "/db/data/data-dev-account_type.sql", "/db/data/data-dev-account.sql"})
 public class AccountMapperTest extends BaseMapperTest {
 
     @Autowired
@@ -45,11 +47,6 @@ public class AccountMapperTest extends BaseMapperTest {
     @Test
     public void selectByPrimaryKey() {
         assertEquals("a", mapper.selectByPrimaryKey("a").getId());
-    }
-
-    @Test
-    public void update2DeleteByPrimaryKey() {
-        assertEquals(1, mapper.update2DeleteByPrimaryKey("a"));
     }
 
     @Test

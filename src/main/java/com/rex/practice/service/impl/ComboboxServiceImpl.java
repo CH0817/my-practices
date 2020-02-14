@@ -6,6 +6,7 @@ import com.rex.practice.dao.mapper.AccountTypeMapper;
 import com.rex.practice.dao.mapper.ItemMapper;
 import com.rex.practice.model.easyui.combobox.ComboboxData;
 import com.rex.practice.service.ComboboxService;
+import com.rex.practice.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class ComboboxServiceImpl implements ComboboxService {
+public class ComboboxServiceImpl extends BaseServiceImpl implements ComboboxService {
 
     private AccountMapper accountMapper;
     private ItemMapper itemMapper;

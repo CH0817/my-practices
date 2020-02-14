@@ -72,7 +72,7 @@ public class LoginController extends BaseController {
     public String resetPassword(@RequestParam("email") String email,
                                 @RequestParam(value = "g-recaptcha-response", required = false) String token,
                                 RedirectAttributes redirectAttributes) {
-        if (!userService.isUserExists(email)) {
+        if (!userService.isEmailExists(email)) {
             redirectAttributes.addFlashAttribute("message", "Email不存在");
             return "redirect:/forget";
         }

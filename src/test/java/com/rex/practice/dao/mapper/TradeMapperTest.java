@@ -2,10 +2,11 @@ package com.rex.practice.dao.mapper;
 
 import com.rex.practice.constant.TradeTypeEnum;
 import com.rex.practice.dao.mapper.base.BaseMapperTest;
-import com.rex.practice.dao.model.primary.Trade;
+import com.rex.practice.dao.model.Trade;
 import com.rex.practice.model.input.SaveTrade;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
@@ -14,6 +15,8 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+@Sql({"/db/data/data-dev-user.sql", "/db/data/data-dev-account_type.sql", "/db/data/data-dev-account.sql",
+        "/db/data/data-dev-item.sql", "/db/data/data-dev-trade.sql"})
 public class TradeMapperTest extends BaseMapperTest {
 
     @Autowired
@@ -67,11 +70,6 @@ public class TradeMapperTest extends BaseMapperTest {
     @Test
     public void selectByPrimaryKey() {
         assertEquals("a", mapper.selectByPrimaryKey("a").getId());
-    }
-
-    @Test
-    public void update2DeleteByPrimaryKey() {
-        assertEquals(1, mapper.update2DeleteByPrimaryKey("a"));
     }
 
     @Test

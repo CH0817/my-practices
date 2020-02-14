@@ -17,9 +17,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <lombok.version>1.18.10</lombok.version>
         <mybatis.version>2.1.1</mybatis.version>
         <h2.version>1.4.199</h2.version>
@@ -72,6 +72,11 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!--Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -108,6 +113,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.19</version>
         </dependency>
+        <!--MariaDB-->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.5.4</version>
+        </dependency>
         <!--Apache commons-->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -141,6 +152,7 @@
     </profiles>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <resources>
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
@@ -159,7 +171,7 @@
                     <include>**/application.yaml</include>
                     <include>**/application-${profileActive}.yaml</include>
                     <include>**/schema.sql</include>
-                    <include>**/data-${profileActive}.sql</include>
+                    <include>**/data-${profileActive}-*.sql</include>
                 </includes>
             </resource>
         </resources>

@@ -1,10 +1,11 @@
 package com.rex.practice.dao.mapper;
 
 import com.rex.practice.dao.mapper.base.BaseMapperTest;
-import com.rex.practice.dao.model.primary.Item;
+import com.rex.practice.dao.model.Item;
 import com.rex.practice.model.easyui.grid.ItemGridVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+@Sql({"/db/data/data-dev-user.sql", "/db/data/data-dev-item.sql"})
 public class ItemMapperTest extends BaseMapperTest {
 
     @Autowired
@@ -41,11 +43,6 @@ public class ItemMapperTest extends BaseMapperTest {
     @Test
     public void selectByPrimaryKey() {
         assertEquals("a", mapper.selectByPrimaryKey("a").getId());
-    }
-
-    @Test
-    public void update2DeleteByPrimaryKey() {
-        assertEquals(1, mapper.update2DeleteByPrimaryKey("a"));
     }
 
     @Test
