@@ -42,14 +42,9 @@ public class TokenServiceImpl extends BaseServiceImpl implements TokenService {
     }
 
     @Override
-    public boolean isTokenExpired(String email) throws Exception {
+    public boolean isTokenExpired(String email) {
         assert StringUtils.isNotBlank(email);
-        RegisterToken token = registerTokenMapper.findByEmail(email);
-        if (Objects.nonNull(token)) {
-            return LocalDate.now().isAfter(token.getExpireDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        }
-        // TODO 自訂 Exception
-        throw new Exception("cannot found register token by " + email);
+        return LocalDate.now().isAfter(registerTokenMapper.findByEmail(email).getExpireDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
     }
 
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/header::commonHead(~{::title},_,~{::script})">
+    <title th:text="${title}">Title</title>
+    <link rel="stylesheet" th:href="@{/css/my_css.css}"/>
+    <!--<script th:src="@{/js/login.js}"></script>-->
+    <script th:inline="javascript">
+        // TODO
+        let message = /*[[${message}]]*/ '';
+        $.messager.confirm('確認', message, function (r) {
+            if (r) {
+                $('#form').submit();
+            }
+        });
+    </script>
+</head>
+<body>
+<div style="display:none;">
+    <form id="form" th:action="${action}" th:method="${method}">
+        <!--TODO 用 map 產生 input-->
+    </form>
+</div>
+</body>
+</html>

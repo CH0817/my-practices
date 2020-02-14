@@ -1,6 +1,9 @@
 package com.rex.practice.service;
 
+import com.rex.practice.dao.model.User;
 import com.rex.practice.model.input.Register;
+
+import java.util.Optional;
 
 public interface UserService {
 
@@ -9,5 +12,9 @@ public interface UserService {
     boolean isEmailExists(String email);
 
     boolean isEmailVerified(String email);
+
+    boolean updateEmailVerifyStatus(String email);
+
+    Optional<User> findByEmail(String email);
 
 }

@@ -43,4 +43,42 @@ public class UserServiceTest extends BaseServiceTest {
         assertFalse(service.isEmailExists(email));
     }
 
+    @Test
+    public void updateEmailVerifyStatus() {
+        String email = "1@1.c";
+
+        when(userMapper.findByEmail(email)).thenReturn(new User());
+        when(userMapper.updateSelectiveByPrimaryKey(any(User.class))).thenReturn(1);
+
+        assertTrue(service.updateEmailVerifyStatus(email));
+
+        verify(userMapper, times(1)).findByEmail(email);
+        verify(userMapper, times(1)).updateSelectiveByPrimaryKey(any(User.class));
+    }
+
+    @Test
+    public void updateEmailVerifyStatusFailure() {
+        String email = "1@1.c";
+
+        when(userMapper.findByEmail(email)).thenReturn(null);
+
+        assertFalse(service.updateEmailVerifyStatus(email));
+
+        verify(userMapper, times(1)).findByEmail(email);
+    }
+
+    @Test
+    public void findByEmail() {
+        String email = "1@1.c";
+        when(userMapper.findByEmail(email)).thenReturn(new User());
+        assertTrue(service.findByEmail(email).isPresent());
+    }
+
+    @Test
+    public void findByEmailNotFound() {
+        String email = "1@1.c";
+        when(userMapper.findByEmail(email)).thenReturn(null);
+        assertFalse(service.findByEmail(email).isPresent());
+    }
+
 }

@@ -97,7 +97,7 @@ public abstract class BaseControllerTest {
         return sendRequest(request);
     }
 
-    private ResultActions sendRequest(MockHttpServletRequestBuilder request) throws Exception {
+    protected ResultActions sendRequest(MockHttpServletRequestBuilder request) throws Exception {
         return mvc.perform(request).andDo(print());
     }
 

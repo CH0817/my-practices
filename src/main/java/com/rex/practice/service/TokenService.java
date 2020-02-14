@@ -6,6 +6,6 @@ public interface TokenService {
 
     String getRegisterToken(String email);
 
-    boolean isTokenExpired(String email) throws Exception;
+    boolean isTokenExpired(String email);
 
 }

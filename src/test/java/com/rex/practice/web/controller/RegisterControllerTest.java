@@ -10,9 +10,11 @@ import org.springframework.validation.BindingResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class RegisterControllerTest extends BaseControllerTest {
@@ -82,6 +84,40 @@ public class RegisterControllerTest extends BaseControllerTest {
     @Test
     public void emailVerifying() throws Exception {
         verifyError("Email驗證中", "redirect:/login");
+    }
+
+    @Test
+    public void registerVerify() throws Exception {
+        String email = "1@1.c";
+        String token = UUID.randomUUID().toString().replace("-", "");
+
+        when(tokenService.getRegisterToken(email)).thenReturn(token);
+        when(tokenService.isTokenExpired(email)).thenReturn(false);
+        when(userService.updateEmailVerifyStatus(email)).thenReturn(true);
+
+        sendRequest(get("/register/verify/{email}/{token}", email, token))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/login"));
+
+        verify(tokenService, times(1)).getRegisterToken(email);
+        verify(tokenService, times(1)).isTokenExpired(email);
+        verify(userService, times(1)).updateEmailVerifyStatus(email);
+    }
+
+    @Test
+    public void registerVerifyButNotRegistered() throws Exception {
+        String email = "1@1.c";
+        String token = UUID.randomUUID().toString().replace("-", "");
+
+        when(tokenService.getRegisterToken(email)).thenReturn("");
+        when(userService.findByEmail(email)).thenReturn(Optional.empty());
+
+        sendRequest(get("/register/verify/{email}/{token}", email, token))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/register"));
+
+        verify(tokenService, times(1)).getRegisterToken(email);
+        verify(userService, times(1)).findByEmail(email);
     }
 
     private void verifyError(String errorMessage, String viewName) throws Exception {
