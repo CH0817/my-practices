@@ -5,6 +5,7 @@ import com.rex.practice.dao.model.Functions;
 import com.rex.practice.model.easyui.FunctionMenuTreeAttribute;
 import com.rex.practice.model.easyui.Tree;
 import com.rex.practice.service.MenuService;
+import com.rex.practice.service.base.BaseServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
 
     private FunctionsMapper mapper;
 

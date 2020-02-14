@@ -7,6 +7,7 @@ import com.rex.practice.dao.model.Item;
 import com.rex.practice.model.easyui.grid.GridPagination;
 import com.rex.practice.model.easyui.grid.ItemGridVo;
 import com.rex.practice.service.ItemService;
+import com.rex.practice.service.base.BaseServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class ItemServiceImpl implements ItemService {
+public class ItemServiceImpl extends BaseServiceImpl implements ItemService {
 
     private ItemMapper mapper;
 

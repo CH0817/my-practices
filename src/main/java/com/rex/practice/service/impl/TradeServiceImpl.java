@@ -7,18 +7,16 @@ import com.rex.practice.dao.model.Trade;
 import com.rex.practice.model.easyui.grid.GridPagination;
 import com.rex.practice.model.easyui.grid.TradeGridVo;
 import com.rex.practice.service.TradeService;
+import com.rex.practice.service.base.BaseServiceImpl;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Service
-public class TradeServiceImpl implements TradeService {
+public class TradeServiceImpl extends BaseServiceImpl implements TradeService {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
     private TradeMapper mapper;
 
     @Autowired

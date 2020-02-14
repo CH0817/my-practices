@@ -6,17 +6,16 @@ import com.rex.practice.service.EmailService;
 import com.rex.practice.service.RegisterService;
 import com.rex.practice.service.TokenService;
 import com.rex.practice.service.UserService;
+import com.rex.practice.service.base.BaseServiceImpl;
 import com.rex.practice.util.BindingResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 import java.util.Optional;
 
 @Service
-@Transactional
-public class RegisterServiceImpl implements RegisterService {
+public class RegisterServiceImpl extends BaseServiceImpl implements RegisterService {
 
     private UserService userService;
     private EmailService emailService;

@@ -4,17 +4,14 @@ import com.rex.practice.dao.mapper.UserMapper;
 import com.rex.practice.dao.model.User;
 import com.rex.practice.model.vo.Login;
 import com.rex.practice.service.LoginService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.rex.practice.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 @Service
-public class LoginServiceImpl implements LoginService {
-
-    private Logger logger = LoggerFactory.getLogger(getClass());
+public class LoginServiceImpl extends BaseServiceImpl implements LoginService {
 
     private UserMapper userMapper;
 

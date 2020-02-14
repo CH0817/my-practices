@@ -1,8 +1,7 @@
 package com.rex.practice.service.impl;
 
 import com.rex.practice.service.EmailService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.rex.practice.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,9 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class EmailServiceImpl implements EmailService {
+public class EmailServiceImpl extends BaseServiceImpl implements EmailService {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
     @Value("${server.servlet.context-path}")
     private String contextPath;
     @Value("${app.url}")

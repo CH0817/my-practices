@@ -6,23 +6,18 @@ import com.rex.practice.model.input.Register;
 import com.rex.practice.service.EmailService;
 import com.rex.practice.service.TokenService;
 import com.rex.practice.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.rex.practice.service.base.BaseServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.util.Date;
 import java.util.Objects;
 
 @Service
-@Transactional
-public class UserServiceImpl implements UserService {
-
-    private Logger logger = LoggerFactory.getLogger(getClass());
+public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     private UserMapper userMapper;
     private PasswordEncoder passwordEncoder;

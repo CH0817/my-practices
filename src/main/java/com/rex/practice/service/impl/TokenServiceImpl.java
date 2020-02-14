@@ -3,6 +3,7 @@ package com.rex.practice.service.impl;
 import com.rex.practice.dao.mapper.RegisterTokenMapper;
 import com.rex.practice.dao.model.RegisterToken;
 import com.rex.practice.service.TokenService;
+import com.rex.practice.service.base.BaseServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class TokenServiceImpl implements TokenService {
+public class TokenServiceImpl extends BaseServiceImpl implements TokenService {
 
     private RegisterTokenMapper registerTokenMapper;
 

@@ -7,6 +7,7 @@ import com.rex.practice.dao.model.Account;
 import com.rex.practice.model.easyui.grid.AccountGridVo;
 import com.rex.practice.model.easyui.grid.GridPagination;
 import com.rex.practice.service.AccountService;
+import com.rex.practice.service.base.BaseServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl extends BaseServiceImpl implements AccountService {
 
     private AccountMapper mapper;
 
