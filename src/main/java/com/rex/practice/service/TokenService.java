@@ -2,10 +2,10 @@ package com.rex.practice.service;
 
 public interface TokenService {
 
-    String createRegisterToken(String email);
+    String createRegisterToken(String userId);
 
-    String getRegisterToken(String email);
+    String getRegisterToken(String userId);
 
-    boolean isTokenExpired(String email) throws Exception;
+    boolean isTokenExpired(String userId) throws Exception;
 
 }

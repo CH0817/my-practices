@@ -19,37 +19,36 @@ import static org.mockito.Mockito.when;
 
 public class TokenServiceTest extends BaseServiceTest {
 
-    private final String EMAIL = "1@1.c";
     @Autowired
     private TokenService service;
 
     @Test
     public void createRegisterToken() {
         when(registerTokenMapper.insertSelective(any(RegisterToken.class))).thenReturn(1);
-        assertTrue(StringUtils.isNotBlank(service.createRegisterToken(EMAIL)));
+        assertTrue(StringUtils.isNotBlank(service.createRegisterToken(userId)));
     }
 
     @Test
     public void getRegisterToken() {
         RegisterToken registerToken = new RegisterToken();
-        registerToken.setEmail(EMAIL);
+        registerToken.setUserId(userId);
         registerToken.setToken(UUID.randomUUID().toString());
-        when(registerTokenMapper.findByEmail(eq(EMAIL))).thenReturn(registerToken);
-        assertEquals(registerToken.getToken(), service.getRegisterToken(EMAIL));
+        when(registerTokenMapper.findByUserId(eq(userId))).thenReturn(registerToken);
+        assertEquals(registerToken.getToken(), service.getRegisterToken(userId));
     }
 
     @Test
     public void isTokenExpired() throws Exception {
         RegisterToken token = new RegisterToken();
         token.setExpireDate(Date.from(LocalDate.now().minusDays(1L).atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        when(registerTokenMapper.findByEmail(eq(EMAIL))).thenReturn(token);
-        assertTrue(service.isTokenExpired(EMAIL));
+        when(registerTokenMapper.findByUserId(eq(userId))).thenReturn(token);
+        assertTrue(service.isTokenExpired(userId));
     }
 
     @Test(expected = Exception.class)
     public void isTokenExpiredEmailNotFound() throws Exception {
-        when(registerTokenMapper.findByEmail(eq(EMAIL))).thenReturn(null);
-        assertTrue(service.isTokenExpired(EMAIL));
+        when(registerTokenMapper.findByUserId(eq(userId))).thenReturn(null);
+        assertTrue(service.isTokenExpired(userId));
     }
 
 }

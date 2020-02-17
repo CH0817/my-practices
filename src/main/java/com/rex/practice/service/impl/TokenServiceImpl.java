@@ -25,31 +25,31 @@ public class TokenServiceImpl extends BaseServiceImpl implements TokenService {
     }
 
     @Override
-    public String createRegisterToken(String email) {
-        assert StringUtils.isNotBlank(email);
+    public String createRegisterToken(String userId) {
+        assert StringUtils.isNotBlank(userId);
         RegisterToken entity = new RegisterToken();
-        entity.setEmail(email);
+        entity.setUserId(userId);
         entity.setToken(UUID.randomUUID().toString().replace("-", ""));
         entity.setExpireDate(Date.from(LocalDate.now().plusDays(7L).atStartOfDay(ZoneId.systemDefault()).toInstant()));
         return registerTokenMapper.insertSelective(entity) == 1 ? entity.getToken() : "";
     }
 
     @Override
-    public String getRegisterToken(String email) {
-        assert StringUtils.isNotBlank(email);
-        RegisterToken registerToken = registerTokenMapper.findByEmail(email);
+    public String getRegisterToken(String userId) {
+        assert StringUtils.isNotBlank(userId);
+        RegisterToken registerToken = registerTokenMapper.findByUserId(userId);
         return Objects.nonNull(registerToken) ? registerToken.getToken() : "";
     }
 
     @Override
-    public boolean isTokenExpired(String email) throws Exception {
-        assert StringUtils.isNotBlank(email);
-        RegisterToken token = registerTokenMapper.findByEmail(email);
+    public boolean isTokenExpired(String userId) throws Exception {
+        assert StringUtils.isNotBlank(userId);
+        RegisterToken token = registerTokenMapper.findByUserId(userId);
         if (Objects.nonNull(token)) {
             return LocalDate.now().isAfter(token.getExpireDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         }
         // TODO 自訂 Exception
-        throw new Exception("cannot found register token by " + email);
+        throw new Exception("cannot found register token by " + userId);
     }
 
 }
