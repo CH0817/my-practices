@@ -1,12 +1,12 @@
 package com.rex.practice.service;
 
+import com.rex.practice.dao.model.User;
 import com.rex.practice.model.input.Register;
 import com.rex.practice.model.verify.RegisterError;
 import com.rex.practice.service.base.BaseServiceTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
@@ -97,15 +97,22 @@ public class RegisterServiceTest extends BaseServiceTest {
     @Test
     public void register() {
         String token = UUID.randomUUID().toString().replace("-", "");
+
+        User user = new User();
+        user.setId(userId);
+        user.setEmail(register.getEmail());
+
         doReturn(true).when(userService).addUser(any(Register.class));
+        doReturn(Optional.of(user)).when(userService).findByEmail(register.getEmail());
         doReturn(token).when(tokenService).createRegisterToken(register.getEmail());
-        doNothing().when(emailService).sendConfirmRegisterEmail(register.getEmail(), token);
+        doNothing().when(emailService).sendConfirmRegisterEmail(userId, register.getEmail(), token);
 
         assertTrue(service.register(register));
 
         verify(userService, times(1)).addUser(any(Register.class));
+        verify(userService, times(1)).findByEmail(register.getEmail());
         verify(tokenService, times(1)).createRegisterToken(anyString());
-        verify(emailService, times(1)).sendConfirmRegisterEmail(anyString(), anyString());
+        verify(emailService, times(1)).sendConfirmRegisterEmail(anyString(), anyString(), anyString());
     }
 
 }

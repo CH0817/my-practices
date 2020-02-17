@@ -16,7 +16,7 @@ public class EmailServiceTest extends BaseServiceTest {
 
     @Test
     public void sendConfirmRegisterEmail() {
-        service.sendConfirmRegisterEmail(registerEmail, UUID.randomUUID().toString().replace("-", ""));
+        service.sendConfirmRegisterEmail(userId, registerEmail, UUID.randomUUID().toString().replace("-", ""));
     }
 
 }

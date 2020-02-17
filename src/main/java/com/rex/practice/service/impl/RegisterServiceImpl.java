@@ -51,7 +51,10 @@ public class RegisterServiceImpl extends BaseServiceImpl implements RegisterServ
     @Override
     public boolean register(Register register) {
         if (userService.addUser(register)) {
-            emailService.sendConfirmRegisterEmail(register.getEmail(), tokenService.createRegisterToken(register.getEmail()));
+            userService.findByEmail(register.getEmail())
+                    .ifPresent(user -> emailService.sendConfirmRegisterEmail(user.getId(),
+                            user.getEmail(),
+                            tokenService.createRegisterToken(user.getEmail())));
             return true;
         }
         return false;
