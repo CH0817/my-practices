@@ -104,15 +104,15 @@ public class RegisterServiceTest extends BaseServiceTest {
 
         doReturn(true).when(userService).addUser(any(Register.class));
         doReturn(Optional.of(user)).when(userService).findByEmail(register.getEmail());
-        doReturn(token).when(tokenService).createRegisterToken(register.getEmail());
+        doReturn(token).when(tokenService).createRegisterToken(user.getId());
         doNothing().when(emailService).sendConfirmRegisterEmail(userId, register.getEmail(), token);
 
         assertTrue(service.register(register));
 
         verify(userService, times(1)).addUser(any(Register.class));
         verify(userService, times(1)).findByEmail(register.getEmail());
-        verify(tokenService, times(1)).createRegisterToken(anyString());
-        verify(emailService, times(1)).sendConfirmRegisterEmail(anyString(), anyString(), anyString());
+        verify(tokenService, times(1)).createRegisterToken(user.getId());
+        verify(emailService, times(1)).sendConfirmRegisterEmail(userId, register.getEmail(), token);
     }
 
 }

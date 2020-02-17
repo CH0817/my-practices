@@ -54,7 +54,7 @@ public class RegisterServiceImpl extends BaseServiceImpl implements RegisterServ
             userService.findByEmail(register.getEmail())
                     .ifPresent(user -> emailService.sendConfirmRegisterEmail(user.getId(),
                             user.getEmail(),
-                            tokenService.createRegisterToken(user.getEmail())));
+                            tokenService.createRegisterToken(user.getId())));
             return true;
         }
         return false;

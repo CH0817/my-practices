@@ -52,7 +52,7 @@ public class RegisterController extends BaseController {
     }
 
     @GetMapping("/verify/{email}/{token}")
-    public String registerVerify(@PathVariable String email, @PathVariable String token, RedirectAttributes redirectAttributes) {
+    public String registerVerify(@PathVariable String email, @PathVariable String token, RedirectAttributes redirectAttributes) throws Exception {
         // TODO 未註冊已完成，接著做轉跳到重新發送確認信頁面
         String registerToken = tokenService.getRegisterToken(email);
         if (StringUtils.isBlank(registerToken) && !userService.findByEmail(email).isPresent()) {
