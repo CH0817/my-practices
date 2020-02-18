@@ -2,6 +2,7 @@ package com.rex.practice.service.impl;
 
 import com.rex.practice.model.input.Register;
 import com.rex.practice.model.verify.RegisterError;
+import com.rex.practice.model.verify.RegisterVerifyError;
 import com.rex.practice.service.EmailService;
 import com.rex.practice.service.RegisterService;
 import com.rex.practice.service.TokenService;
@@ -58,6 +59,25 @@ public class RegisterServiceImpl extends BaseServiceImpl implements RegisterServ
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Optional<RegisterVerifyError> accountVerify(String userId, String token) throws Exception {
+        RegisterVerifyError error = new RegisterVerifyError();
+        if (!userService.findById(userId).isPresent()) {
+            error.setAccountError(true);
+            return Optional.of(error);
+        }
+        if (tokenService.isTokenExpired(userId) || !token.equals(tokenService.getRegisterToken(userId))) {
+            error.setTokenError(true);
+            return Optional.of(error);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean updateAccountToVerified(String userId) {
+        return userService.updateEmailVerifyStatus(userId);
     }
 
 }

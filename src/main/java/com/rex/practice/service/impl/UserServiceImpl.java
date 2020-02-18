@@ -46,8 +46,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateEmailVerifyStatus(String email) {
-        Optional<User> optional = Optional.ofNullable(userMapper.findByEmail(email));
+    public boolean updateEmailVerifyStatus(String userId) {
+        Optional<User> optional = Optional.ofNullable(userMapper.selectByPrimaryKey(userId));
         if (optional.isPresent()) {
             User entity = optional.get();
             entity.setIsEmailVerify(true);
@@ -60,6 +60,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     @Override
     public Optional<User> findByEmail(String email) {
         return Optional.ofNullable(userMapper.findByEmail(email));
+    }
+
+    @Override
+    public Optional<User> findById(String userId) {
+        return Optional.ofNullable(userMapper.selectByPrimaryKey(userId));
     }
 
 }

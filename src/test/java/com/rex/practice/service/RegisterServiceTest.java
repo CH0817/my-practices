@@ -3,8 +3,10 @@ package com.rex.practice.service;
 import com.rex.practice.dao.model.User;
 import com.rex.practice.model.input.Register;
 import com.rex.practice.model.verify.RegisterError;
+import com.rex.practice.model.verify.RegisterVerifyError;
 import com.rex.practice.service.base.BaseServiceTest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -15,8 +17,7 @@ import org.springframework.validation.FieldError;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class RegisterServiceTest extends BaseServiceTest {
@@ -113,6 +114,78 @@ public class RegisterServiceTest extends BaseServiceTest {
         verify(userService, times(1)).findByEmail(register.getEmail());
         verify(tokenService, times(1)).createRegisterToken(user.getId());
         verify(emailService, times(1)).sendConfirmRegisterEmail(userId, register.getEmail(), token);
+    }
+
+    @Test
+    public void accountVerifyButNotRegisterData() throws Exception {
+        doReturn(Optional.empty()).when(userService).findById(userId);
+
+        Optional<RegisterVerifyError> optionalError = service.accountVerify(userId, UUID.randomUUID().toString());
+
+        assertTrue(optionalError.isPresent());
+        assertTrue(optionalError.get().isAccountError());
+
+        verify(userService, times(1)).findById(userId);
+    }
+
+    @Test
+    public void accountVerifyButTokenExpired() throws Exception {
+        doReturn(Optional.of(new User())).when(userService).findById(userId);
+        doReturn(true).when(tokenService).isTokenExpired(userId);
+
+        Optional<RegisterVerifyError> optionalError = service.accountVerify(userId, UUID.randomUUID().toString());
+
+        assertTrue(optionalError.isPresent());
+        assertTrue(optionalError.get().isTokenError());
+
+        verify(userService, times(1)).findById(userId);
+        verify(tokenService, times(1)).isTokenExpired(userId);
+    }
+
+    @Test
+    public void accountVerifyButTokenNotSame() throws Exception {
+        doReturn(Optional.of(new User())).when(userService).findById(userId);
+        doReturn(false).when(tokenService).isTokenExpired(userId);
+        doReturn(UUID.randomUUID().toString()).when(tokenService).getRegisterToken(userId);
+
+        Optional<RegisterVerifyError> optionalError = service.accountVerify(userId, UUID.randomUUID().toString());
+
+        assertTrue(optionalError.isPresent());
+        assertTrue(optionalError.get().isTokenError());
+
+        verify(userService, times(1)).findById(userId);
+        verify(tokenService, times(1)).isTokenExpired(userId);
+        verify(tokenService, times(1)).getRegisterToken(userId);
+    }
+
+    @Test
+    public void accountVerify() throws Exception {
+        String token = UUID.randomUUID().toString();
+
+        doReturn(Optional.of(new User())).when(userService).findById(userId);
+        doReturn(false).when(tokenService).isTokenExpired(userId);
+        doReturn(token).when(tokenService).getRegisterToken(userId);
+
+        assertFalse(service.accountVerify(userId, token).isPresent());
+
+        verify(userService, times(1)).findById(userId);
+        verify(tokenService, times(1)).isTokenExpired(userId);
+        verify(tokenService, times(1)).getRegisterToken(userId);
+    }
+
+    @Test
+    public void updateAccountToVerified() {
+        doReturn(true).when(userService).updateEmailVerifyStatus(userId);
+
+        assertTrue(service.updateAccountToVerified(userId));
+
+        verify(userService, times(1)).updateEmailVerifyStatus(userId);
+    }
+
+    @Test
+    @Ignore
+    public void updateAccountToVerifiedFailure() {
+        // TODO 拋出自訂例外
     }
 
 }

@@ -13,8 +13,10 @@ public interface UserService {
 
     boolean isEmailVerified(String email);
 
-    boolean updateEmailVerifyStatus(String email);
+    boolean updateEmailVerifyStatus(String userId);
 
     Optional<User> findByEmail(String email);
+
+    Optional<User> findById(String userId);
 
 }

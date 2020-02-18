@@ -2,11 +2,9 @@ package com.rex.practice.web.controller;
 
 import com.rex.practice.model.input.Register;
 import com.rex.practice.model.verify.RegisterError;
+import com.rex.practice.model.verify.RegisterVerifyError;
 import com.rex.practice.service.RegisterService;
-import com.rex.practice.service.TokenService;
-import com.rex.practice.service.UserService;
 import com.rex.practice.web.controller.base.BaseController;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Controller
@@ -24,10 +23,6 @@ import java.util.Optional;
 public class RegisterController extends BaseController {
 
     private RegisterService registerService;
-    @Autowired
-    private TokenService tokenService;
-    @Autowired
-    private UserService userService;
 
     @Autowired
     public RegisterController(RegisterService registerService) {
@@ -51,15 +46,21 @@ public class RegisterController extends BaseController {
         return "redirect:/login";
     }
 
-    @GetMapping("/verify/{email}/{token}")
-    public String registerVerify(@PathVariable String email, @PathVariable String token, RedirectAttributes redirectAttributes) throws Exception {
-        // TODO 未註冊已完成，接著做轉跳到重新發送確認信頁面
-        String registerToken = tokenService.getRegisterToken(email);
-        if (StringUtils.isBlank(registerToken) && !userService.findByEmail(email).isPresent()) {
-            return "redirect:/register";
+    @GetMapping("/verify/{userId}/{token}")
+    public String accountVerify(@PathVariable String userId, @PathVariable String token, HttpServletRequest request)
+            throws Exception {
+        Optional<RegisterVerifyError> optionalError = registerService.accountVerify(userId, token);
+        if (optionalError.isPresent()) {
+            if (optionalError.get().isAccountError()) {
+                return "redirect:/register";
+            }
+            if (optionalError.get().isTokenError()) {
+                request.setAttribute("userId", userId);
+                return "forward:/helper/register/verify/resend";
+            }
         }
-        boolean isTokenExpired = tokenService.isTokenExpired(email);
-        boolean isUpdate = userService.updateEmailVerifyStatus(email);
+
+        registerService.updateAccountToVerified(userId);
         return "redirect:/login";
     }
 

@@ -2,8 +2,10 @@ package com.rex.practice.web.controller;
 
 import com.rex.practice.model.input.Register;
 import com.rex.practice.model.verify.RegisterError;
+import com.rex.practice.model.verify.RegisterVerifyError;
 import com.rex.practice.web.controller.base.BaseControllerTest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.validation.BindingResult;
 
@@ -87,37 +89,56 @@ public class RegisterControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void registerVerify() throws Exception {
-        String email = "1@1.c";
-        String token = UUID.randomUUID().toString().replace("-", "");
+    public void accountVerifyButNotRegisterData() throws Exception {
+        String token = randomToken();
 
-        when(tokenService.getRegisterToken(email)).thenReturn(token);
-        when(tokenService.isTokenExpired(email)).thenReturn(false);
-        when(userService.updateEmailVerifyStatus(email)).thenReturn(true);
+        RegisterVerifyError error = new RegisterVerifyError();
+        error.setAccountError(true);
 
-        sendRequest(get("/register/verify/{email}/{token}", email, token))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/login"));
+        when(registerService.accountVerify(userId, token)).thenReturn(Optional.of(error));
 
-        verify(tokenService, times(1)).getRegisterToken(email);
-        verify(tokenService, times(1)).isTokenExpired(email);
-        verify(userService, times(1)).updateEmailVerifyStatus(email);
-    }
-
-    @Test
-    public void registerVerifyButNotRegistered() throws Exception {
-        String email = "1@1.c";
-        String token = UUID.randomUUID().toString().replace("-", "");
-
-        when(tokenService.getRegisterToken(email)).thenReturn("");
-        when(userService.findByEmail(email)).thenReturn(Optional.empty());
-
-        sendRequest(get("/register/verify/{email}/{token}", email, token))
+        sendRequest(get("/register/verify/{userId}/{token}", userId, token))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/register"));
 
-        verify(tokenService, times(1)).getRegisterToken(email);
-        verify(userService, times(1)).findByEmail(email);
+        verify(registerService, times(1)).accountVerify(userId, token);
+    }
+
+    @Test
+    public void accountVerifyButTokenError() throws Exception {
+        String token = randomToken();
+
+        RegisterVerifyError error = new RegisterVerifyError();
+        error.setTokenError(true);
+
+        when(registerService.accountVerify(userId, token)).thenReturn(Optional.of(error));
+
+        sendRequest(get("/register/verify/{userId}/{token}", userId, token))
+                .andExpect(status().isOk())
+                .andExpect(request().attribute("userId", userId))
+                .andExpect(view().name("forward:/helper/register/verify/resend/"));
+
+        verify(registerService, times(1)).accountVerify(userId, token);
+    }
+
+    @Test
+    public void accountVerify() throws Exception {
+        String token = randomToken();
+
+        when(registerService.accountVerify(userId, token)).thenReturn(Optional.empty());
+
+        sendRequest(get("/register/verify/{userId}/{token}", userId, token))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/login"));
+
+        verify(registerService, times(1)).accountVerify(userId, token);
+        verify(registerService, times(1)).updateAccountToVerified(userId);
+    }
+
+    @Test
+    @Ignore
+    public void accountVerifyFailure() throws Exception {
+        // TODO 流程要改，userService.updateEmailVerifyStatus() 回傳 false 的時候轉跳到提示頁
     }
 
     private void verifyError(String errorMessage, String viewName) throws Exception {
@@ -131,6 +152,10 @@ public class RegisterControllerTest extends BaseControllerTest {
                 .andExpect(view().name(optional.get().getViewName()));
 
         verify(registerService, times(1)).verify(any(Register.class), any(BindingResult.class));
+    }
+
+    private String randomToken() {
+        return UUID.randomUUID().toString().replace("-", "");
     }
 
 }

@@ -45,14 +45,15 @@ public class UserServiceTest extends BaseServiceTest {
 
     @Test
     public void updateEmailVerifyStatus() {
-        String email = "1@1.c";
+        User entity = new User();
+        entity.setId(userId);
 
-        when(userMapper.findByEmail(email)).thenReturn(new User());
+        when(userMapper.selectByPrimaryKey(userId)).thenReturn(entity);
         when(userMapper.updateSelectiveByPrimaryKey(any(User.class))).thenReturn(1);
 
-        assertTrue(service.updateEmailVerifyStatus(email));
+        assertTrue(service.updateEmailVerifyStatus(userId));
 
-        verify(userMapper, times(1)).findByEmail(email);
+        verify(userMapper, times(1)).selectByPrimaryKey(userId);
         verify(userMapper, times(1)).updateSelectiveByPrimaryKey(any(User.class));
     }
 
@@ -60,11 +61,11 @@ public class UserServiceTest extends BaseServiceTest {
     public void updateEmailVerifyStatusFailure() {
         String email = "1@1.c";
 
-        when(userMapper.findByEmail(email)).thenReturn(null);
+        when(userMapper.selectByPrimaryKey(email)).thenReturn(null);
 
         assertFalse(service.updateEmailVerifyStatus(email));
 
-        verify(userMapper, times(1)).findByEmail(email);
+        verify(userMapper, times(1)).selectByPrimaryKey(email);
     }
 
     @Test
@@ -79,6 +80,18 @@ public class UserServiceTest extends BaseServiceTest {
         String email = "1@1.c";
         when(userMapper.findByEmail(email)).thenReturn(null);
         assertFalse(service.findByEmail(email).isPresent());
+    }
+
+    @Test
+    public void findById() {
+        when(userMapper.selectByPrimaryKey(userId)).thenReturn(new User());
+        assertTrue(service.findById(userId).isPresent());
+    }
+
+    @Test
+    public void findByIdNotFound() {
+        when(userMapper.selectByPrimaryKey(userId)).thenReturn(null);
+        assertFalse(service.findById(userId).isPresent());
     }
 
 }
