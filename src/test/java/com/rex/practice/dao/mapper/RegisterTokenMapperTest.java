@@ -35,4 +35,9 @@ public class RegisterTokenMapperTest extends BaseMapperTest {
         assertTrue(Objects.nonNull(mapper.findByUserId("a")));
     }
 
+    @Test
+    public void deleteByUserId() {
+        assertEquals(1, mapper.deleteByUserId("a"));
+    }
+
 }

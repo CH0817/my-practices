@@ -9,4 +9,6 @@ public interface RegisterTokenMapper extends BaseMapper<RegisterToken> {
 
     RegisterToken findByUserId(String userId);
 
+    int deleteByUserId(String userId);
+
 }

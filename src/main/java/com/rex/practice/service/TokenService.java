@@ -8,4 +8,6 @@ public interface TokenService {
 
     boolean isTokenExpired(String userId) throws Exception;
 
+    void deleteToken(String userId);
+
 }

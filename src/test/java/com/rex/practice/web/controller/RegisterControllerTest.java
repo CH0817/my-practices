@@ -116,7 +116,7 @@ public class RegisterControllerTest extends BaseControllerTest {
         sendRequest(get("/register/verify/{userId}/{token}", userId, token))
                 .andExpect(status().isOk())
                 .andExpect(request().attribute("userId", userId))
-                .andExpect(view().name("forward:/helper/register/verify/resend/"));
+                .andExpect(view().name("forward:/helper/register/verify/resend"));
 
         verify(registerService, times(1)).accountVerify(userId, token);
     }
@@ -139,6 +139,39 @@ public class RegisterControllerTest extends BaseControllerTest {
     @Ignore
     public void accountVerifyFailure() throws Exception {
         // TODO 流程要改，userService.updateEmailVerifyStatus() 回傳 false 的時候轉跳到提示頁
+    }
+
+    @Test
+    public void resendVerifyEmailButNoGiveUserId() throws Exception {
+        sendPostRequest("/register/verify/resend", params).andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void resendVerifyEmailSendErrorUserId() throws Exception {
+        params = new HashMap<>();
+        params.put("userId", new String[]{userId});
+
+        when(registerService.resendVerifyEmail(userId)).thenReturn(false);
+
+        sendPostRequest("/register/verify/resend", params)
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$").value(false));
+
+        verify(registerService, times(1)).resendVerifyEmail(userId);
+    }
+
+    @Test
+    public void resendVerifyEmail() throws Exception {
+        params = new HashMap<>();
+        params.put("userId", new String[]{userId});
+
+        when(registerService.resendVerifyEmail(userId)).thenReturn(true);
+
+        sendPostRequest("/register/verify/resend", params)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(true));
+
+        verify(registerService, times(1)).resendVerifyEmail(userId);
     }
 
     private void verifyError(String errorMessage, String viewName) throws Exception {

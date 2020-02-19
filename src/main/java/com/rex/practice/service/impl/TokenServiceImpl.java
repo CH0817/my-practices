@@ -52,4 +52,11 @@ public class TokenServiceImpl extends BaseServiceImpl implements TokenService {
         throw new Exception("cannot found register token by " + userId);
     }
 
+    @Override
+    public void deleteToken(String userId) {
+        if (StringUtils.isNotBlank(userId)) {
+            registerTokenMapper.deleteByUserId(userId);
+        }
+    }
+
 }

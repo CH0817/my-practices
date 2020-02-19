@@ -25,4 +25,8 @@
   <select id="findByUserId" parameterType="string" resultMap="BaseResultMap">
     select * from register_token where user_id = #{userId}
   </select>
+
+  <delete id="deleteByUserId" parameterType="string">
+    delete register_token where user_id = #{userId}
+  </delete>
 </mapper>
