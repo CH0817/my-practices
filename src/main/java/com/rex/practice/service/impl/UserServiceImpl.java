@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
@@ -42,6 +43,28 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     @Override
     public boolean isEmailVerified(String email) {
         return userMapper.findByEmail(email).getIsEmailVerify();
+    }
+
+    @Override
+    public boolean updateEmailVerifyStatus(String userId) {
+        Optional<User> optional = Optional.ofNullable(userMapper.selectByPrimaryKey(userId));
+        if (optional.isPresent()) {
+            User entity = optional.get();
+            entity.setIsEmailVerify(true);
+            entity.setUpdateDate(new Date());
+            return userMapper.updateSelectiveByPrimaryKey(entity) == 1;
+        }
+        return false;
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return Optional.ofNullable(userMapper.findByEmail(email));
+    }
+
+    @Override
+    public Optional<User> findById(String userId) {
+        return Optional.ofNullable(userMapper.selectByPrimaryKey(userId));
     }
 
 }

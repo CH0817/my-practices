@@ -15,7 +15,7 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@Sql({"/db/data/data-dev-register_token.sql"})
+@Sql({"/db/data/data-dev-user.sql", "/db/data/data-dev-register_token.sql"})
 public class RegisterTokenMapperTest extends BaseMapperTest {
 
     @Autowired
@@ -24,15 +24,20 @@ public class RegisterTokenMapperTest extends BaseMapperTest {
     @Test
     public void insertSelective() {
         RegisterToken entity = new RegisterToken();
-        entity.setEmail("test@mail.com");
+        entity.setUserId("b");
         entity.setToken(UUID.randomUUID().toString().replace("-", ""));
         entity.setExpireDate(Date.from(LocalDate.now().plusDays(7L).atStartOfDay(ZoneId.systemDefault()).toInstant()));
         assertEquals(1, mapper.insertSelective(entity));
     }
 
     @Test
-    public void findByEmail() {
-        assertTrue(Objects.nonNull(mapper.findByEmail("test@email.com")));
+    public void findByUserId() {
+        assertTrue(Objects.nonNull(mapper.findByUserId("a")));
+    }
+
+    @Test
+    public void deleteByUserId() {
+        assertEquals(1, mapper.deleteByUserId("a"));
     }
 
 }

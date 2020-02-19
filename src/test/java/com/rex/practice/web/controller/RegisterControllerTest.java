@@ -1,18 +1,25 @@
 package com.rex.practice.web.controller;
 
 import com.rex.practice.model.input.Register;
-import com.rex.practice.model.verify.RegisterError;
+import com.rex.practice.model.message.ErrorMessage;
+import com.rex.practice.model.message.InfoMessage;
+import com.rex.practice.model.message.base.Message;
+import com.rex.practice.model.verify.RegisterVerifyError;
 import com.rex.practice.web.controller.base.BaseControllerTest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.validation.BindingResult;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class RegisterControllerTest extends BaseControllerTest {
@@ -36,65 +43,165 @@ public class RegisterControllerTest extends BaseControllerTest {
 
     @Test
     public void register() throws Exception {
-        sendPostRequest("/register", params)
-                .andExpect(status().is3xxRedirection())
-                .andExpect(flash().attribute("message", nullValue()))
-                .andExpect(view().name("redirect:/login"));
+        when(registerService.verify(any(Register.class), any(BindingResult.class))).thenReturn(Optional.empty());
+        when(registerService.register(any(Register.class))).thenReturn(true);
 
+        sendRegisterRequest(new InfoMessage("註冊成功，請至信箱收取驗證信", "/login"));
+
+        verify(registerService, times(1)).verify(any(Register.class), any(BindingResult.class));
         verify(registerService, times(1)).register(any(Register.class));
     }
 
     @Test
-    public void emailIsEmpty() throws Exception {
-        verifyError("Email不能為空", "redirect:/register");
+    public void registerButEmailIsEmpty() throws Exception {
+        registerVerifyError(new ErrorMessage("Email不能為空", "/register"));
     }
 
     @Test
-    public void emailFormatError() throws Exception {
-        verifyError("錯誤的Email格式", "redirect:/register");
+    public void registerButEmailFormatError() throws Exception {
+        registerVerifyError(new ErrorMessage("錯誤的Email格式", "/register"));
     }
 
     @Test
-    public void passwordIsEmpty() throws Exception {
-        verifyError("密碼不能為空，密碼必須是8~12碼", "redirect:/register");
+    public void registerButPasswordIsEmpty() throws Exception {
+        registerVerifyError(new ErrorMessage("密碼不能為空，密碼必須是8~12碼", "/register"));
     }
 
     @Test
-    public void passwordFormatError() throws Exception {
-        verifyError("密碼必須是8~12碼", "redirect:/register");
+    public void registerButPasswordFormatError() throws Exception {
+        registerVerifyError(new ErrorMessage("密碼必須是8~12碼", "/register"));
     }
 
     @Test
-    public void confirmPasswordIsEmpty() throws Exception {
-        verifyError("確認密碼不能為空", "redirect:/register");
+    public void registerButConfirmPasswordIsEmpty() throws Exception {
+        registerVerifyError(new ErrorMessage("確認密碼不能為空", "/register"));
     }
 
     @Test
-    public void passwordDifferent() throws Exception {
-        verifyError("兩次密碼不相同", "redirect:/register");
+    public void registerButPasswordDifferent() throws Exception {
+        registerVerifyError(new ErrorMessage("兩次密碼不相同", "/register"));
     }
 
     @Test
-    public void emailRegistered() throws Exception {
-        verifyError("Email已被註冊", "redirect:/register");
+    public void registerButEmailRegistered() throws Exception {
+        registerVerifyError(new ErrorMessage("Email已被註冊", "/register"));
     }
 
     @Test
-    public void emailVerifying() throws Exception {
-        verifyError("Email驗證中", "redirect:/login");
+    public void registerButEmailVerifying() throws Exception {
+        registerVerifyError(new ErrorMessage("Email驗證中", "/login"));
     }
 
-    private void verifyError(String errorMessage, String viewName) throws Exception {
-        Optional<RegisterError> optional = Optional.of(new RegisterError(errorMessage, viewName));
+    @Test
+    public void accountVerifyButNotRegisterData() throws Exception {
+        String token = randomToken();
+
+        RegisterVerifyError error = new RegisterVerifyError();
+        error.setAccountError(true);
+
+        when(registerService.accountVerify(userId, token)).thenReturn(Optional.of(error));
+
+        sendRequest(get("/register/verify/{userId}/{token}", userId, token))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/register"));
+
+        verify(registerService, times(1)).accountVerify(userId, token);
+    }
+
+    @Test
+    public void accountVerifyButTokenError() throws Exception {
+        String token = randomToken();
+
+        RegisterVerifyError error = new RegisterVerifyError();
+        error.setTokenError(true);
+
+        when(registerService.accountVerify(userId, token)).thenReturn(Optional.of(error));
+
+        sendRequest(get("/register/verify/{userId}/{token}", userId, token))
+                .andExpect(status().isOk())
+                .andExpect(request().attribute("userId", userId))
+                .andExpect(view().name("forward:/helper/register/verify/resend"));
+
+        verify(registerService, times(1)).accountVerify(userId, token);
+    }
+
+    @Test
+    public void accountVerify() throws Exception {
+        String token = randomToken();
+
+        when(registerService.accountVerify(userId, token)).thenReturn(Optional.empty());
+
+        sendRequest(get("/register/verify/{userId}/{token}", userId, token))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/login"));
+
+        verify(registerService, times(1)).accountVerify(userId, token);
+        verify(registerService, times(1)).updateAccountToVerified(userId);
+    }
+
+    @Test
+    @Ignore
+    public void accountVerifyFailure() throws Exception {
+        // TODO 流程要改，userService.updateEmailVerifyStatus() 回傳 false 的時候轉跳到提示頁
+    }
+
+    @Test
+    public void resendVerifyEmailButNoGiveUserId() throws Exception {
+        sendPostRequest("/register/verify/resend", params).andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void resendVerifyEmailSendErrorUserId() throws Exception {
+        params = new HashMap<>();
+        params.put("userId", new String[]{userId});
+
+        when(registerService.resendVerifyEmail(userId)).thenReturn(false);
+
+        sendPostRequest("/register/verify/resend", params)
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$").value(false));
+
+        verify(registerService, times(1)).resendVerifyEmail(userId);
+    }
+
+    @Test
+    public void resendVerifyEmail() throws Exception {
+        params = new HashMap<>();
+        params.put("userId", new String[]{userId});
+
+        when(registerService.resendVerifyEmail(userId)).thenReturn(true);
+
+        sendPostRequest("/register/verify/resend", params)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(true));
+
+        verify(registerService, times(1)).resendVerifyEmail(userId);
+    }
+
+    private void sendRegisterRequest(Message expectMessage) throws Exception {
+        sendPostRequest("/register/create", params)
+                .andExpect(status().isOk())
+                .andExpect(request().attribute("message", allOf(
+                        hasProperty("message", is(expectMessage.getMessage())),
+                        hasProperty("redirectUrl", is(expectMessage.getRedirectUrl())),
+                        hasProperty("icon", is(expectMessage.getIcon()))
+                )))
+                .andExpect(view().name("forward:/helper/show/info"));
+    }
+
+    private void registerVerifyError(Message expectMessage) throws Exception {
+        Optional<Message> optional = Optional.of(expectMessage);
 
         when(registerService.verify(any(Register.class), any(BindingResult.class))).thenReturn(optional);
 
-        sendPostRequest("/register", params)
-                .andExpect(status().is3xxRedirection())
-                .andExpect(flash().attribute("message", optional.get().getErrorMessage()))
-                .andExpect(view().name(optional.get().getViewName()));
+        sendRegisterRequest(expectMessage);
 
         verify(registerService, times(1)).verify(any(Register.class), any(BindingResult.class));
+        verify(registerService, never()).register(any(Register.class));
+    }
+
+    private String randomToken() {
+        return UUID.randomUUID().toString().replace("-", "");
     }
 
 }

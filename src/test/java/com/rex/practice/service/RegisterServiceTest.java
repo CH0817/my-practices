@@ -1,12 +1,14 @@
 package com.rex.practice.service;
 
+import com.rex.practice.dao.model.User;
 import com.rex.practice.model.input.Register;
-import com.rex.practice.model.verify.RegisterError;
+import com.rex.practice.model.message.base.Message;
+import com.rex.practice.model.verify.RegisterVerifyError;
 import com.rex.practice.service.base.BaseServiceTest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
@@ -15,8 +17,7 @@ import org.springframework.validation.FieldError;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class RegisterServiceTest extends BaseServiceTest {
@@ -47,18 +48,18 @@ public class RegisterServiceTest extends BaseServiceTest {
         String errorMessage = "Email不能為空";
         bindingResult.addError(new FieldError("", "email", errorMessage));
 
-        Optional<RegisterError> optional = service.verify(register, bindingResult);
+        Optional<Message> optional = service.verify(register, bindingResult);
 
-        assertRegisterVerify(optional, errorMessage, "redirect:/register");
+        assertRegisterVerify(optional, errorMessage, "/register");
     }
 
     @Test
     public void passwordDifferentError() {
         register.setConfirmPassword("22222222");
 
-        Optional<RegisterError> optional = service.verify(register, bindingResult);
+        Optional<Message> optional = service.verify(register, bindingResult);
 
-        assertRegisterVerify(optional, "兩次密碼不相同", "redirect:/register");
+        assertRegisterVerify(optional, "兩次密碼不相同", "/register");
     }
 
     @Test
@@ -66,9 +67,9 @@ public class RegisterServiceTest extends BaseServiceTest {
         doReturn(true).when(userService).isEmailExists(register.getEmail());
         doReturn(true).when(userService).isEmailVerified(register.getEmail());
 
-        Optional<RegisterError> optional = service.verify(register, bindingResult);
+        Optional<Message> optional = service.verify(register, bindingResult);
 
-        assertRegisterVerify(optional, "Email已被註冊", "redirect:/register");
+        assertRegisterVerify(optional, "Email已被註冊", "/register");
 
         verify(userService, times(1)).isEmailExists(register.getEmail());
         verify(userService, times(1)).isEmailVerified(register.getEmail());
@@ -79,33 +80,141 @@ public class RegisterServiceTest extends BaseServiceTest {
         doReturn(true).when(userService).isEmailExists(register.getEmail());
         doReturn(false).when(userService).isEmailVerified(register.getEmail());
 
-        Optional<RegisterError> optional = service.verify(register, bindingResult);
+        Optional<Message> optional = service.verify(register, bindingResult);
 
-        assertRegisterVerify(optional, "Email驗證中", "redirect:/login");
+        assertRegisterVerify(optional, "Email驗證中", "/login");
 
         verify(userService, times(1)).isEmailExists(register.getEmail());
         verify(userService, times(1)).isEmailVerified(register.getEmail());
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    private void assertRegisterVerify(Optional<RegisterError> optional, String expectMessage, String expectViewName) {
+    private void assertRegisterVerify(Optional<Message> optional, String expectMessage, String expectRedirectUrl) {
         assertTrue(optional.isPresent());
-        assertEquals(expectMessage, optional.get().getErrorMessage());
-        assertEquals(expectViewName, optional.get().getViewName());
+        assertEquals(expectMessage, optional.get().getMessage());
+        assertEquals(expectRedirectUrl, optional.get().getRedirectUrl());
     }
 
     @Test
     public void register() {
         String token = UUID.randomUUID().toString().replace("-", "");
+
+        User user = new User();
+        user.setId(userId);
+        user.setEmail(register.getEmail());
+
         doReturn(true).when(userService).addUser(any(Register.class));
-        doReturn(token).when(tokenService).createRegisterToken(register.getEmail());
-        doNothing().when(emailService).sendConfirmRegisterEmail(register.getEmail(), token);
+        doReturn(Optional.of(user)).when(userService).findByEmail(register.getEmail());
+        doReturn(token).when(tokenService).createRegisterToken(user.getId());
+        doNothing().when(emailService).sendConfirmRegisterEmail(userId, register.getEmail(), token);
 
         assertTrue(service.register(register));
 
         verify(userService, times(1)).addUser(any(Register.class));
-        verify(tokenService, times(1)).createRegisterToken(anyString());
-        verify(emailService, times(1)).sendConfirmRegisterEmail(anyString(), anyString());
+        verify(userService, times(1)).findByEmail(register.getEmail());
+        verify(tokenService, times(1)).createRegisterToken(user.getId());
+        verify(emailService, times(1)).sendConfirmRegisterEmail(userId, register.getEmail(), token);
+    }
+
+    @Test
+    public void accountVerifyButNotRegisterData() throws Exception {
+        doReturn(Optional.empty()).when(userService).findById(userId);
+
+        Optional<RegisterVerifyError> optionalError = service.accountVerify(userId, UUID.randomUUID().toString());
+
+        assertTrue(optionalError.isPresent());
+        assertTrue(optionalError.get().isAccountError());
+
+        verify(userService, times(1)).findById(userId);
+    }
+
+    @Test
+    public void accountVerifyButTokenExpired() throws Exception {
+        doReturn(Optional.of(new User())).when(userService).findById(userId);
+        doReturn(true).when(tokenService).isTokenExpired(userId);
+
+        Optional<RegisterVerifyError> optionalError = service.accountVerify(userId, UUID.randomUUID().toString());
+
+        assertTrue(optionalError.isPresent());
+        assertTrue(optionalError.get().isTokenError());
+
+        verify(userService, times(1)).findById(userId);
+        verify(tokenService, times(1)).isTokenExpired(userId);
+    }
+
+    @Test
+    public void accountVerifyButTokenNotSame() throws Exception {
+        doReturn(Optional.of(new User())).when(userService).findById(userId);
+        doReturn(false).when(tokenService).isTokenExpired(userId);
+        doReturn(UUID.randomUUID().toString()).when(tokenService).getRegisterToken(userId);
+
+        Optional<RegisterVerifyError> optionalError = service.accountVerify(userId, UUID.randomUUID().toString());
+
+        assertTrue(optionalError.isPresent());
+        assertTrue(optionalError.get().isTokenError());
+
+        verify(userService, times(1)).findById(userId);
+        verify(tokenService, times(1)).isTokenExpired(userId);
+        verify(tokenService, times(1)).getRegisterToken(userId);
+    }
+
+    @Test
+    public void accountVerify() throws Exception {
+        String token = UUID.randomUUID().toString();
+
+        doReturn(Optional.of(new User())).when(userService).findById(userId);
+        doReturn(false).when(tokenService).isTokenExpired(userId);
+        doReturn(token).when(tokenService).getRegisterToken(userId);
+
+        assertFalse(service.accountVerify(userId, token).isPresent());
+
+        verify(userService, times(1)).findById(userId);
+        verify(tokenService, times(1)).isTokenExpired(userId);
+        verify(tokenService, times(1)).getRegisterToken(userId);
+    }
+
+    @Test
+    public void updateAccountToVerified() {
+        doReturn(true).when(userService).updateEmailVerifyStatus(userId);
+
+        assertTrue(service.updateAccountToVerified(userId));
+
+        verify(userService, times(1)).updateEmailVerifyStatus(userId);
+    }
+
+    @Test
+    @Ignore
+    public void updateAccountToVerifiedFailure() {
+        // TODO 拋出自訂例外
+    }
+
+    @Test
+    public void resendVerifyEmailSendErrorUserId() {
+        doReturn(Optional.empty()).when(userService).findById(userId);
+
+        assertFalse(service.resendVerifyEmail(userId));
+
+        verify(userService, times(1)).findById(userId);
+    }
+
+    @Test
+    public void resendVerifyEmail() {
+        String token = UUID.randomUUID().toString().replace("-", "");
+        User user = new User();
+        user.setId(userId);
+        user.setEmail("1@a.c");
+
+        doReturn(Optional.of(user)).when(userService).findById(userId);
+        doReturn(token).when(tokenService).createRegisterToken(userId);
+        doNothing().when(emailService).sendConfirmRegisterEmail(userId, user.getEmail(), token);
+        doNothing().when(tokenService).deleteToken(userId);
+
+        assertTrue(service.resendVerifyEmail(userId));
+
+        verify(userService, times(1)).findById(userId);
+        verify(tokenService, times(1)).createRegisterToken(userId);
+        verify(emailService, times(1)).sendConfirmRegisterEmail(userId, user.getEmail(), token);
+        verify(tokenService, times(1)).deleteToken(userId);
     }
 
 }

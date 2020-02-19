@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/header::commonHead(~{::title},_,~{::script})">
+    <title>系統提示</title>
+    <script th:inline="javascript">
+        'use strict';
+
+        $(function () {
+            const message = /*[[${message.message}]]*/ '';
+            const redirectUrl = /*[[@{${message.redirectUrl}}]]*/ '';
+            const icon = /*[[${message.icon}]]*/ '';
+            $.messager.alert({
+                title: '訊息',
+                msg: info,
+                icon: icon,
+                fn: function () {
+                    window.location.replace(redirectUrl);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

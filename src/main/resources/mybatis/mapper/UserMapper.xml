@@ -59,6 +59,7 @@
       <if test="email != null">email = #{email},</if>
       <if test="password != null">password = #{password},</if>
       <if test="removed != null">removed = #{removed},</if>
+      <if test="isEmailVerify != null">email_verify = #{isEmailVerify},</if>
       update_date = #{updateDate},
     </set>
     where id = #{id} and removed = 0

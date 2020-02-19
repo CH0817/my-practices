@@ -1,9 +1,27 @@
 @startuml
 start
-    if(是否有該token資料) then (Y)
-        :更新使用者驗證狀態;
+    if(是否有註冊資料) then (Y)
+        if(token是否過期) then (Y)
+            (A)
+        else (N)
+            if(token是否相同) then (Y)
+                :更新使用者驗證狀態;
+                :刪除token資料;
+                :導向登入頁;
+            else (N)
+                (A)
+            endif
+        endif
     else (N)
-        :導向錯誤頁;
+        :導向註冊頁;
     endif
+end
+(A)
+if(是否重新發送認證信) then (Y)
+    :重新發送認證信;
+else (N)
+    :刪除註冊資料;
+    :導向註冊頁;
+endif
 end
 @enduml

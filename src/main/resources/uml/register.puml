@@ -1,23 +1,29 @@
 @startuml
 start
-    fork
-        :檢查Email格式;
-    fork again
-        :兩次密碼是否相同;
-    end fork
-    if(檢查通過？) then (Y)
+    if(註冊資料檢核通過？) then (Y)
         if(Email是否已被註冊？) then (Y)
             if(Email是否已通過驗證？) then (Y)
-                :導回註冊頁並顯示錯誤訊息;
+                (A)
+                detach
             else (N)
-                :顯示驗證提示後導至登入頁;
+                (B)
+                detach
             endif
         else (N)
             :執行註冊;
             :發送Email驗證信;
+            (B)
+            detach
         endif;
     else (N)
-        :導回註冊頁並顯示錯誤訊息;
+        (A)
     endif
+(A)
+:顯示錯誤訊息;
+:回註冊頁;
+end
+(B)
+:顯示提示訊息;
+:回登入頁;
 end
 @enduml

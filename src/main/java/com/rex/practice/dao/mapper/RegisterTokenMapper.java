@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RegisterTokenMapper extends BaseMapper<RegisterToken> {
 
-    RegisterToken findByEmail(String email);
+    RegisterToken findByUserId(String userId);
+
+    int deleteByUserId(String userId);
 
 }

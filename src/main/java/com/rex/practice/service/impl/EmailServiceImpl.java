@@ -37,22 +37,22 @@ public class EmailServiceImpl extends BaseServiceImpl implements EmailService {
 
     @Async
     @Override
-    public void sendConfirmRegisterEmail(String email, String token) {
+    public void sendConfirmRegisterEmail(String userId, String email, String token) {
         // TODO 這是用 Thymeleaf 做 template ，改用 freemarker 試試？
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
-            setMailHelper(message, email, mailContent(email, token));
+            setMailHelper(message, email, mailContent(userId, token));
             javaMailSender.send(message);
         } catch (MessagingException e) {
             logger.error("send register verify email error", e);
         }
     }
 
-    private Context mailContent(String email, String token) {
+    private Context mailContent(String userId, String token) {
         Context context = new Context();
 
         Map<String, Object> variables = new HashMap<>();
-        variables.put("link", "http://" + appUrl + ":" + appPort + contextPath + "/register/verify/" + email + "/" + token);
+        variables.put("link", "http://" + appUrl + ":" + appPort + contextPath + "/register/verify/" + userId + "/" + token);
 
         context.setVariables(variables);
 
