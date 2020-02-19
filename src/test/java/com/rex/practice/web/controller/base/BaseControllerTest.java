@@ -26,7 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = {AccountBookController.class, AccountController.class, ComboboxController.class,
-        FunctionController.class, ItemController.class, LoginController.class, RegisterController.class})
+        FunctionController.class, ItemController.class, LoginController.class, RegisterController.class,
+        HelperController.class})
 @AutoConfigureMockMvc
 @MockBean(classes = {JavaMailSender.class, ReCaptchaProperty.class})
 @Ignore

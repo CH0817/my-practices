@@ -1,24 +1,62 @@
 <!DOCTYPE html>
 <html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/common/header::commonHead(~{::title},_,~{::script})">
-    <title th:text="${title}">Title</title>
-    <link rel="stylesheet" th:href="@{/css/my_css.css}"/>
-    <!--<script th:src="@{/js/login.js}"></script>-->
+    <title th:text="${confirmParameter.title}">Title</title>
     <script th:inline="javascript">
-        // TODO
-        let message = /*[[${message}]]*/ '';
-        $.messager.confirm('確認', message, function (r) {
-            if (r) {
-                $('#form').submit();
-            }
+        'use strict';
+
+        function sendConfirmForm() {
+            $.messager.progress();
+            $('#confirmForm').form('submit', {
+                success: function (data) {
+                    $.messager.progress('close');
+                    // TODO 要用 AJAX ???
+                    $.messager.alert({
+                        title: '訊息',
+                        msg: '驗證信已重新發送',
+                        fn: function () {
+                            window.location.replace(/*[[@{/login}]]*/ '');
+                        }
+                    });
+                }
+            });
+        }
+
+        function sendDenyForm() {
+            $('#denyForm').form('submit', {
+                iframe: false,
+                ajax: false
+            });
+        }
+
+        $(function () {
+            let message = /*[[${confirmParameter.message}]]*/ '';
+            $.messager.confirm('確認', message, function (r) {
+                if (r) {
+                    sendConfirmForm();
+                } else {
+                    sendDenyForm();
+                }
+            });
         });
     </script>
 </head>
 <body>
 <div style="display:none;">
-    <form id="form" th:action="${action}" th:method="${method}">
-        <!--TODO 用 map 產生 input-->
-    </form>
+    <div>
+        <form id="confirmForm" th:action="@{${confirmParameter.confirmForm.action}}" th:method="${confirmParameter.confirmForm.method}">
+            <th:block th:each="parameter:${confirmParameter.confirmForm.parameter}">
+                <input th:name="${parameter.key}" th:value="${parameter.value}">
+            </th:block>
+        </form>
+    </div>
+    <div>
+        <form id="denyForm" th:action="@{${confirmParameter.denyForm.action}}" th:method="${confirmParameter.denyForm.method}">
+            <th:block th:each="parameter:${confirmParameter.denyForm.parameter}">
+                <input th:name="${parameter.key}" th:value="${parameter.value}">
+            </th:block>
+        </form>
+    </div>
 </div>
 </body>
 </html>

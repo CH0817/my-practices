@@ -188,4 +188,33 @@ public class RegisterServiceTest extends BaseServiceTest {
         // TODO 拋出自訂例外
     }
 
+    @Test
+    public void resendVerifyEmailSendErrorUserId() {
+        doReturn(Optional.empty()).when(userService).findById(userId);
+
+        assertFalse(service.resendVerifyEmail(userId));
+
+        verify(userService, times(1)).findById(userId);
+    }
+
+    @Test
+    public void resendVerifyEmail() {
+        String token = UUID.randomUUID().toString().replace("-", "");
+        User user = new User();
+        user.setId(userId);
+        user.setEmail("1@a.c");
+
+        doReturn(Optional.of(user)).when(userService).findById(userId);
+        doReturn(token).when(tokenService).createRegisterToken(userId);
+        doNothing().when(emailService).sendConfirmRegisterEmail(userId, user.getEmail(), token);
+        doNothing().when(tokenService).deleteToken(userId);
+
+        assertTrue(service.resendVerifyEmail(userId));
+
+        verify(userService, times(1)).findById(userId);
+        verify(tokenService, times(1)).createRegisterToken(userId);
+        verify(emailService, times(1)).sendConfirmRegisterEmail(userId, user.getEmail(), token);
+        verify(tokenService, times(1)).deleteToken(userId);
+    }
+
 }

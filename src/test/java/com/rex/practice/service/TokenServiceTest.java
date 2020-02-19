@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TokenServiceTest extends BaseServiceTest {
 
@@ -49,6 +49,24 @@ public class TokenServiceTest extends BaseServiceTest {
     public void isTokenExpiredEmailNotFound() throws Exception {
         when(registerTokenMapper.findByUserId(eq(userId))).thenReturn(null);
         assertTrue(service.isTokenExpired(userId));
+    }
+
+    @Test
+    public void deleteTokenEmptyUserId() {
+        service.deleteToken("");
+        verify(registerTokenMapper, never()).deleteByUserId(userId);
+    }
+
+    @Test
+    public void deleteTokenNullUserId() {
+        service.deleteToken(null);
+        verify(registerTokenMapper, never()).deleteByUserId(userId);
+    }
+
+    @Test
+    public void deleteToken() {
+        service.deleteToken(userId);
+        verify(registerTokenMapper, times(1)).deleteByUserId(userId);
     }
 
 }

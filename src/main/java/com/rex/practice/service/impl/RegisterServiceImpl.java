@@ -1,5 +1,6 @@
 package com.rex.practice.service.impl;
 
+import com.rex.practice.dao.model.User;
 import com.rex.practice.model.input.Register;
 import com.rex.practice.model.verify.RegisterError;
 import com.rex.practice.model.verify.RegisterVerifyError;
@@ -78,6 +79,17 @@ public class RegisterServiceImpl extends BaseServiceImpl implements RegisterServ
     @Override
     public boolean updateAccountToVerified(String userId) {
         return userService.updateEmailVerifyStatus(userId);
+    }
+
+    @Override
+    public boolean resendVerifyEmail(String userId) {
+        Optional<User> optionalUser = userService.findById(userId);
+        boolean isUserExists = optionalUser.isPresent();
+        if (isUserExists) {
+            tokenService.deleteToken(userId);
+            emailService.sendConfirmRegisterEmail(userId, optionalUser.get().getEmail(), tokenService.createRegisterToken(userId));
+        }
+        return isUserExists;
     }
 
 }

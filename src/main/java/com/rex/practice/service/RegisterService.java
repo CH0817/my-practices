@@ -17,4 +17,6 @@ public interface RegisterService {
 
     boolean updateAccountToVerified(String userId);
 
+    boolean resendVerifyEmail(String userId);
+
 }
