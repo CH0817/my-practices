@@ -49,42 +49,42 @@ public class RegisterControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void emailIsEmpty() throws Exception {
+    public void registerButEmailIsEmpty() throws Exception {
         verifyError("Email不能為空", "redirect:/register");
     }
 
     @Test
-    public void emailFormatError() throws Exception {
+    public void registerButEmailFormatError() throws Exception {
         verifyError("錯誤的Email格式", "redirect:/register");
     }
 
     @Test
-    public void passwordIsEmpty() throws Exception {
+    public void registerButPasswordIsEmpty() throws Exception {
         verifyError("密碼不能為空，密碼必須是8~12碼", "redirect:/register");
     }
 
     @Test
-    public void passwordFormatError() throws Exception {
+    public void registerButPasswordFormatError() throws Exception {
         verifyError("密碼必須是8~12碼", "redirect:/register");
     }
 
     @Test
-    public void confirmPasswordIsEmpty() throws Exception {
+    public void registerButConfirmPasswordIsEmpty() throws Exception {
         verifyError("確認密碼不能為空", "redirect:/register");
     }
 
     @Test
-    public void passwordDifferent() throws Exception {
+    public void registerButPasswordDifferent() throws Exception {
         verifyError("兩次密碼不相同", "redirect:/register");
     }
 
     @Test
-    public void emailRegistered() throws Exception {
+    public void registerButEmailRegistered() throws Exception {
         verifyError("Email已被註冊", "redirect:/register");
     }
 
     @Test
-    public void emailVerifying() throws Exception {
+    public void registerButEmailVerifying() throws Exception {
         verifyError("Email驗證中", "redirect:/login");
     }
 
