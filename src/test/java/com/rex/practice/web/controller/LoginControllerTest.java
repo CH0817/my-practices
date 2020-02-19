@@ -4,13 +4,13 @@ import com.rex.practice.web.controller.base.BaseControllerTest;
 import com.rex.practice.web.controller.security.config.MockUserDetailsService;
 import org.junit.Test;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.web.servlet.RequestBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Import({MockUserDetailsService.class})
 public class LoginControllerTest extends BaseControllerTest {
@@ -18,20 +18,24 @@ public class LoginControllerTest extends BaseControllerTest {
 
     @Test
     public void login() throws Exception {
-        Map<String, String[]> params = new HashMap<>();
-        params.put("email", new String[]{"test@email.com"});
-        params.put("password", new String[]{"11111111"});
-
-        sendPostRequest("/login", params).andDo(print()).andExpect(authenticated());
+        mvc.perform(getLoginForm("test@email.com"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/main"))
+                .andExpect(authenticated());
     }
 
     @Test
     public void invalidLogin() throws Exception {
-        Map<String, String[]> params = new HashMap<>();
-        params.put("email", new String[]{"test_02@email.com"});
-        params.put("password", new String[]{"11111111"});
+        mvc.perform(getLoginForm("test_02@email.com"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(forwardedUrl("/login-error"))
+                .andExpect(unauthenticated());
+    }
 
-        sendPostRequest("/login", params).andDo(print()).andExpect(unauthenticated());
+    private RequestBuilder getLoginForm(String email) {
+        return formLogin().userParameter("email").user(email).password("11111111");
     }
 
 }
