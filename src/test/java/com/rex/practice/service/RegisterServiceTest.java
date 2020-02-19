@@ -2,7 +2,7 @@ package com.rex.practice.service;
 
 import com.rex.practice.dao.model.User;
 import com.rex.practice.model.input.Register;
-import com.rex.practice.model.verify.RegisterError;
+import com.rex.practice.model.message.base.Message;
 import com.rex.practice.model.verify.RegisterVerifyError;
 import com.rex.practice.service.base.BaseServiceTest;
 import org.junit.Before;
@@ -48,18 +48,18 @@ public class RegisterServiceTest extends BaseServiceTest {
         String errorMessage = "Email不能為空";
         bindingResult.addError(new FieldError("", "email", errorMessage));
 
-        Optional<RegisterError> optional = service.verify(register, bindingResult);
+        Optional<Message> optional = service.verify(register, bindingResult);
 
-        assertRegisterVerify(optional, errorMessage, "redirect:/register");
+        assertRegisterVerify(optional, errorMessage, "/register");
     }
 
     @Test
     public void passwordDifferentError() {
         register.setConfirmPassword("22222222");
 
-        Optional<RegisterError> optional = service.verify(register, bindingResult);
+        Optional<Message> optional = service.verify(register, bindingResult);
 
-        assertRegisterVerify(optional, "兩次密碼不相同", "redirect:/register");
+        assertRegisterVerify(optional, "兩次密碼不相同", "/register");
     }
 
     @Test
@@ -67,9 +67,9 @@ public class RegisterServiceTest extends BaseServiceTest {
         doReturn(true).when(userService).isEmailExists(register.getEmail());
         doReturn(true).when(userService).isEmailVerified(register.getEmail());
 
-        Optional<RegisterError> optional = service.verify(register, bindingResult);
+        Optional<Message> optional = service.verify(register, bindingResult);
 
-        assertRegisterVerify(optional, "Email已被註冊", "redirect:/register");
+        assertRegisterVerify(optional, "Email已被註冊", "/register");
 
         verify(userService, times(1)).isEmailExists(register.getEmail());
         verify(userService, times(1)).isEmailVerified(register.getEmail());
@@ -80,19 +80,19 @@ public class RegisterServiceTest extends BaseServiceTest {
         doReturn(true).when(userService).isEmailExists(register.getEmail());
         doReturn(false).when(userService).isEmailVerified(register.getEmail());
 
-        Optional<RegisterError> optional = service.verify(register, bindingResult);
+        Optional<Message> optional = service.verify(register, bindingResult);
 
-        assertRegisterVerify(optional, "Email驗證中", "redirect:/login");
+        assertRegisterVerify(optional, "Email驗證中", "/login");
 
         verify(userService, times(1)).isEmailExists(register.getEmail());
         verify(userService, times(1)).isEmailVerified(register.getEmail());
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    private void assertRegisterVerify(Optional<RegisterError> optional, String expectMessage, String expectViewName) {
+    private void assertRegisterVerify(Optional<Message> optional, String expectMessage, String expectRedirectUrl) {
         assertTrue(optional.isPresent());
-        assertEquals(expectMessage, optional.get().getErrorMessage());
-        assertEquals(expectViewName, optional.get().getViewName());
+        assertEquals(expectMessage, optional.get().getMessage());
+        assertEquals(expectRedirectUrl, optional.get().getRedirectUrl());
     }
 
     @Test

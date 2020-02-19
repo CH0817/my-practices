@@ -2,7 +2,8 @@ package com.rex.practice.service.impl;
 
 import com.rex.practice.dao.model.User;
 import com.rex.practice.model.input.Register;
-import com.rex.practice.model.verify.RegisterError;
+import com.rex.practice.model.message.ErrorMessage;
+import com.rex.practice.model.message.base.Message;
 import com.rex.practice.model.verify.RegisterVerifyError;
 import com.rex.practice.service.EmailService;
 import com.rex.practice.service.RegisterService;
@@ -31,20 +32,20 @@ public class RegisterServiceImpl extends BaseServiceImpl implements RegisterServ
     }
 
     @Override
-    public Optional<RegisterError> verify(Register register, BindingResult bindingResult) {
+    public Optional<Message> verify(Register register, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
-            return Optional.of(new RegisterError(BindingResultUtils.getFieldErrorMessages(bindingResult),
-                    "redirect:/register"));
+            return Optional.of(new ErrorMessage(BindingResultUtils.getFieldErrorMessages(bindingResult),
+                    "/register"));
         }
         if (!register.getPassword().equals(register.getConfirmPassword())) {
-            return Optional.of(new RegisterError("兩次密碼不相同", "redirect:/register"));
+            return Optional.of(new ErrorMessage("兩次密碼不相同", "/register"));
         }
         if (userService.isEmailExists(register.getEmail())) {
             if (userService.isEmailVerified(register.getEmail())) {
-                return Optional.of(new RegisterError("Email已被註冊", "redirect:/register"));
+                return Optional.of(new ErrorMessage("Email已被註冊", "/register"));
             }
             else {
-                return Optional.of(new RegisterError("Email驗證中", "redirect:/login"));
+                return Optional.of(new ErrorMessage("Email驗證中", "/login"));
             }
         }
         return Optional.empty();

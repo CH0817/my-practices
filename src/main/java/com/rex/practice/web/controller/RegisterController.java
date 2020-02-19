@@ -1,7 +1,9 @@
 package com.rex.practice.web.controller;
 
 import com.rex.practice.model.input.Register;
-import com.rex.practice.model.verify.RegisterError;
+import com.rex.practice.model.message.ErrorMessage;
+import com.rex.practice.model.message.InfoMessage;
+import com.rex.practice.model.message.base.Message;
 import com.rex.practice.model.verify.RegisterVerifyError;
 import com.rex.practice.service.RegisterService;
 import com.rex.practice.web.controller.base.BaseController;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -33,16 +34,19 @@ public class RegisterController extends BaseController {
         return "register";
     }
 
-    @PostMapping(value = {"", "/"})
-    public String register(@Validated Register register, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        Optional<RegisterError> verifyOptional = registerService.verify(register, bindingResult);
-        if (verifyOptional.isPresent()) {
-            redirectAttributes.addFlashAttribute("message", verifyOptional.get().getErrorMessage());
-            return verifyOptional.get().getViewName();
+    @PostMapping("/create")
+    public String register(@Validated Register register, BindingResult bindingResult, HttpServletRequest request) {
+        Optional<Message> optionalError = registerService.verify(register, bindingResult);
+        if (optionalError.isPresent()) {
+            request.setAttribute("message", optionalError.get());
         }
-
-        registerService.register(register);
-        return "redirect:/login";
+        else {
+            request.setAttribute("message", new InfoMessage("註冊成功，請至信箱收取驗證信", "/login"));
+            if (!registerService.register(register)) {
+                request.setAttribute("message", new ErrorMessage("註冊失敗", "/register"));
+            }
+        }
+        return "forward:/helper/show/info";
     }
 
     @GetMapping("/verify/{userId}/{token}")

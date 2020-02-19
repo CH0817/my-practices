@@ -1,7 +1,9 @@
 package com.rex.practice.web.controller;
 
+import com.rex.practice.exception.LostNecessaryParameterException;
 import com.rex.practice.model.help.ConfirmParameter;
 import com.rex.practice.model.help.Form;
+import com.rex.practice.model.message.base.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/helper")
@@ -39,6 +42,16 @@ public class HelperController {
                 .denyForm(new Form("/login"))
                 .build());
         return "help/confirm";
+    }
+
+    @RequestMapping("/show/info")
+    public String toShowMessagePage(HttpServletRequest request, Model model) {
+        Message message = (Message) request.getAttribute("message");
+        if (Objects.isNull(message)) {
+            throw new LostNecessaryParameterException("message should not be null", "/login");
+        }
+        model.addAttribute("message", message);
+        return "help/message";
     }
 
 }
