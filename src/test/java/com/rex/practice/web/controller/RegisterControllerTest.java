@@ -9,6 +9,7 @@ import com.rex.practice.web.controller.base.BaseControllerTest;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.validation.BindingResult;
 
 import java.util.HashMap;
@@ -16,7 +17,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -179,14 +179,10 @@ public class RegisterControllerTest extends BaseControllerTest {
     }
 
     private void sendRegisterRequest(Message expectMessage) throws Exception {
-        sendPostRequest("/register/create", params)
+        ResultActions resultActions = sendPostRequest("/register/create", params)
                 .andExpect(status().isOk())
-                .andExpect(request().attribute("message", allOf(
-                        hasProperty("message", is(expectMessage.getMessage())),
-                        hasProperty("redirectUrl", is(expectMessage.getRedirectUrl())),
-                        hasProperty("icon", is(expectMessage.getIcon()))
-                )))
                 .andExpect(view().name("forward:/helper/show/info"));
+        verifyForwardMessage(resultActions, expectMessage);
     }
 
     private void registerVerifyError(Message expectMessage) throws Exception {

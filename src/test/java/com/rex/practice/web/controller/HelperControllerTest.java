@@ -4,6 +4,7 @@ import com.rex.practice.model.message.InfoMessage;
 import com.rex.practice.model.message.base.Message;
 import com.rex.practice.web.controller.base.BaseControllerTest;
 import org.junit.Test;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -46,16 +47,12 @@ public class HelperControllerTest extends BaseControllerTest {
     @Test
     public void toShowMessagePage() throws Exception {
         Message message = new InfoMessage("test", "/login");
-        sendRequest(post("/helper/show/info")
+        ResultActions resultActions = sendRequest(post("/helper/show/info")
                 .with(csrf())
                 .requestAttr("message", message))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("message", allOf(
-                        hasProperty("message", is(message.getMessage())),
-                        hasProperty("redirectUrl", is(message.getRedirectUrl())),
-                        hasProperty("icon", is(message.getIcon()))
-                )))
                 .andExpect(view().name("help/message"));
+        verifyForwardMessage(resultActions, message);
     }
 
     @Test

@@ -1,25 +1,26 @@
 package com.rex.practice.web.controller;
 
 import com.rex.practice.model.message.ErrorMessage;
-import com.rex.practice.model.message.base.Message;
 import com.rex.practice.web.controller.base.BaseControllerTest;
 import com.rex.practice.web.controller.security.MockSecuredUser;
 import com.rex.practice.web.controller.security.config.MockUserDetailsService;
 import org.junit.Test;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.RequestBuilder;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Import({MockUserDetailsService.class})
 public class LoginControllerTest extends BaseControllerTest {
 
-
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
     public void login() throws Exception {
         mvc.perform(getLoginForm("test@email.com"))
@@ -41,8 +42,8 @@ public class LoginControllerTest extends BaseControllerTest {
     @MockSecuredUser
     @Test
     public void loginError() throws Exception {
-        Message expectMessage = new ErrorMessage("Email或密碼錯誤", "/login");
-        sendGetRequest("/login-error")
+        ErrorMessage expectMessage = new ErrorMessage("Email或密碼錯誤", "/login");
+        mvc.perform(get("/login-error"))
                 .andExpect(status().isOk())
                 .andExpect(request().attribute("message", allOf(
                         hasProperty("message", is(expectMessage.getMessage())),

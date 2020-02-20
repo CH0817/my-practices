@@ -1,5 +1,6 @@
 package com.rex.practice.web.controller.base;
 
+import com.rex.practice.model.message.base.Message;
 import com.rex.practice.model.recapthcha.ReCaptchaProperty;
 import com.rex.practice.service.*;
 import com.rex.practice.service.impl.MenuServiceImpl;
@@ -20,9 +21,11 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Map;
 
+import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = {AccountBookController.class, AccountController.class, ComboboxController.class,
@@ -100,6 +103,14 @@ public abstract class BaseControllerTest {
 
     protected ResultActions sendRequest(MockHttpServletRequestBuilder request) throws Exception {
         return mvc.perform(request).andDo(print());
+    }
+
+    protected void verifyForwardMessage(ResultActions resultActions, Message expectMessage) throws Exception {
+        resultActions.andExpect(request().attribute("message", allOf(
+                hasProperty("message", is(expectMessage.getMessage())),
+                hasProperty("redirectUrl", is(expectMessage.getRedirectUrl())),
+                hasProperty("icon", is(expectMessage.getIcon()))
+        )));
     }
 
 }
