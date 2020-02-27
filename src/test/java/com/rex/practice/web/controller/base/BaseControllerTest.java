@@ -1,7 +1,10 @@
 package com.rex.practice.web.controller.base;
 
+import com.rex.practice.config.BeansConfig;
 import com.rex.practice.model.message.base.Message;
 import com.rex.practice.model.recapthcha.ReCaptchaProperty;
+import com.rex.practice.security.CustomAuthenticationProvider;
+import com.rex.practice.security.CustomAuthenticationSuccessHandler;
 import com.rex.practice.service.*;
 import com.rex.practice.service.impl.MenuServiceImpl;
 import com.rex.practice.web.controller.*;
@@ -11,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -33,6 +38,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         HelperController.class})
 @AutoConfigureMockMvc
 @MockBean(classes = {JavaMailSender.class, ReCaptchaProperty.class})
+@SpyBean(classes = {CustomAuthenticationProvider.class, CustomAuthenticationSuccessHandler.class})
+@Import({BeansConfig.class})
 @Ignore
 public abstract class BaseControllerTest {
 

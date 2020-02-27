@@ -1,7 +1,7 @@
 package com.rex.practice.web.controller.security;
 
 import com.rex.practice.dao.model.User;
-import com.rex.practice.model.security.SecuredUser;
+import com.rex.practice.security.CustomUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,7 +18,7 @@ public class MockSecurityContextFactory implements WithSecurityContextFactory<Mo
     @Override
     public SecurityContext createSecurityContext(MockSecuredUser mockSecuredUser) {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
-        SecuredUser principal = new SecuredUser(createUser(mockSecuredUser), getDefaultAuthorityList());
+        CustomUserDetails principal = new CustomUserDetails(createUser(mockSecuredUser), getDefaultAuthorityList());
         Authentication auth = new UsernamePasswordAuthenticationToken(principal, "password", principal.getAuthorities());
         context.setAuthentication(auth);
         return context;

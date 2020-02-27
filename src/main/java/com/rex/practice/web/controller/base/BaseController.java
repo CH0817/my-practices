@@ -1,6 +1,6 @@
 package com.rex.practice.web.controller.base;
 
-import com.rex.practice.model.security.SecuredUser;
+import com.rex.practice.security.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -10,9 +10,9 @@ public abstract class BaseController {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected SecuredUser getSecuredUser() {
+    protected CustomUserDetails getSecuredUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (SecuredUser) authentication.getPrincipal();
+        return (CustomUserDetails) authentication.getPrincipal();
     }
 
     protected String getUserId() {

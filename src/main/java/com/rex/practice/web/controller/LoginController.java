@@ -1,6 +1,5 @@
 package com.rex.practice.web.controller;
 
-import com.rex.practice.model.message.ErrorMessage;
 import com.rex.practice.model.recapthcha.ReCaptchaProperty;
 import com.rex.practice.model.recapthcha.ReCaptchaResponse;
 import com.rex.practice.service.UserService;
@@ -56,12 +55,6 @@ public class LoginController extends BaseController {
     @RequestMapping("/main")
     public String main() {
         return "page/main";
-    }
-
-    @RequestMapping("/login-error")
-    public String loginError(HttpServletRequest request) {
-        request.setAttribute("message", new ErrorMessage("Email或密碼錯誤", "/login"));
-        return "forward:/helper/show/info";
     }
 
     @GetMapping("/forget")
